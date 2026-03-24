@@ -87,7 +87,9 @@ body {
 
 /* --- LEITNER PROGRESS --- */
 .progress-section {
-  margin-bottom: 2.5rem;
+  margin-top: 2.5rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--rule);
 }
 
 .progress-title {
@@ -407,6 +409,22 @@ body {
 .results-box .results-label {
   font-size: 1.1rem;
   color: var(--ink-soft);
+  margin-bottom: 1rem;
+}
+
+.results-box .feedback {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  line-height: 1.6;
+  color: var(--ink);
+  margin-bottom: 0.6rem;
+  padding: 0 1rem;
+}
+
+.results-box .feedback-sub {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  font-style: italic;
   margin-bottom: 1.5rem;
 }
 
@@ -422,6 +440,29 @@ body {
 }
 
 .results-box .play-again:hover { background: var(--accent); color: var(--bg); }
+
+/* --- VOCAB RANK --- */
+.vocab-rank {
+  text-align: center;
+  padding: 1.2rem;
+  margin-top: 1rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg-surface);
+}
+
+.vocab-rank .rank-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.vocab-rank .rank-desc {
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  font-style: italic;
+}
 
 .empty-state {
   text-align: center;
@@ -461,17 +502,6 @@ body {
 
 <div class="container">
 
-  <div class="progress-section">
-    <div class="progress-title">Your Progress</div>
-    <div class="leitner-boxes">
-      <div class="leitner-box"><span class="box-count" id="box1Count">0</span><span class="box-label">New</span></div>
-      <div class="leitner-box"><span class="box-count" id="box2Count">0</span><span class="box-label">Learning</span></div>
-      <div class="leitner-box"><span class="box-count" id="box3Count">0</span><span class="box-label">Reviewing</span></div>
-      <div class="leitner-box"><span class="box-count" id="box4Count">0</span><span class="box-label">Mastered</span></div>
-    </div>
-    <div class="streak-line" id="streakLine"></div>
-  </div>
-
   <div class="mode-selector">
     <button class="mode-btn active" data-mode="flashcards" onclick="switchMode('flashcards')">
       <span class="mode-icon">&#x1F4DA;</span>
@@ -492,6 +522,19 @@ body {
   </div>
 
   <div class="game-area" id="gameArea"></div>
+
+  <div class="progress-section">
+    <div class="progress-title">Your Progress</div>
+    <div class="leitner-boxes">
+      <div class="leitner-box"><span class="box-count" id="box1Count">0</span><span class="box-label">New</span></div>
+      <div class="leitner-box"><span class="box-count" id="box2Count">0</span><span class="box-label">Learning</span></div>
+      <div class="leitner-box"><span class="box-count" id="box3Count">0</span><span class="box-label">Reviewing</span></div>
+      <div class="leitner-box"><span class="box-count" id="box4Count">0</span><span class="box-label">Mastered</span></div>
+    </div>
+    <div class="streak-line" id="streakLine"></div>
+    <div class="vocab-rank" id="vocabRank"></div>
+  </div>
+
 </div>
 
 <script>
@@ -525,6 +568,10 @@ function updateProgress() {
   document.getElementById('box4Count').textContent = c[3];
   const streak = getStreak();
   document.getElementById('streakLine').innerHTML = streak > 0 ? `<strong>${streak}</strong> day streak` : 'Start your streak by reviewing today';
+  // Vocab rank
+  const [rankTitle, rankDesc] = getVocabRank();
+  const rankEl = document.getElementById('vocabRank');
+  if (rankEl) rankEl.innerHTML = `<div class="rank-title">${rankTitle}</div><div class="rank-desc">${rankDesc}</div>`;
 }
 
 function switchMode(m) {
@@ -552,12 +599,73 @@ function getPriorityQueue() {
   return shuffle(g[0]).concat(shuffle(g[1]),shuffle(g[2]),shuffle(g[3]));
 }
 
+// === FEEDBACK ENGINE ===
+function getMatchFeedback(score, total) {
+  const pct = score / total;
+  if (pct === 1) return ["Perfect score. You may now refer to yourself as a thaumaturge of definitions.", "The words have nothing left to teach you. For now."];
+  if (pct >= 0.8) return ["A strong showing. Not quite inexorable mastery, but the words are starting to fear you.", "One or two slipped past — revisit them before they get comfortable."];
+  if (pct >= 0.6) return ["Respectable, but a sartorial vocabulary requires sharper tailoring than this.", "The missed words are waiting for you in the flashcards. They're not going anywhere."];
+  if (pct >= 0.4) return ["Your vocabulary knowledge appears to be in a state of torpid hibernation.", "Consider a dalliance with the flashcards before attempting this again."];
+  if (pct >= 0.2) return ["This performance may warrant an emergency ethics seminar on the turpitude of not studying.", "The flashcards are free. They're right there. They want to help you."];
+  return ["Someone should be defenestrated for this, and that someone might be you.", "Please return to the flashcards immediately. This is not a drill."];
+}
+
+function getFillFeedback(score, total) {
+  const pct = score / total;
+  if (pct === 1) return ["Every blank, filled. Every sentence, completed. You are the mendicant of no one's vocabulary charity.", "You clearly know these words in context. That's the hardest part."];
+  if (pct >= 0.8) return ["Near-perfect contextual recall. Your brain is doing something right — don't let it get complacent.", "The few you missed are worth revisiting. Context is everything."];
+  if (pct >= 0.6) return ["You know the definitions but the sentences caught you off guard. A tepid performance at best.", "Knowing a word and knowing how to use it are different skills. Practice both."];
+  if (pct >= 0.4) return ["The blanks appear to have eviscerated your confidence. Understandable.", "Re-read the example sentences on the main page — they'll stick better than you think."];
+  return ["A paroxysm of wrong answers. The sentences are weeping.", "Start with flashcards, then come back. The sentences will wait."];
+}
+
+function getSpeedFeedback(score) {
+  if (score >= 20) return ["Twenty or more in sixty seconds. Your lexical reflexes are bordering on vertiginous.", "At this speed, you could defenestrate a dictionary and reassemble it mid-fall."];
+  if (score >= 15) return ["Fast and mostly accurate. An inexorable march toward vocabulary dominance.", "Your recall speed is getting genuinely impressive."];
+  if (score >= 10) return ["A solid pace, though not one that would inspire a peroration in your honor.", "Speed comes with repetition. Play again and watch the number climb."];
+  if (score >= 5) return ["Your speed suggests a certain slapdash relationship with these words.", "Slow is fine for flashcards. For speed rounds, it's literally the opposite of the point."];
+  return ["You answered fewer than five. The clock is not your friend, and neither are these words. Yet.", "Try the flashcards first to build familiarity, then come back swinging."];
+}
+
+function getFlashcardFeedback(total, againCount) {
+  const pct = againCount / total;
+  if (pct === 0) return ["Not a single 'Again.' Either you're a thaumaturge or you're being too easy on yourself.", "If you rated cards 'Easy' that were actually 'Good,' be honest next time — it helps."];
+  if (pct <= 0.15) return ["Nearly all recalled. A few stragglers, but your vocabulary is in fighting shape.", "The ones you hit 'Again' on will resurface first next time. That's the system working."];
+  if (pct <= 0.35) return ["A healthy mix of recall and struggle. This is exactly how spaced repetition is supposed to feel.", "The words you forgot aren't failures — they're the whole reason you're here."];
+  if (pct <= 0.6) return ["More than a third needed another look. Your vocabulary is feeling neophobic about being tested.", "Consistency beats cramming. Come back tomorrow and those 'Again' cards will surprise you."];
+  return ["The majority went straight back to Box 1. This is not a dalliance — this is a relationship. Commit.", "Daily review, even five minutes, will turn this around faster than you'd expect."];
+}
+
+function getVocabRank() {
+  const p = loadProgress();
+  let mastered = 0, reviewing = 0;
+  WORDS.forEach(w => { const b = p[w.word]?.box || 1; if (b === 4) mastered++; if (b >= 3) reviewing++; });
+  const mp = mastered / WORDS.length, kp = reviewing / WORDS.length;
+  if (mp >= 0.9) return ["Lexical Thaumaturge", "You have mastered the dark arts of vocabulary. Most English speakers know 20,000–35,000 words — you're sharpening the rarest blades in the drawer."];
+  if (mp >= 0.7) return ["Distinguished Vocabularian", "Your command of these words puts you well above the average educated adult, who passively recognizes far more words than they can wield. You wield."];
+  if (mp >= 0.5) return ["Lexical Contender", "Past the halfway mark. Research suggests active vocabulary is only about a third of total recognition vocabulary. You're building the active arsenal."];
+  if (kp >= 0.5) return ["Wordsmith-in-Training", "You recognize more than half, but mastery takes repetition. Studies show 5–7 encounters with a word in context before it sticks permanently."];
+  if (kp >= 0.25) return ["Apprentice of the Page", "Getting traction. Ebbinghaus showed we lose 70% of new information within 24 hours without review. You're fighting the curve."];
+  return ["Neophyte", "Everyone starts here. Spaced repetition can improve retention by over 200% compared to traditional study. The system works if you show up."];
+}
+
+function renderResults(big, label, feedbackArr, replayFn) {
+  const [fb, fbSub] = feedbackArr;
+  return `<div class="results-box">
+    <div class="big-number">${big}</div>
+    <div class="results-label">${label}</div>
+    <div class="feedback">${fb}</div>
+    <div class="feedback-sub">${fbSub}</div>
+    <button class="play-again" onclick="${replayFn}">Play Again</button>
+  </div>`;
+}
+
 // === FLASHCARDS ===
-let fcQ=[], fcI=0;
-function startFlashcards() { fcQ=getPriorityQueue(); fcI=0; showFC(); }
+let fcQ=[], fcI=0, fcAgain=0;
+function startFlashcards() { fcQ=getPriorityQueue(); fcI=0; fcAgain=0; showFC(); }
 function showFC() {
   const a=document.getElementById('gameArea');
-  if (fcI>=fcQ.length) { a.innerHTML=`<div class="results-box"><div class="big-number">${fcQ.length}</div><div class="results-label">cards reviewed</div><button class="play-again" onclick="startFlashcards()">Review Again</button></div>`; return; }
+  if (fcI>=fcQ.length) { a.innerHTML=renderResults(fcQ.length, 'cards reviewed', getFlashcardFeedback(fcQ.length, fcAgain), 'startFlashcards()'); return; }
   const w=fcQ[fcI], box=getBox(w.word), defs=w.definitions.map(d=>`<div>${d}</div>`).join('');
   a.innerHTML=`
     <div class="quiz-counter">Card ${fcI+1} of ${fcQ.length} &middot; Box ${box}</div>
@@ -574,6 +682,7 @@ function showFC() {
 }
 function revealCard() { const w=document.getElementById('fcW'); if(w.classList.contains('revealed'))return; w.classList.add('revealed'); document.getElementById('fcB').style.display='flex'; }
 function rateCard(r) {
+  if (r==='again') fcAgain++;
   const w=fcQ[fcI], box=getBox(w.word);
   let nb; if(r==='again')nb=1; else if(r==='hard')nb=Math.max(1,box); else if(r==='good')nb=Math.min(4,box+1); else nb=Math.min(4,box+2);
   setBox(w.word,nb); recordStreak(); updateProgress(); fcI++; showFC();
@@ -584,7 +693,7 @@ let mQ=[], mI=0, mC=0;
 function startMatch() { mQ=shuffle([...WORDS]).slice(0,Math.min(10,WORDS.length)); mI=0; mC=0; showMatch(); }
 function showMatch() {
   const a=document.getElementById('gameArea');
-  if(mI>=mQ.length){a.innerHTML=`<div class="results-box"><div class="big-number">${mC}/${mQ.length}</div><div class="results-label">correct</div><button class="play-again" onclick="startMatch()">Play Again</button></div>`;recordStreak();updateProgress();return;}
+  if(mI>=mQ.length){a.innerHTML=renderResults(mC+'/'+mQ.length, 'correct', getMatchFeedback(mC,mQ.length), 'startMatch()');recordStreak();updateProgress();return;}
   const w=mQ[mI], opts=shuffle([w,...pick(WORDS,3,w.word)]);
   a.innerHTML=`<div class="quiz-counter">Question ${mI+1} of ${mQ.length}</div>
     <div class="quiz-question"><span class="q-label">Which word matches this definition?</span>${w.definitions[0]}</div>
@@ -604,7 +713,7 @@ let fQ=[], fI=0, fC=0;
 function startFill() { fQ=shuffle(WORDS.filter(w=>w.sentence?.length>10)).slice(0,Math.min(10,WORDS.length)); fI=0; fC=0; showFill(); }
 function showFill() {
   const a=document.getElementById('gameArea');
-  if(fI>=fQ.length){a.innerHTML=`<div class="results-box"><div class="big-number">${fC}/${fQ.length}</div><div class="results-label">correct</div><button class="play-again" onclick="startFill()">Play Again</button></div>`;recordStreak();updateProgress();return;}
+  if(fI>=fQ.length){a.innerHTML=renderResults(fC+'/'+fQ.length, 'correct', getFillFeedback(fC,fQ.length), 'startFill()');recordStreak();updateProgress();return;}
   const w=fQ[fI], stem=w.word.length>4?w.word.slice(0,-1):w.word, re=new RegExp('\\b('+esc(stem)+'[a-z]*)\\b','gi');
   let inflected=w.word; const m=re.exec(w.sentence); if(m)inflected=m[1];
   const blanked=w.sentence.replace(new RegExp('\\b('+esc(stem)+'[a-z]*)\\b','gi'),'<span class="blank">________</span>');
@@ -643,7 +752,10 @@ function ansSpeed(btn,cw) {
   updateProgress(); btn.classList.add(ok?'correct':'wrong','answered');
   setTimeout(()=>{if(sTime>0)showSpeedQ();},300);
 }
-function endSpeed() { document.getElementById('gameArea').innerHTML=`<div class="results-box"><div class="big-number">${sScore}</div><div class="results-label">words in 60 seconds</div><button class="play-again" onclick="startSpeed()">Play Again</button></div>`; updateProgress(); }
+function endSpeed() {
+  document.getElementById('gameArea').innerHTML=renderResults(sScore, 'words in 60 seconds', getSpeedFeedback(sScore), 'startSpeed()');
+  updateProgress();
+}
 
 // === INIT ===
 fetch('words.json').then(r=>r.json()).then(words=>{

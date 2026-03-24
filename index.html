@@ -68,7 +68,7 @@ body {
 
 .masthead .tagline {
   font-style: italic;
-  font-size: 1.05rem;
+  font-size: 1.2rem;
   color: var(--ink-muted);
   margin-top: 0.6rem;
 }
@@ -77,12 +77,12 @@ body {
 .info-line {
   max-width: 740px;
   margin: 0 auto;
-  padding: 1rem 1.5rem;
+  padding: 1.2rem 1.5rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid var(--rule);
-  font-size: 0.85rem;
+  font-size: 1rem;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   color: var(--ink-muted);
@@ -187,8 +187,8 @@ body {
 .entry-pos {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
-  font-size: 1.2rem;
-  color: var(--ink-muted);
+  font-size: 1.4rem;
+  color: var(--accent-dim);
   margin-bottom: 1.5rem;
 }
 
@@ -202,7 +202,7 @@ body {
   gap: 0.6rem;
   margin-bottom: 0.6rem;
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-style: normal !important;
   line-height: 1.7;
   color: var(--ink);
@@ -214,7 +214,7 @@ body {
 }
 
 .entry-def-num {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--accent);
   flex-shrink: 0;
   padding-top: 0.2rem;
@@ -222,7 +222,7 @@ body {
 }
 
 .entry-etymology {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--ink-muted);
   line-height: 1.7;
   margin-bottom: 2rem;
@@ -234,7 +234,7 @@ body {
   font-weight: 600;
   color: var(--ink-soft);
   text-transform: uppercase;
-  font-size: 0.75rem;
+  font-size: 0.82rem;
   letter-spacing: 0.12em;
 }
 
@@ -365,34 +365,48 @@ body {
 /* --- MOBILE --- */
 @media (max-width: 600px) {
   .masthead { padding: 2.5rem 1.2rem 2rem; }
-  .masthead .tagline { font-size: 1rem; }
-  .info-line { padding: 1rem 1.2rem; font-size: 0.85rem; }
-  .review-banner a { padding: 1.1rem 1.2rem; font-size: 1.05rem; }
+  .masthead .tagline { font-size: 1.15rem; }
+  .info-line {
+    padding: 1rem 1.2rem;
+    font-size: 0.95rem;
+    flex-direction: column;
+    gap: 0.3rem;
+    text-align: center;
+  }
+  .review-banner { padding: 0 1.2rem; margin-top: 1.2rem; }
+  .review-banner a { font-size: 1.15rem; padding: 1.1rem; }
   .entries { padding: 0 1.2rem 4rem; }
   .date-group { padding: 3rem 0 0; }
   .date-group.today { margin: 0 -1.2rem; padding: 3rem 1.2rem 0.5rem; }
-  .date-heading { font-size: 0.85rem; margin-bottom: 1.8rem; }
+  .date-heading { font-size: 0.9rem; margin-bottom: 1.8rem; }
   .entry { padding-bottom: 3rem; }
   .entry + .entry { padding-top: 2.5rem; }
-  .entry-pos { font-size: 1.15rem; }
-  .entry-def { font-size: 1.05rem; }
-  .entry-etymology { font-size: 0.95rem; }
+  .entry-pos { font-size: 1.3rem; }
+  .entry-def { font-size: 1.15rem; }
+  .entry-def-num { font-size: 1rem; }
+  .entry-etymology { font-size: 1.05rem; }
   .entry-sentence { font-size: 1.2rem; }
+  .quiz-toggle { font-size: 1.05rem; }
+  .quiz-prompt-text { font-size: 1.05rem; }
+  .quiz-option { font-size: 1.05rem; padding: 0.9rem 1rem; }
+  .quiz-result { font-size: 1.05rem; }
+  .quiz-contact { font-size: 1rem; }
   .quiz-section { margin-top: 1.8rem; }
-  .review-banner { padding: 0 1.2rem; margin-top: 1.2rem; }
-  .review-banner a { font-size: 1.15rem; padding: 1.1rem; }
 }
 
 /* --- DESKTOP --- */
 @media (min-width: 1024px) {
   .entries { padding: 0 2rem 6rem; }
   .masthead { padding: 4rem 2rem 3rem; }
+  .masthead .tagline { font-size: 1.3rem; }
+  .info-line { font-size: 1.05rem; }
   .date-group { padding: 3.5rem 0 0; }
   .entry { padding-bottom: 3.5rem; }
   .entry + .entry { padding-top: 3rem; }
-  .entry-def { font-size: 1.15rem; }
-  .entry-etymology { font-size: 1.05rem; }
-  .entry-sentence { font-size: 1.3rem; }
+  .entry-pos { font-size: 1.5rem; }
+  .entry-def { font-size: 1.25rem; }
+  .entry-etymology { font-size: 1.1rem; }
+  .entry-sentence { font-size: 1.35rem; }
   .quiz-option { font-size: 1.1rem; }
 }
 
