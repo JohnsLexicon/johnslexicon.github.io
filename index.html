@@ -105,6 +105,22 @@
     font-weight: 400;
   }
 
+  .review-link {
+    font-size: 0.82rem;
+    font-weight: 600;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.04em;
+    padding: 0.3rem 0.8rem;
+    border: 1px solid var(--accent-dim);
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .review-link:hover {
+    background: var(--accent);
+    color: var(--bg);
+  }
+
   /* --- ENTRIES CONTAINER --- */
   .entries {
     max-width: 740px;
@@ -468,6 +484,7 @@
 
 <div class="info-banner">
   <span id="todayDate"></span>
+  <a href="review.html" class="review-link">Review &rarr;</a>
   <span class="word-count" id="wordCount"></span>
 </div>
 
