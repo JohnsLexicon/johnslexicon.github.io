@@ -88,7 +88,7 @@
   .info-banner {
     max-width: 740px;
     margin: 0 auto;
-    padding: 1.1rem 1.5rem;
+    padding: 1.2rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -105,13 +105,21 @@
     font-weight: 400;
   }
 
+  .review-banner {
+    max-width: 740px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-bottom: 1px solid var(--rule);
+  }
+
   .review-link {
-    font-size: 0.82rem;
+    font-size: 0.85rem;
     font-weight: 600;
     color: var(--accent);
     text-decoration: none;
     letter-spacing: 0.04em;
-    padding: 0.3rem 0.8rem;
+    padding: 0.45rem 1.4rem;
     border: 1px solid var(--accent-dim);
     transition: background 0.2s, color 0.2s;
   }
@@ -130,11 +138,12 @@
 
   /* --- DATE GROUPS --- */
   .date-group {
-    padding: 3rem 0 0;
+    padding: 3.5rem 0 0;
   }
 
   .date-group + .date-group {
     border-top: 1px solid var(--rule);
+    margin-top: 1rem;
   }
 
   .date-heading {
@@ -151,7 +160,7 @@
   .date-group.today {
     background: var(--highlight-bg);
     margin: 0 -1.5rem;
-    padding: 3rem 1.5rem 0;
+    padding: 3.5rem 1.5rem 0.5rem;
     border-bottom: 2px solid var(--accent-dim);
     position: relative;
   }
@@ -159,27 +168,27 @@
   .date-group.today::before {
     content: "TODAY";
     position: absolute;
-    top: 1rem;
+    top: 1.2rem;
     right: 1.5rem;
     font-family: 'Lora', Georgia, serif;
-    font-size: 0.6rem;
+    font-size: 0.62rem;
     font-weight: 600;
     letter-spacing: 0.2em;
     text-transform: uppercase;
     color: var(--accent);
-    background: var(--bg);
+    background: var(--highlight-bg);
     padding: 0.2rem 0.65rem;
     border: 1px solid var(--accent-dim);
   }
 
   /* --- WORD ENTRIES --- */
   .entry {
-    padding-bottom: 3rem;
+    padding-bottom: 3.5rem;
     animation: fadeUp 0.4s ease both;
   }
 
   .entry + .entry {
-    padding-top: 2.5rem;
+    padding-top: 3rem;
     border-top: 1px dashed var(--rule);
   }
 
@@ -197,12 +206,12 @@
     font-style: italic;
     font-size: 1.1rem;
     color: var(--ink-muted);
-    margin-bottom: 1.2rem;
+    margin-bottom: 1.4rem;
   }
 
   /* --- DEFINITIONS --- */
   .entry-definitions {
-    margin-bottom: 1.4rem;
+    margin-bottom: 1.6rem;
     font-style: normal;
   }
 
@@ -236,7 +245,7 @@
     font-weight: 400;
     color: var(--ink-muted);
     line-height: 1.7;
-    margin-bottom: 1.6rem;
+    margin-bottom: 1.8rem;
     padding-left: 1rem;
     border-left: 2px solid var(--rule-light);
   }
@@ -283,7 +292,7 @@
 
   /* --- QUIZ --- */
   .quiz-section {
-    margin-top: 1.5rem;
+    margin-top: 2rem;
   }
 
   .quiz-toggle {
@@ -432,18 +441,25 @@
   @media (max-width: 600px) {
     .masthead { padding: 2.5rem 1.2rem 2rem; }
     .masthead .tagline { font-size: 0.95rem; }
-    .entries { padding: 0 1.2rem 4rem; }
-    .date-group.today { margin: 0 -1.2rem; padding: 2.5rem 1.2rem 0; }
     .info-banner { padding: 1rem 1.2rem; font-size: 0.82rem; }
     .info-banner .word-count { font-size: 0.78rem; }
-    .date-heading { font-size: 0.8rem; }
-    .entry-word { font-size: clamp(2rem, 8vw, 2.8rem); }
-    .entry-pos { font-size: 1.1rem; }
-    .entry-def { font-size: 1.05rem; }
+    .review-banner { padding: 0.9rem 1.2rem; }
+    .entries { padding: 0 1.2rem 4rem; }
+    .date-group { padding: 3rem 0 0; }
+    .date-group + .date-group { margin-top: 0.5rem; }
+    .date-group.today { margin: 0 -1.2rem; padding: 3rem 1.2rem 0.5rem; }
+    .date-heading { font-size: 0.8rem; margin-bottom: 1.8rem; }
+    .entry { padding-bottom: 3rem; }
+    .entry + .entry { padding-top: 2.5rem; }
+    .entry-word { font-size: clamp(2rem, 8vw, 2.8rem); margin-bottom: 0.25rem; }
+    .entry-pos { font-size: 1.1rem; margin-bottom: 1.4rem; }
+    .entry-definitions { margin-bottom: 1.6rem; }
+    .entry-def { font-size: 1.05rem; margin-bottom: 0.6rem; }
     .entry-def-num { font-size: 0.85rem; }
-    .entry-etymology { font-size: 0.95rem; }
+    .entry-etymology { font-size: 0.95rem; margin-bottom: 1.8rem; }
     .entry-etymology .etym-label { font-size: 0.72rem; }
     .entry-sentence { font-size: 1.18rem; }
+    .quiz-section { margin-top: 1.8rem; }
     .quiz-toggle { font-size: 0.9rem; padding: 0.55rem 1.1rem; }
     .quiz-prompt-text { font-size: 0.95rem; }
     .quiz-option { font-size: 0.98rem; padding: 0.75rem 0.9rem; }
@@ -484,8 +500,11 @@
 
 <div class="info-banner">
   <span id="todayDate"></span>
-  <a href="review.html" class="review-link">Review &rarr;</a>
   <span class="word-count" id="wordCount"></span>
+</div>
+
+<div class="review-banner">
+  <a href="review.html" class="review-link">Review &rarr;</a>
 </div>
 
 <main class="entries" id="entries">
