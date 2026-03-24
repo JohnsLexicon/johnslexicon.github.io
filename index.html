@@ -193,9 +193,10 @@
     display: flex;
     gap: 0.6rem;
     margin-bottom: 0.5rem;
-    font-size: 0.95rem;
+    font-size: 1.05rem;
+    font-style: normal;
     line-height: 1.6;
-    color: var(--ink-soft);
+    color: var(--ink);
   }
 
   .entry-def-num {
@@ -208,7 +209,7 @@
 
   /* --- ETYMOLOGY --- */
   .entry-etymology {
-    font-size: 0.85rem;
+    font-size: 0.93rem;
     font-weight: 400;
     color: var(--ink-muted);
     line-height: 1.7;
@@ -221,7 +222,7 @@
     font-weight: 600;
     color: var(--ink-soft);
     text-transform: uppercase;
-    font-size: 0.66rem;
+    font-size: 0.7rem;
     letter-spacing: 0.12em;
   }
 
@@ -412,8 +413,10 @@
     .date-group.today { margin: 0 -1.2rem; padding: 2.5rem 1.2rem 0; }
     .info-banner { padding: 1rem 1.2rem; }
     .entry-word { font-size: clamp(1.9rem, 7vw, 2.6rem); }
-    .entry-sentence { font-size: 1.08rem; }
-    .quiz-option { font-size: 0.84rem; padding: 0.65rem 0.85rem; }
+    .entry-def { font-size: 1rem; }
+    .entry-etymology { font-size: 0.9rem; }
+    .entry-sentence { font-size: 1.12rem; }
+    .quiz-option { font-size: 0.88rem; padding: 0.65rem 0.85rem; }
   }
 
   @media (min-width: 1024px) {
@@ -422,6 +425,8 @@
     .date-group { padding: 3.5rem 0 0; }
     .entry { padding-bottom: 3.5rem; }
     .entry + .entry { padding-top: 3rem; }
+    .entry-def { font-size: 1.1rem; }
+    .entry-etymology { font-size: 0.96rem; }
   }
 
   /* --- PRINT --- */
