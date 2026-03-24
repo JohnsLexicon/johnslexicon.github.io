@@ -183,6 +183,27 @@ body {
   margin-bottom: 0.25rem;
 }
 
+.entry-pronunciation {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  margin-bottom: 0.3rem;
+  display: flex;
+  align-items: baseline;
+  gap: 0.8rem;
+  flex-wrap: wrap;
+}
+
+.pron-simple {
+  color: var(--ink-soft);
+  font-weight: 500;
+}
+
+.pron-ipa {
+  font-size: 0.92rem;
+  color: var(--ink-muted);
+}
+
 .entry-pos {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
@@ -340,6 +361,85 @@ body {
 .quiz-contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .quiz-contact a:hover { text-decoration: underline; }
 
+/* --- PRONUNCIATION GUIDE --- */
+.pron-guide-wrapper {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+  text-align: center;
+}
+
+.pron-guide-toggle {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--ink-muted);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0.8rem 0;
+  transition: color 0.2s;
+}
+
+.pron-guide-toggle:hover { color: var(--accent); }
+
+.pron-guide {
+  display: none;
+  text-align: left;
+}
+
+.pron-guide.open { display: block; }
+
+.pron-guide-inner {
+  background: var(--bg-raised);
+  border: 1px solid var(--rule-light);
+  padding: 1.8rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.pron-guide-intro {
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.pron-symbols {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+.pron-sym {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+  padding: 0.4rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+.pron-sym:last-child { border-bottom: none; }
+
+.pron-sym .sym {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--accent);
+  min-width: 2.5rem;
+  font-family: 'Lora', Georgia, serif;
+}
+
+.pron-sym .sym-desc {
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  line-height: 1.5;
+}
+
+.pron-sym .sym-desc em {
+  color: var(--ink);
+  font-style: italic;
+}
+
 /* --- FOOTER --- */
 .archive-footer {
   max-width: 740px;
@@ -391,6 +491,8 @@ body {
   .quiz-result { font-size: 1.05rem; }
   .quiz-contact { font-size: 1rem; }
   .quiz-section { margin-top: 1.8rem; }
+  .entry-pronunciation { font-size: 1rem; }
+  .pron-guide-wrapper { padding: 0 1.2rem; }
 }
 
 /* --- DESKTOP --- */
@@ -431,6 +533,36 @@ body {
 
 <div class="review-banner">
   <a href="review.html">Review for Quiz &rarr;</a>
+</div>
+
+<div class="pron-guide-wrapper">
+  <button class="pron-guide-toggle" onclick="document.getElementById('pronGuide').classList.toggle('open')">What do the pronunciation symbols mean?</button>
+  <div class="pron-guide" id="pronGuide">
+    <div class="pron-guide-inner">
+      <p class="pron-guide-intro">The <strong>simple pronunciation</strong> uses capitalized syllables for stress: <strong>TUR</strong>-jid means emphasize the first syllable. The <strong>IPA symbols</strong> (in slashes) are the International Phonetic Alphabet — here's a quick guide to the less obvious ones:</p>
+      <div class="pron-symbols">
+        <div class="pron-sym"><span class="sym">ˈ</span><span class="sym-desc">Stress mark — the following syllable is emphasized</span></div>
+        <div class="pron-sym"><span class="sym">ˌ</span><span class="sym-desc">Secondary stress — lighter emphasis</span></div>
+        <div class="pron-sym"><span class="sym">ə</span><span class="sym-desc">Schwa — the "uh" sound in <em>about</em>, <em>taken</em></span></div>
+        <div class="pron-sym"><span class="sym">æ</span><span class="sym-desc">The "a" in <em>cat</em>, <em>trap</em></span></div>
+        <div class="pron-sym"><span class="sym">ɪ</span><span class="sym-desc">Short "i" as in <em>kit</em>, <em>bit</em></span></div>
+        <div class="pron-sym"><span class="sym">iː</span><span class="sym-desc">Long "ee" as in <em>fleece</em>, <em>see</em></span></div>
+        <div class="pron-sym"><span class="sym">ɛ</span><span class="sym-desc">The "e" in <em>dress</em>, <em>bed</em></span></div>
+        <div class="pron-sym"><span class="sym">ɔː</span><span class="sym-desc">The "aw" in <em>thought</em>, <em>law</em></span></div>
+        <div class="pron-sym"><span class="sym">ɜːr</span><span class="sym-desc">The "ur" in <em>nurse</em>, <em>bird</em></span></div>
+        <div class="pron-sym"><span class="sym">ʊ</span><span class="sym-desc">Short "oo" as in <em>foot</em>, <em>put</em></span></div>
+        <div class="pron-sym"><span class="sym">uː</span><span class="sym-desc">Long "oo" as in <em>goose</em>, <em>food</em></span></div>
+        <div class="pron-sym"><span class="sym">aɪ</span><span class="sym-desc">The "eye" sound in <em>price</em>, <em>fly</em></span></div>
+        <div class="pron-sym"><span class="sym">eɪ</span><span class="sym-desc">The "ay" sound in <em>face</em>, <em>day</em></span></div>
+        <div class="pron-sym"><span class="sym">ɔɪ</span><span class="sym-desc">The "oy" sound in <em>choice</em>, <em>boy</em></span></div>
+        <div class="pron-sym"><span class="sym">oʊ</span><span class="sym-desc">The "oh" sound in <em>goat</em>, <em>show</em></span></div>
+        <div class="pron-sym"><span class="sym">dʒ</span><span class="sym-desc">The "j" sound in <em>judge</em>, <em>edge</em></span></div>
+        <div class="pron-sym"><span class="sym">ʃ</span><span class="sym-desc">The "sh" sound in <em>ship</em>, <em>nation</em></span></div>
+        <div class="pron-sym"><span class="sym">θ</span><span class="sym-desc">The "th" in <em>think</em>, <em>bath</em> (voiceless)</span></div>
+        <div class="pron-sym"><span class="sym">ŋ</span><span class="sym-desc">The "ng" sound in <em>sing</em>, <em>think</em></span></div>
+      </div>
+    </div>
+  </div>
 </div>
 
 <main class="entries" id="entries"></main>
@@ -498,6 +630,7 @@ function renderEntries(words) {
 
       return `<article class="entry" id="word-${w.word}">
         <h2 class="entry-word">${w.word}</h2>
+        ${w.pronunciation ? `<div class="entry-pronunciation"><span class="pron-simple">${w.pronunciation}</span>${w.ipa ? `<span class="pron-ipa">${w.ipa}</span>` : ''}</div>` : ''}
         <div class="entry-pos">${w.partOfSpeech}</div>
         <div class="entry-definitions">${defs}</div>
         <div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;${renderEtymology(w.etymology)}</div>
