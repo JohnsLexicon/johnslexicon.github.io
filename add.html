@@ -9,13 +9,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
 <style>
   :root {
-    --ink: #1a1714;
-    --paper: #f5f0e8;
-    --accent: #8b2500;
-    --muted: #7a7265;
-    --rule: #c8bfb0;
-    --highlight: #fdf6e3;
-    --field-bg: #faf7f2;
+    --ink: #e4e8ec;
+    --paper: #141a1e;
+    --accent: #3dd8c5;
+    --muted: #6e7a86;
+    --rule: #2a343c;
+    --highlight: #182226;
+    --field-bg: #1b2228;
   }
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -80,7 +80,7 @@
   select {
     -webkit-appearance: none;
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%237a7265' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%236e7a86' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 0.7rem center;
     padding-right: 2rem;
@@ -146,7 +146,7 @@
   .quiz-info code {
     font-family: 'Lora', Georgia, serif;
     font-size: 0.82rem;
-    background: var(--paper-dark, #ebe4d8);
+    background: var(--field-bg);
     padding: 0.1rem 0.3rem;
     border: 1px solid var(--rule);
   }
@@ -162,6 +162,7 @@
     line-height: 1.5;
     white-space: pre-wrap;
     word-break: break-word;
+    color: var(--muted);
   }
 
   .quiz-prompt-box::after {
@@ -178,7 +179,7 @@
 
   .quiz-prompt-box.copied::after {
     content: 'Copied';
-    color: #2d6a35;
+    color: #5cd67a;
   }
 
   .quiz-area { margin-top: 1rem; }
@@ -220,7 +221,7 @@
     transition: background 0.2s;
   }
 
-  .generate-btn:hover { background: var(--accent-light, #b8451a); }
+  .generate-btn:hover { background: #5eeadb; }
 
   /* --- OUTPUT --- */
   .output-section {
@@ -240,8 +241,8 @@
   }
 
   .output-box {
-    background: var(--ink);
-    color: #e8e0d4;
+    background: #0d1114;
+    color: #b0b8c2;
     padding: 1rem;
     font-family: 'Lora', Georgia, serif;
     font-size: 0.8rem;
@@ -269,7 +270,7 @@
 
   .copy-btn:hover { background: var(--accent); color: var(--paper); }
 
-  .copy-btn.copied { background: #2d6a35; color: var(--paper); border-color: #2d6a35; }
+  .copy-btn.copied { background: #5cd67a; color: var(--paper); border-color: #5cd67a; }
 
   .instructions {
     margin-top: 1.5rem;
@@ -311,6 +312,14 @@
 <label for="wordEtym">Etymology</label>
 <textarea id="wordEtym" rows="3" placeholder="Use *asterisks* around Latin/Greek terms to italicize them on the site. No trailing period."></textarea>
 <p class="hint">Example: From Latin *evisceratus*, from *e-* 'out' + *viscera* 'internal organs'</p>
+
+<label for="wordPron">Pronunciation (simple)</label>
+<input type="text" id="wordPron" placeholder="e.g., ih-VIS-uh-rayt (capitalize stressed syllable)">
+<p class="hint">Use ALL CAPS for the stressed syllable, hyphens between syllables</p>
+
+<label for="wordIpa">IPA Pronunciation</label>
+<input type="text" id="wordIpa" placeholder="e.g., /ɪˈvɪs.ə.reɪt/">
+<p class="hint">Copy from Merriam-Webster or Wiktionary. Include the slashes.</p>
 
 <label for="wordSentence">Sentence</label>
 <textarea id="wordSentence" rows="3" placeholder="Your example sentence. The vocabulary word will be auto-bolded on the site."></textarea>
@@ -409,6 +418,8 @@ function generateJSON() {
     .map(i => i.value.trim())
     .filter(Boolean);
   const etym = document.getElementById('wordEtym').value.trim();
+  const pron = document.getElementById('wordPron').value.trim();
+  const ipa = document.getElementById('wordIpa').value.trim();
   const sentence = document.getElementById('wordSentence').value.trim();
 
   if (!word || defs.length === 0 || !sentence) {
@@ -422,6 +433,8 @@ function generateJSON() {
     partOfSpeech: pos,
     definitions: defs,
     etymology: etym,
+    pronunciation: pron,
+    ipa: ipa,
     sentence: sentence
   };
 
