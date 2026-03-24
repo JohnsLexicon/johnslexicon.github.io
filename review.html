@@ -13,7 +13,6 @@
   --bg: #1a1612;
   --bg-raised: #231e19;
   --bg-surface: #2c251f;
-  --bg-card: #292220;
   --ink: #e8ddd0;
   --ink-soft: #bfb3a3;
   --ink-muted: #8a7e71;
@@ -33,14 +32,13 @@
 }
 
 * { margin: 0; padding: 0; box-sizing: border-box; }
-
 html { background: var(--bg); }
 
 body {
   font-family: 'Lora', Georgia, serif;
   color: var(--ink);
   background: var(--bg);
-  line-height: 1.6;
+  line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   min-height: 100vh;
 }
@@ -48,7 +46,7 @@ body {
 /* --- HEADER --- */
 .header {
   text-align: center;
-  padding: 2.5rem 1.5rem 1.5rem;
+  padding: 2.5rem 1.5rem 2rem;
   border-bottom: 1px solid var(--rule);
   max-width: 740px;
   margin: 0 auto;
@@ -57,52 +55,107 @@ body {
 .header h1 {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-weight: 700;
-  font-size: 1.8rem;
+  font-size: 2rem;
   letter-spacing: 0.05em;
   text-transform: uppercase;
 }
 
 .header .sub {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--ink-muted);
   font-style: italic;
-  margin-top: 0.3rem;
+  margin-top: 0.4rem;
 }
 
 .back-link {
   display: inline-block;
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: var(--accent);
   text-decoration: none;
-  margin-top: 0.8rem;
+  margin-top: 1rem;
   font-weight: 600;
 }
 
 .back-link:hover { text-decoration: underline; }
 
-/* --- MAIN CONTAINER --- */
+/* --- CONTAINER --- */
 .container {
   max-width: 740px;
   margin: 0 auto;
   padding: 2rem 1.5rem 4rem;
 }
 
+/* --- LEITNER PROGRESS --- */
+.progress-section {
+  margin-bottom: 2.5rem;
+}
+
+.progress-title {
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--ink-muted);
+  margin-bottom: 1rem;
+}
+
+.leitner-boxes {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.leitner-box {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1.2rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg-raised);
+}
+
+.leitner-box .box-count {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  min-width: 2.5rem;
+  text-align: center;
+}
+
+.leitner-box:nth-child(1) .box-count { color: var(--box1); }
+.leitner-box:nth-child(2) .box-count { color: var(--box2); }
+.leitner-box:nth-child(3) .box-count { color: var(--box3); }
+.leitner-box:nth-child(4) .box-count { color: var(--box4); }
+
+.leitner-box .box-label {
+  font-size: 1.05rem;
+  color: var(--ink-soft);
+}
+
+.streak-line {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  text-align: center;
+  padding-top: 0.5rem;
+}
+
+.streak-line strong { color: var(--accent); }
+
 /* --- MODE SELECTOR --- */
 .mode-selector {
   display: flex;
   flex-direction: column;
-  gap: 0.7rem;
+  gap: 0.6rem;
   margin-bottom: 2.5rem;
 }
 
 .mode-btn {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1rem;
-  font-weight: 600;
   color: var(--ink-soft);
   background: var(--bg-raised);
   border: 1px solid var(--rule-light);
-  padding: 1rem 1.2rem;
+  padding: 1.1rem 1.3rem;
   cursor: pointer;
   transition: all 0.2s;
   text-align: left;
@@ -114,78 +167,29 @@ body {
 .mode-btn:hover { border-color: var(--accent-dim); color: var(--ink); }
 .mode-btn.active { border-color: var(--accent); color: var(--accent); background: var(--bg-surface); }
 
-.mode-btn .mode-icon {
-  font-size: 1.6rem;
-  flex-shrink: 0;
-}
+.mode-btn .mode-icon { font-size: 1.8rem; flex-shrink: 0; }
 
 .mode-btn .mode-text { display: flex; flex-direction: column; }
-.mode-btn .mode-label { font-size: 1.05rem; }
-.mode-btn .mode-desc { font-size: 0.88rem; color: var(--ink-muted); margin-top: 0.1rem; font-weight: 400; }
 
-/* --- PROGRESS BAR --- */
-.progress-section {
-  margin-bottom: 2rem;
-  padding: 1.2rem;
-  background: var(--bg-raised);
-  border: 1px solid var(--rule);
-}
-
-.progress-title {
-  font-size: 0.8rem;
+.mode-btn .mode-label {
+  font-size: 1.15rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
+}
+
+.mode-btn .mode-desc {
+  font-size: 0.95rem;
   color: var(--ink-muted);
-  margin-bottom: 0.8rem;
+  margin-top: 0.1rem;
+  font-weight: 400;
 }
-
-.leitner-boxes {
-  display: flex;
-  gap: 0.5rem;
-  margin-bottom: 0.6rem;
-}
-
-.leitner-box {
-  flex: 1;
-  text-align: center;
-  padding: 0.5rem 0.3rem;
-  border: 1px solid var(--rule-light);
-  background: var(--bg);
-  font-size: 0.82rem;
-  color: var(--ink-muted);
-}
-
-.leitner-box .box-count {
-  font-size: 1.5rem;
-  font-weight: 700;
-  font-family: 'Cormorant Garamond', Georgia, serif;
-  display: block;
-  margin-bottom: 0.1rem;
-}
-
-.leitner-box:nth-child(1) .box-count { color: var(--box1); }
-.leitner-box:nth-child(2) .box-count { color: var(--box2); }
-.leitner-box:nth-child(3) .box-count { color: var(--box3); }
-.leitner-box:nth-child(4) .box-count { color: var(--box4); }
-
-.streak-line {
-  font-size: 0.92rem;
-  color: var(--ink-muted);
-  text-align: center;
-}
-
-.streak-line strong { color: var(--accent); }
 
 /* --- GAME AREA --- */
-.game-area {
-  min-height: 300px;
-}
+.game-area { min-height: 300px; }
 
 /* --- FLASHCARD --- */
 .flashcard-wrapper {
   margin: 0 auto 1.5rem;
-  max-width: 540px;
+  max-width: 560px;
   cursor: pointer;
 }
 
@@ -199,19 +203,15 @@ body {
   border: 1px solid var(--rule-light);
   background: var(--bg-raised);
   min-height: 240px;
-  transition: opacity 0.3s;
 }
 
-.flashcard-back {
-  display: none;
-}
-
+.flashcard-back { display: none; }
 .flashcard-wrapper.revealed .flashcard-front { display: none; }
 .flashcard-wrapper.revealed .flashcard-back { display: flex; }
 
 .fc-word {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 2.4rem;
+  font-size: 2.8rem;
   font-weight: 700;
   margin-bottom: 0.3rem;
 }
@@ -220,45 +220,44 @@ body {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-style: italic;
   color: var(--ink-muted);
-  font-size: 1.1rem;
+  font-size: 1.2rem;
 }
 
 .fc-tap {
-  font-size: 0.9rem;
+  font-size: 1rem;
   color: var(--ink-muted);
-  margin-top: 1rem;
+  margin-top: 1.2rem;
   font-style: italic;
 }
 
 .fc-def {
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 1.12rem;
-  line-height: 1.65;
+  font-size: 1.15rem;
+  line-height: 1.7;
   text-align: center;
-  color: var(--ink);
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
 }
 
 .fc-etym {
-  font-size: 0.92rem;
+  font-size: 1rem;
   color: var(--ink-muted);
   text-align: center;
-  line-height: 1.55;
+  line-height: 1.6;
 }
 
 .fc-buttons {
   display: flex;
   gap: 0.6rem;
   justify-content: center;
-  max-width: 500px;
+  max-width: 560px;
   margin: 0 auto;
 }
 
 .fc-btn {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
-  padding: 0.75rem 1.5rem;
+  padding: 0.8rem 1.5rem;
   border: 1px solid;
   background: none;
   cursor: pointer;
@@ -275,15 +274,22 @@ body {
 .fc-btn.easy { color: var(--correct); border-color: var(--correct); }
 .fc-btn.easy:hover { background: var(--correct); color: var(--bg); }
 
-/* --- QUIZ (Match + Fill) --- */
+/* --- QUIZ --- */
+.quiz-counter {
+  text-align: center;
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-bottom: 1.2rem;
+}
+
 .quiz-question {
   font-family: 'Libre Baskerville', Georgia, serif;
-  font-size: 1.15rem;
-  line-height: 1.65;
+  font-size: 1.2rem;
+  line-height: 1.7;
   text-align: center;
   color: var(--ink);
   margin-bottom: 1.5rem;
-  padding: 1.5rem;
+  padding: 1.8rem;
   background: var(--bg-raised);
   border: 1px solid var(--rule-light);
 }
@@ -297,12 +303,12 @@ body {
 
 .quiz-question .q-label {
   display: block;
-  font-size: 0.8rem;
   font-family: 'Lora', Georgia, serif;
+  font-size: 0.9rem;
   text-transform: uppercase;
-  letter-spacing: 0.1em;
+  letter-spacing: 0.08em;
   color: var(--ink-muted);
-  margin-bottom: 0.8rem;
+  margin-bottom: 1rem;
   font-weight: 600;
 }
 
@@ -316,81 +322,69 @@ body {
 
 .quiz-choice {
   font-family: 'Lora', Georgia, serif;
-  font-size: 1.05rem;
+  font-size: 1.1rem;
   font-weight: 600;
   color: var(--ink-soft);
   background: var(--bg-raised);
   border: 1px solid var(--rule-light);
-  padding: 1rem;
+  padding: 1.1rem;
   cursor: pointer;
   text-align: center;
   transition: all 0.2s;
 }
 
 .quiz-choice:hover:not(.answered) { border-color: var(--accent-dim); color: var(--ink); }
-.quiz-choice.correct { border-color: var(--correct); background: var(--correct-bg); color: var(--ink); }
-.quiz-choice.wrong { border-color: var(--wrong); background: var(--wrong-bg); }
-.quiz-choice.dimmed { opacity: 0.35; }
-
-.quiz-counter {
-  text-align: center;
-  font-size: 0.92rem;
-  color: var(--ink-muted);
-  margin-bottom: 1rem;
-}
+.quiz-choice.correct { border-color: var(--correct); background: var(--correct-bg); color: var(--ink); cursor: default; }
+.quiz-choice.wrong { border-color: var(--wrong); background: var(--wrong-bg); cursor: default; }
+.quiz-choice.dimmed { opacity: 0.35; cursor: default; }
 
 .quiz-next {
   display: block;
-  margin: 1rem auto 0;
+  margin: 1.2rem auto 0;
   font-family: 'Lora', Georgia, serif;
-  font-size: 1rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--accent);
   background: none;
   border: 1px solid var(--accent-dim);
-  padding: 0.7rem 2.5rem;
+  padding: 0.75rem 2.5rem;
   cursor: pointer;
 }
 
 .quiz-next:hover { background: var(--accent); color: var(--bg); }
 
-/* --- SPEED ROUND --- */
+/* --- SPEED --- */
 .speed-hud {
   display: flex;
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
-  padding: 0.8rem 1rem;
+  padding: 1rem 1.2rem;
   background: var(--bg-raised);
   border: 1px solid var(--rule);
 }
 
 .speed-timer {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: var(--accent-glow);
 }
 
-.speed-score {
-  font-size: 1.05rem;
-  color: var(--ink-soft);
-}
-
+.speed-score { font-size: 1.1rem; color: var(--ink-soft); }
 .speed-score strong { color: var(--accent); }
 
 .speed-start {
   display: block;
   margin: 2rem auto;
   font-family: 'Lora', Georgia, serif;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--bg);
   background: var(--accent);
   border: none;
-  padding: 1rem 3rem;
+  padding: 1.1rem 3.5rem;
   cursor: pointer;
-  letter-spacing: 0.04em;
 }
 
 .speed-start:hover { background: var(--accent-glow); }
@@ -398,92 +392,62 @@ body {
 /* --- RESULTS --- */
 .results-box {
   text-align: center;
-  padding: 2.5rem 1.5rem;
+  padding: 3rem 1.5rem;
   background: var(--bg-raised);
   border: 1px solid var(--rule);
 }
 
 .results-box .big-number {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 4rem;
+  font-size: 4.5rem;
   font-weight: 700;
   color: var(--accent-glow);
 }
 
 .results-box .results-label {
-  font-size: 1rem;
+  font-size: 1.1rem;
   color: var(--ink-soft);
   margin-bottom: 1.5rem;
 }
 
 .results-box .play-again {
   font-family: 'Lora', Georgia, serif;
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   font-weight: 600;
   color: var(--accent);
   background: none;
   border: 1px solid var(--accent-dim);
-  padding: 0.6rem 2rem;
+  padding: 0.7rem 2rem;
   cursor: pointer;
 }
 
 .results-box .play-again:hover { background: var(--accent); color: var(--bg); }
 
-/* --- EMPTY STATE --- */
 .empty-state {
   text-align: center;
   padding: 3rem;
   color: var(--ink-muted);
   font-style: italic;
-  font-size: 1rem;
+  font-size: 1.1rem;
 }
 
-/* --- RESPONSIVE --- */
+/* --- MOBILE --- */
 @media (max-width: 600px) {
-  .header { padding: 2rem 1.2rem 1.2rem; }
-  .header h1 { font-size: 1.6rem; }
-  .header .sub { font-size: 0.92rem; }
-  .back-link { font-size: 0.9rem; }
+  .header { padding: 2rem 1.2rem 1.5rem; }
   .container { padding: 1.5rem 1.2rem 3rem; }
-  .progress-section { padding: 1rem; }
-  .progress-title { font-size: 0.78rem; }
-  .leitner-box { font-size: 0.8rem; padding: 0.6rem 0.3rem; }
-  .leitner-box .box-count { font-size: 1.4rem; }
-  .streak-line { font-size: 0.9rem; }
-  .mode-selector { gap: 0.6rem; }
-  .mode-btn { padding: 0.9rem 1rem; gap: 0.8rem; }
-  .mode-btn .mode-icon { font-size: 1.4rem; }
-  .mode-btn .mode-label { font-size: 1rem; }
-  .mode-btn .mode-desc { font-size: 0.85rem; }
-  .quiz-counter { font-size: 0.9rem; }
-  .quiz-question { font-size: 1.1rem; padding: 1.2rem; }
-  .quiz-question .q-label { font-size: 0.78rem; }
   .quiz-choices { grid-template-columns: 1fr; }
-  .quiz-choice { font-size: 1.02rem; padding: 0.9rem; }
-  .quiz-next { font-size: 0.95rem; }
-  .fc-word { font-size: 2rem; }
-  .fc-pos { font-size: 1rem; }
-  .fc-tap { font-size: 0.88rem; }
-  .fc-def { font-size: 1.05rem; }
-  .fc-etym { font-size: 0.88rem; }
-  .flashcard-face { min-height: 200px; padding: 1.5rem; }
+  .fc-word { font-size: 2.2rem; }
   .fc-buttons { flex-wrap: wrap; }
-  .fc-btn { padding: 0.7rem 1rem; font-size: 0.92rem; }
-  .speed-hud { padding: 0.8rem; }
-  .speed-score { font-size: 1rem; }
-  .results-box .big-number { font-size: 3.5rem; }
-  .results-box .results-label { font-size: 0.95rem; }
-  .results-box .play-again { font-size: 0.92rem; }
+  .fc-btn { flex: 1 1 45%; }
 }
 
+/* --- DESKTOP --- */
 @media (min-width: 1024px) {
   .container { padding: 2.5rem 2rem 5rem; }
-  .flashcard-face { min-height: 300px; padding: 2.5rem; }
+  .flashcard-face { min-height: 300px; padding: 3rem 2.5rem; }
+  .fc-def { font-size: 1.25rem; }
   .mode-selector { max-width: 560px; }
-  .fc-def { font-size: 1.2rem; }
-  .fc-etym { font-size: 0.95rem; }
-  .quiz-question { font-size: 1.2rem; }
-  .quiz-choice { font-size: 1.1rem; }
+  .leitner-boxes { max-width: 560px; }
 }
 </style>
 </head>
@@ -497,27 +461,25 @@ body {
 
 <div class="container">
 
-  <!-- Progress -->
-  <div class="progress-section" id="progressSection">
-    <div class="progress-title">Leitner Boxes</div>
+  <div class="progress-section">
+    <div class="progress-title">Your Progress</div>
     <div class="leitner-boxes">
-      <div class="leitner-box"><span class="box-count" id="box1Count">0</span>New</div>
-      <div class="leitner-box"><span class="box-count" id="box2Count">0</span>Learning</div>
-      <div class="leitner-box"><span class="box-count" id="box3Count">0</span>Review</div>
-      <div class="leitner-box"><span class="box-count" id="box4Count">0</span>Mastered</div>
+      <div class="leitner-box"><span class="box-count" id="box1Count">0</span><span class="box-label">New</span></div>
+      <div class="leitner-box"><span class="box-count" id="box2Count">0</span><span class="box-label">Learning</span></div>
+      <div class="leitner-box"><span class="box-count" id="box3Count">0</span><span class="box-label">Reviewing</span></div>
+      <div class="leitner-box"><span class="box-count" id="box4Count">0</span><span class="box-label">Mastered</span></div>
     </div>
     <div class="streak-line" id="streakLine"></div>
   </div>
 
-  <!-- Mode Selector -->
   <div class="mode-selector">
     <button class="mode-btn active" data-mode="flashcards" onclick="switchMode('flashcards')">
       <span class="mode-icon">&#x1F4DA;</span>
-      <span class="mode-text"><span class="mode-label">Flashcards</span><span class="mode-desc">Spaced repetition</span></span>
+      <span class="mode-text"><span class="mode-label">Flashcards</span><span class="mode-desc">Spaced repetition with self-rating</span></span>
     </button>
     <button class="mode-btn" data-mode="match" onclick="switchMode('match')">
       <span class="mode-icon">&#x1F3AF;</span>
-      <span class="mode-text"><span class="mode-label">Definition Match</span><span class="mode-desc">Definition → word</span></span>
+      <span class="mode-text"><span class="mode-label">Definition Match</span><span class="mode-desc">Match the definition to the word</span></span>
     </button>
     <button class="mode-btn" data-mode="fill" onclick="switchMode('fill')">
       <span class="mode-icon">&#x270D;&#xFE0F;</span>
@@ -529,461 +491,165 @@ body {
     </button>
   </div>
 
-  <!-- Game Area -->
   <div class="game-area" id="gameArea"></div>
-
 </div>
 
 <script>
-// ==================== DATA ====================
 let WORDS = [];
 let currentMode = 'flashcards';
 
-// ==================== LEITNER STATE ====================
-// Boxes: 1=New, 2=Learning, 3=Review, 4=Mastered
-function loadProgress() {
-  try {
-    return JSON.parse(localStorage.getItem('lexicon-progress') || '{}');
-  } catch { return {}; }
-}
+function loadProgress() { try { return JSON.parse(localStorage.getItem('lexicon-progress')||'{}'); } catch { return {}; } }
+function saveProgress(d) { localStorage.setItem('lexicon-progress', JSON.stringify(d)); }
+function getBox(w) { return loadProgress()[w]?.box || 1; }
+function setBox(w, b) { const p = loadProgress(); if (!p[w]) p[w] = {box:1,lastReview:null,reviews:0}; p[w].box = Math.min(4,Math.max(1,b)); p[w].lastReview = new Date().toISOString(); p[w].reviews = (p[w].reviews||0)+1; saveProgress(p); }
 
-function saveProgress(data) {
-  localStorage.setItem('lexicon-progress', JSON.stringify(data));
-}
-
-function getBox(word) {
-  const p = loadProgress();
-  return p[word]?.box || 1;
-}
-
-function setBox(word, box) {
-  const p = loadProgress();
-  if (!p[word]) p[word] = { box: 1, lastReview: null, reviews: 0 };
-  p[word].box = Math.min(4, Math.max(1, box));
-  p[word].lastReview = new Date().toISOString();
-  p[word].reviews = (p[word].reviews || 0) + 1;
-  saveProgress(p);
-}
+function getTodayStr() { const d = new Date(); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function getDateStr(o) { const d = new Date(); d.setDate(d.getDate()+o); return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 
 function getStreak() {
-  try {
-    const s = JSON.parse(localStorage.getItem('lexicon-streak') || '{}');
-    const today = getTodayStr();
-    if (s.lastDay === today) return s.count || 0;
-    const yesterday = getDateStr(-1);
-    if (s.lastDay === yesterday) return s.count || 0;
-    return 0;
-  } catch { return 0; }
+  try { const s = JSON.parse(localStorage.getItem('lexicon-streak')||'{}'); const t = getTodayStr(); if (s.lastDay===t) return s.count||0; if (s.lastDay===getDateStr(-1)) return s.count||0; return 0; } catch { return 0; }
 }
-
 function recordStreak() {
-  const today = getTodayStr();
-  const s = JSON.parse(localStorage.getItem('lexicon-streak') || '{}');
-  if (s.lastDay === today) return;
-  const yesterday = getDateStr(-1);
-  const count = (s.lastDay === yesterday) ? (s.count || 0) + 1 : 1;
-  localStorage.setItem('lexicon-streak', JSON.stringify({ lastDay: today, count }));
+  const t = getTodayStr(), s = JSON.parse(localStorage.getItem('lexicon-streak')||'{}');
+  if (s.lastDay===t) return;
+  const c = (s.lastDay===getDateStr(-1)) ? (s.count||0)+1 : 1;
+  localStorage.setItem('lexicon-streak', JSON.stringify({lastDay:t, count:c}));
 }
 
-function getTodayStr() {
-  const d = new Date();
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-}
-
-function getDateStr(offset) {
-  const d = new Date();
-  d.setDate(d.getDate() + offset);
-  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
-}
-
-// ==================== UI UPDATES ====================
 function updateProgress() {
-  const p = loadProgress();
-  let counts = [0,0,0,0];
-  WORDS.forEach(w => {
-    const box = p[w.word]?.box || 1;
-    counts[box - 1]++;
-  });
-  document.getElementById('box1Count').textContent = counts[0];
-  document.getElementById('box2Count').textContent = counts[1];
-  document.getElementById('box3Count').textContent = counts[2];
-  document.getElementById('box4Count').textContent = counts[3];
-
+  const p = loadProgress(); let c=[0,0,0,0];
+  WORDS.forEach(w => { c[(p[w.word]?.box||1)-1]++; });
+  document.getElementById('box1Count').textContent = c[0];
+  document.getElementById('box2Count').textContent = c[1];
+  document.getElementById('box3Count').textContent = c[2];
+  document.getElementById('box4Count').textContent = c[3];
   const streak = getStreak();
-  const el = document.getElementById('streakLine');
-  el.innerHTML = streak > 0
-    ? `<strong>${streak}</strong> day streak`
-    : 'Start your streak by reviewing today';
+  document.getElementById('streakLine').innerHTML = streak > 0 ? `<strong>${streak}</strong> day streak` : 'Start your streak by reviewing today';
 }
 
-function switchMode(mode) {
-  currentMode = mode;
-  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode === mode));
-  startMode(mode);
+function switchMode(m) {
+  currentMode = m;
+  document.querySelectorAll('.mode-btn').forEach(b => b.classList.toggle('active', b.dataset.mode===m));
+  startMode(m);
 }
 
-function startMode(mode) {
-  const area = document.getElementById('gameArea');
-  if (WORDS.length === 0) { area.innerHTML = '<div class="empty-state">Loading words...</div>'; return; }
-  if (mode === 'flashcards') startFlashcards();
-  else if (mode === 'match') startMatch();
-  else if (mode === 'fill') startFill();
-  else if (mode === 'speed') startSpeed();
+function startMode(m) {
+  if (!WORDS.length) { document.getElementById('gameArea').innerHTML='<div class="empty-state">Loading...</div>'; return; }
+  if (m==='flashcards') startFlashcards();
+  else if (m==='match') startMatch();
+  else if (m==='fill') startFill();
+  else if (m==='speed') startSpeed();
 }
 
-// ==================== HELPERS ====================
-function shuffle(arr) {
-  const a = [...arr];
-  for (let i = a.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [a[i], a[j]] = [a[j], a[i]];
-  }
-  return a;
-}
+function shuffle(a) { const r=[...a]; for(let i=r.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[r[i],r[j]]=[r[j],r[i]];} return r; }
+function pick(a,n,ex) { return shuffle(ex?a.filter(w=>w.word!==ex):a).slice(0,n); }
+function renderEtym(t) { return t.replace(/\*([^*]+)\*/g,'<em>$1</em>'); }
+function esc(s) { return s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'); }
 
-function pick(arr, n, exclude) {
-  const filtered = exclude ? arr.filter(w => w.word !== exclude) : arr;
-  return shuffle(filtered).slice(0, n);
-}
-
-function renderEtym(text) {
-  return text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-}
-
-// Priority queue: Box 1 first, then 2, then 3, then 4
 function getPriorityQueue() {
-  const p = loadProgress();
-  const boxGroups = [[],[],[],[]];
-  WORDS.forEach(w => {
-    const box = p[w.word]?.box || 1;
-    boxGroups[box - 1].push(w);
-  });
-  return shuffle(boxGroups[0]).concat(shuffle(boxGroups[1]), shuffle(boxGroups[2]), shuffle(boxGroups[3]));
+  const p=loadProgress(), g=[[],[],[],[]];
+  WORDS.forEach(w=>{g[(p[w.word]?.box||1)-1].push(w);});
+  return shuffle(g[0]).concat(shuffle(g[1]),shuffle(g[2]),shuffle(g[3]));
 }
 
-// ==================== FLASHCARDS ====================
-let fcQueue = [];
-let fcIndex = 0;
-
-function startFlashcards() {
-  fcQueue = getPriorityQueue();
-  fcIndex = 0;
-  showFlashcard();
-}
-
-function showFlashcard() {
-  const area = document.getElementById('gameArea');
-  if (fcIndex >= fcQueue.length) {
-    area.innerHTML = `<div class="results-box">
-      <div class="big-number">${fcQueue.length}</div>
-      <div class="results-label">cards reviewed</div>
-      <button class="play-again" onclick="startFlashcards()">Review Again</button>
-    </div>`;
-    return;
-  }
-
-  const w = fcQueue[fcIndex];
-  const box = getBox(w.word);
-  const defsHtml = w.definitions.map(d => `<div>${d}</div>`).join('');
-
-  area.innerHTML = `
-    <div class="quiz-counter">Card ${fcIndex + 1} of ${fcQueue.length} &middot; Box ${box}</div>
-    <div class="flashcard-wrapper" id="fcWrapper" onclick="revealCard()">
-      <div class="flashcard-face flashcard-front">
-        <div class="fc-word">${w.word}</div>
-        <div class="fc-pos">${w.partOfSpeech}</div>
-        <div class="fc-tap">Tap to reveal</div>
-      </div>
-      <div class="flashcard-face flashcard-back">
-        <div class="fc-def">${defsHtml}</div>
-        <div class="fc-etym">${renderEtym(w.etymology)}</div>
-      </div>
+// === FLASHCARDS ===
+let fcQ=[], fcI=0;
+function startFlashcards() { fcQ=getPriorityQueue(); fcI=0; showFC(); }
+function showFC() {
+  const a=document.getElementById('gameArea');
+  if (fcI>=fcQ.length) { a.innerHTML=`<div class="results-box"><div class="big-number">${fcQ.length}</div><div class="results-label">cards reviewed</div><button class="play-again" onclick="startFlashcards()">Review Again</button></div>`; return; }
+  const w=fcQ[fcI], box=getBox(w.word), defs=w.definitions.map(d=>`<div>${d}</div>`).join('');
+  a.innerHTML=`
+    <div class="quiz-counter">Card ${fcI+1} of ${fcQ.length} &middot; Box ${box}</div>
+    <div class="flashcard-wrapper" id="fcW" onclick="revealCard()">
+      <div class="flashcard-face flashcard-front"><div class="fc-word">${w.word}</div><div class="fc-pos">${w.partOfSpeech}</div><div class="fc-tap">Tap to reveal</div></div>
+      <div class="flashcard-face flashcard-back"><div class="fc-def">${defs}</div><div class="fc-etym">${renderEtym(w.etymology)}</div></div>
     </div>
-    <div class="fc-buttons" id="fcButtons" style="display:none;">
+    <div class="fc-buttons" id="fcB" style="display:none">
       <button class="fc-btn again" onclick="rateCard('again')">Again</button>
       <button class="fc-btn hard" onclick="rateCard('hard')">Hard</button>
       <button class="fc-btn good" onclick="rateCard('good')">Good</button>
       <button class="fc-btn easy" onclick="rateCard('easy')">Easy</button>
-    </div>
-  `;
-}
-
-function revealCard() {
-  const wrapper = document.getElementById('fcWrapper');
-  if (wrapper.classList.contains('revealed')) return;
-  wrapper.classList.add('revealed');
-  document.getElementById('fcButtons').style.display = 'flex';
-}
-
-function rateCard(rating) {
-  const w = fcQueue[fcIndex];
-  const box = getBox(w.word);
-  let newBox;
-  if (rating === 'again') newBox = 1;
-  else if (rating === 'hard') newBox = Math.max(1, box);
-  else if (rating === 'good') newBox = Math.min(4, box + 1);
-  else if (rating === 'easy') newBox = Math.min(4, box + 2);
-  setBox(w.word, newBox);
-  recordStreak();
-  updateProgress();
-  fcIndex++;
-  showFlashcard();
-}
-
-// ==================== DEFINITION MATCH ====================
-let matchQueue = [];
-let matchIndex = 0;
-let matchCorrect = 0;
-
-function startMatch() {
-  matchQueue = shuffle([...WORDS]).slice(0, Math.min(10, WORDS.length));
-  matchIndex = 0;
-  matchCorrect = 0;
-  showMatchQuestion();
-}
-
-function showMatchQuestion() {
-  const area = document.getElementById('gameArea');
-  if (matchIndex >= matchQueue.length) {
-    area.innerHTML = `<div class="results-box">
-      <div class="big-number">${matchCorrect}/${matchQueue.length}</div>
-      <div class="results-label">correct</div>
-      <button class="play-again" onclick="startMatch()">Play Again</button>
     </div>`;
-    recordStreak();
-    updateProgress();
-    return;
-  }
-
-  const w = matchQueue[matchIndex];
-  const distractors = pick(WORDS, 3, w.word);
-  const options = shuffle([w, ...distractors]);
-
-  area.innerHTML = `
-    <div class="quiz-counter">Question ${matchIndex + 1} of ${matchQueue.length}</div>
-    <div class="quiz-question">
-      <span class="q-label">Which word matches this definition?</span>
-      ${w.definitions[0]}
-    </div>
-    <div class="quiz-choices">
-      ${options.map(o => `<button class="quiz-choice" data-word="${o.word}" onclick="answerMatch(this, '${w.word}')">${o.word}</button>`).join('')}
-    </div>
-  `;
+}
+function revealCard() { const w=document.getElementById('fcW'); if(w.classList.contains('revealed'))return; w.classList.add('revealed'); document.getElementById('fcB').style.display='flex'; }
+function rateCard(r) {
+  const w=fcQ[fcI], box=getBox(w.word);
+  let nb; if(r==='again')nb=1; else if(r==='hard')nb=Math.max(1,box); else if(r==='good')nb=Math.min(4,box+1); else nb=Math.min(4,box+2);
+  setBox(w.word,nb); recordStreak(); updateProgress(); fcI++; showFC();
 }
 
-function answerMatch(btn, correctWord) {
-  if (btn.classList.contains('answered')) return;
-  const all = document.querySelectorAll('.quiz-choice');
-  const isCorrect = btn.dataset.word === correctWord;
-
-  all.forEach(b => {
-    b.classList.add('answered');
-    if (b.dataset.word === correctWord) b.classList.add('correct');
-    else if (b === btn && !isCorrect) b.classList.add('wrong');
-    else b.classList.add('dimmed');
-  });
-
-  if (isCorrect) {
-    matchCorrect++;
-    const box = getBox(correctWord);
-    setBox(correctWord, Math.min(4, box + 1));
-  } else {
-    setBox(correctWord, 1);
-  }
+// === DEFINITION MATCH ===
+let mQ=[], mI=0, mC=0;
+function startMatch() { mQ=shuffle([...WORDS]).slice(0,Math.min(10,WORDS.length)); mI=0; mC=0; showMatch(); }
+function showMatch() {
+  const a=document.getElementById('gameArea');
+  if(mI>=mQ.length){a.innerHTML=`<div class="results-box"><div class="big-number">${mC}/${mQ.length}</div><div class="results-label">correct</div><button class="play-again" onclick="startMatch()">Play Again</button></div>`;recordStreak();updateProgress();return;}
+  const w=mQ[mI], opts=shuffle([w,...pick(WORDS,3,w.word)]);
+  a.innerHTML=`<div class="quiz-counter">Question ${mI+1} of ${mQ.length}</div>
+    <div class="quiz-question"><span class="q-label">Which word matches this definition?</span>${w.definitions[0]}</div>
+    <div class="quiz-choices">${opts.map(o=>`<button class="quiz-choice" data-word="${o.word}" onclick="ansMatch(this,'${w.word}')">${o.word}</button>`).join('')}</div>`;
+}
+function ansMatch(btn,cw) {
+  if(btn.classList.contains('answered'))return;
+  const ok=btn.dataset.word===cw;
+  document.querySelectorAll('.quiz-choice').forEach(b=>{b.classList.add('answered');if(b.dataset.word===cw)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong');else b.classList.add('dimmed');});
+  if(ok){mC++;setBox(cw,Math.min(4,getBox(cw)+1));}else setBox(cw,1);
   updateProgress();
-
-  const next = document.createElement('button');
-  next.className = 'quiz-next';
-  next.textContent = matchIndex < matchQueue.length - 1 ? 'Next' : 'See Results';
-  next.onclick = () => { matchIndex++; showMatchQuestion(); };
-  document.getElementById('gameArea').appendChild(next);
+  const n=document.createElement('button');n.className='quiz-next';n.textContent=mI<mQ.length-1?'Next':'See Results';n.onclick=()=>{mI++;showMatch();};document.getElementById('gameArea').appendChild(n);
 }
 
-// ==================== FILL THE BLANK ====================
-let fillQueue = [];
-let fillIndex = 0;
-let fillCorrect = 0;
-
-function startFill() {
-  const withSentences = WORDS.filter(w => w.sentence && w.sentence.length > 10);
-  fillQueue = shuffle(withSentences).slice(0, Math.min(10, withSentences.length));
-  fillIndex = 0;
-  fillCorrect = 0;
-  showFillQuestion();
+// === FILL THE BLANK ===
+let fQ=[], fI=0, fC=0;
+function startFill() { fQ=shuffle(WORDS.filter(w=>w.sentence?.length>10)).slice(0,Math.min(10,WORDS.length)); fI=0; fC=0; showFill(); }
+function showFill() {
+  const a=document.getElementById('gameArea');
+  if(fI>=fQ.length){a.innerHTML=`<div class="results-box"><div class="big-number">${fC}/${fQ.length}</div><div class="results-label">correct</div><button class="play-again" onclick="startFill()">Play Again</button></div>`;recordStreak();updateProgress();return;}
+  const w=fQ[fI], stem=w.word.length>4?w.word.slice(0,-1):w.word, re=new RegExp('\\b('+esc(stem)+'[a-z]*)\\b','gi');
+  let inflected=w.word; const m=re.exec(w.sentence); if(m)inflected=m[1];
+  const blanked=w.sentence.replace(new RegExp('\\b('+esc(stem)+'[a-z]*)\\b','gi'),'<span class="blank">________</span>');
+  const dists=pick(WORDS,3,w.word);
+  const getInfl=(e)=>{const s=e.word.length>4?e.word.slice(0,-1):e.word;const r=new RegExp('\\b('+esc(s)+'[a-z]*)\\b','gi');const m=r.exec(e.sentence||'');return m?m[1]:e.word;};
+  const opts=shuffle([{word:w.word,display:inflected},...dists.map(d=>({word:d.word,display:getInfl(d)}))]);
+  a.innerHTML=`<div class="quiz-counter">Question ${fI+1} of ${fQ.length}</div>
+    <div class="quiz-question"><span class="q-label">Fill in the blank</span>${blanked}</div>
+    <div class="quiz-choices">${opts.map(o=>`<button class="quiz-choice" data-word="${o.word}" onclick="ansFill(this,'${w.word}')">${o.display}</button>`).join('')}</div>`;
 }
-
-function showFillQuestion() {
-  const area = document.getElementById('gameArea');
-  if (fillIndex >= fillQueue.length) {
-    area.innerHTML = `<div class="results-box">
-      <div class="big-number">${fillCorrect}/${fillQueue.length}</div>
-      <div class="results-label">correct</div>
-      <button class="play-again" onclick="startFill()">Play Again</button>
-    </div>`;
-    recordStreak();
-    updateProgress();
-    return;
-  }
-
-  const w = fillQueue[fillIndex];
-  // Find the actual inflected form used in the sentence
-  const stem = w.word.length > 4 ? w.word.slice(0, -1) : w.word;
-  const regex = new RegExp('\\b(' + stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[a-z]*)\\b', 'gi');
-  let inflectedForm = w.word;
-  const match = regex.exec(w.sentence);
-  if (match) inflectedForm = match[1];
-  const blanked = w.sentence.replace(new RegExp('\\b(' + stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[a-z]*)\\b', 'gi'), '<span class="blank">________</span>');
-
-  // For distractors, also find their inflected forms from their sentences
-  const distractors = pick(WORDS, 3, w.word);
-  const getInflected = (entry) => {
-    const s = entry.word.length > 4 ? entry.word.slice(0, -1) : entry.word;
-    const r = new RegExp('\\b(' + s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[a-z]*)\\b', 'gi');
-    const m = r.exec(entry.sentence || '');
-    return m ? m[1] : entry.word;
-  };
-
-  const options = shuffle([
-    { word: w.word, display: inflectedForm },
-    ...distractors.map(d => ({ word: d.word, display: getInflected(d) }))
-  ]);
-
-  area.innerHTML = `
-    <div class="quiz-counter">Question ${fillIndex + 1} of ${fillQueue.length}</div>
-    <div class="quiz-question">
-      <span class="q-label">Fill in the blank</span>
-      ${blanked}
-    </div>
-    <div class="quiz-choices">
-      ${options.map(o => `<button class="quiz-choice" data-word="${o.word}" onclick="answerFill(this, '${w.word}')">${o.display}</button>`).join('')}
-    </div>
-  `;
-}
-
-function answerFill(btn, correctWord) {
-  if (btn.classList.contains('answered')) return;
-  const all = document.querySelectorAll('.quiz-choice');
-  const isCorrect = btn.dataset.word === correctWord;
-
-  all.forEach(b => {
-    b.classList.add('answered');
-    if (b.dataset.word === correctWord) b.classList.add('correct');
-    else if (b === btn && !isCorrect) b.classList.add('wrong');
-    else b.classList.add('dimmed');
-  });
-
-  if (isCorrect) {
-    fillCorrect++;
-    const box = getBox(correctWord);
-    setBox(correctWord, Math.min(4, box + 1));
-  } else {
-    setBox(correctWord, 1);
-  }
+function ansFill(btn,cw) {
+  if(btn.classList.contains('answered'))return;
+  const ok=btn.dataset.word===cw;
+  document.querySelectorAll('.quiz-choice').forEach(b=>{b.classList.add('answered');if(b.dataset.word===cw)b.classList.add('correct');else if(b===btn&&!ok)b.classList.add('wrong');else b.classList.add('dimmed');});
+  if(ok){fC++;setBox(cw,Math.min(4,getBox(cw)+1));}else setBox(cw,1);
   updateProgress();
-
-  const next = document.createElement('button');
-  next.className = 'quiz-next';
-  next.textContent = fillIndex < fillQueue.length - 1 ? 'Next' : 'See Results';
-  next.onclick = () => { fillIndex++; showFillQuestion(); };
-  document.getElementById('gameArea').appendChild(next);
+  const n=document.createElement('button');n.className='quiz-next';n.textContent=fI<fQ.length-1?'Next':'See Results';n.onclick=()=>{fI++;showFill();};document.getElementById('gameArea').appendChild(n);
 }
 
-// ==================== SPEED ROUND ====================
-let speedTimer = null;
-let speedTime = 60;
-let speedScore = 0;
-let speedWord = null;
-
+// === SPEED ROUND ===
+let sTimer=null,sTime=60,sScore=0;
 function startSpeed() {
-  const area = document.getElementById('gameArea');
-  area.innerHTML = `
-    <div style="text-align:center;padding:2rem;">
-      <p style="font-size:1.1rem;color:var(--ink-soft);margin-bottom:0.5rem;">60 seconds. Definition appears. Pick the right word. Go fast.</p>
-      <button class="speed-start" onclick="beginSpeed()">Start</button>
-    </div>
-  `;
+  document.getElementById('gameArea').innerHTML=`<div style="text-align:center;padding:2.5rem"><p style="font-size:1.15rem;color:var(--ink-soft);margin-bottom:1rem">60 seconds. Definition appears. Pick the right word. Go fast.</p><button class="speed-start" onclick="beginSpeed()">Start</button></div>`;
 }
-
-function beginSpeed() {
-  speedTime = 60;
-  speedScore = 0;
-  recordStreak();
-  showSpeedQuestion();
-  speedTimer = setInterval(() => {
-    speedTime--;
-    const el = document.getElementById('speedTimerDisplay');
-    if (el) el.textContent = speedTime + 's';
-    if (speedTime <= 0) {
-      clearInterval(speedTimer);
-      endSpeed();
-    }
-  }, 1000);
+function beginSpeed() { sTime=60; sScore=0; recordStreak(); showSpeedQ(); sTimer=setInterval(()=>{sTime--;const e=document.getElementById('sT');if(e)e.textContent=sTime+'s';if(sTime<=0){clearInterval(sTimer);endSpeed();}},1000); }
+function showSpeedQ() {
+  const a=document.getElementById('gameArea'), w=WORDS[Math.floor(Math.random()*WORDS.length)], opts=shuffle([w,...pick(WORDS,3,w.word)]);
+  a.innerHTML=`<div class="speed-hud"><div class="speed-timer" id="sT">${sTime}s</div><div class="speed-score">Score: <strong id="sS">${sScore}</strong></div></div>
+    <div class="quiz-question"><span class="q-label">Which word?</span>${w.definitions[0]}</div>
+    <div class="quiz-choices">${opts.map(o=>`<button class="quiz-choice" data-word="${o.word}" onclick="ansSpeed(this,'${w.word}')">${o.word}</button>`).join('')}</div>`;
 }
-
-function showSpeedQuestion() {
-  const area = document.getElementById('gameArea');
-  const w = WORDS[Math.floor(Math.random() * WORDS.length)];
-  speedWord = w;
-  const distractors = pick(WORDS, 3, w.word);
-  const options = shuffle([w, ...distractors]);
-
-  area.innerHTML = `
-    <div class="speed-hud">
-      <div class="speed-timer" id="speedTimerDisplay">${speedTime}s</div>
-      <div class="speed-score">Score: <strong id="speedScoreDisplay">${speedScore}</strong></div>
-    </div>
-    <div class="quiz-question">
-      <span class="q-label">Which word?</span>
-      ${w.definitions[0]}
-    </div>
-    <div class="quiz-choices">
-      ${options.map(o => `<button class="quiz-choice" data-word="${o.word}" onclick="answerSpeed(this, '${w.word}')">${o.word}</button>`).join('')}
-    </div>
-  `;
+function ansSpeed(btn,cw) {
+  if(btn.classList.contains('answered'))return;
+  const ok=btn.dataset.word===cw;
+  if(ok){sScore++;setBox(cw,Math.min(4,getBox(cw)+1));}else setBox(cw,1);
+  updateProgress(); btn.classList.add(ok?'correct':'wrong','answered');
+  setTimeout(()=>{if(sTime>0)showSpeedQ();},300);
 }
+function endSpeed() { document.getElementById('gameArea').innerHTML=`<div class="results-box"><div class="big-number">${sScore}</div><div class="results-label">words in 60 seconds</div><button class="play-again" onclick="startSpeed()">Play Again</button></div>`; updateProgress(); }
 
-function answerSpeed(btn, correctWord) {
-  if (btn.classList.contains('answered')) return;
-  const isCorrect = btn.dataset.word === correctWord;
-  if (isCorrect) {
-    speedScore++;
-    const box = getBox(correctWord);
-    setBox(correctWord, Math.min(4, box + 1));
-  } else {
-    setBox(correctWord, 1);
-  }
-  updateProgress();
-  // Quick flash then next
-  btn.classList.add(isCorrect ? 'correct' : 'wrong');
-  btn.classList.add('answered');
-  setTimeout(() => {
-    if (speedTime > 0) showSpeedQuestion();
-  }, 300);
-}
-
-function endSpeed() {
-  const area = document.getElementById('gameArea');
-  area.innerHTML = `<div class="results-box">
-    <div class="big-number">${speedScore}</div>
-    <div class="results-label">words in 60 seconds</div>
-    <button class="play-again" onclick="startSpeed()">Play Again</button>
-  </div>`;
-  updateProgress();
-}
-
-// ==================== INIT ====================
-fetch('words.json')
-  .then(r => r.json())
-  .then(words => {
-    const today = getTodayStr();
-    WORDS = words.filter(w => w.date <= today);
-    updateProgress();
-    startMode(currentMode);
-  })
-  .catch(err => {
-    document.getElementById('gameArea').innerHTML =
-      '<div class="empty-state">Unable to load words.</div>';
-  });
+// === INIT ===
+fetch('words.json').then(r=>r.json()).then(words=>{
+  WORDS=words.filter(w=>w.date<=getTodayStr());
+  updateProgress(); startMode(currentMode);
+}).catch(()=>{document.getElementById('gameArea').innerHTML='<div class="empty-state">Unable to load words.</div>';});
 </script>
 </body>
 </html>

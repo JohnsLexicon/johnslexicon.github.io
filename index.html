@@ -10,484 +10,394 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --bg: #1a1612;
-    --bg-raised: #231e19;
-    --bg-surface: #2c251f;
-    --ink: #e8ddd0;
-    --ink-soft: #bfb3a3;
-    --ink-muted: #8a7e71;
-    --accent: #d4854a;
-    --accent-glow: #e89a5e;
-    --accent-dim: #a86838;
-    --rule: #3d3429;
-    --rule-light: #4a3f33;
-    --highlight-bg: #2a2118;
-    --correct: #6aad5e;
-    --correct-bg: #1e2b1a;
-    --wrong: #c7634a;
-    --wrong-bg: #2b1c18;
-  }
+:root {
+  --bg: #1a1612;
+  --bg-raised: #231e19;
+  --bg-surface: #2c251f;
+  --ink: #e8ddd0;
+  --ink-soft: #bfb3a3;
+  --ink-muted: #8a7e71;
+  --accent: #d4854a;
+  --accent-glow: #e89a5e;
+  --accent-dim: #a86838;
+  --rule: #3d3429;
+  --rule-light: #4a3f33;
+  --highlight-bg: #2a2118;
+  --correct: #6aad5e;
+  --correct-bg: #1e2b1a;
+  --wrong: #c7634a;
+  --wrong-bg: #2b1c18;
+}
 
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { background: var(--bg); }
 
-  html {
-    scroll-behavior: smooth;
-    background: var(--bg);
-  }
+body {
+  font-family: 'Lora', Georgia, serif;
+  color: var(--ink);
+  background: var(--bg);
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
 
-  body {
-    font-family: 'Lora', Georgia, serif;
-    color: var(--ink);
-    background: var(--bg);
-    line-height: 1.65;
-    font-weight: 400;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+/* --- HEADER --- */
+.masthead {
+  text-align: center;
+  padding: 3.5rem 1.5rem 2.5rem;
+  border-bottom: 1px solid var(--rule);
+  max-width: 740px;
+  margin: 0 auto;
+}
 
-  /* --- HEADER --- */
-  .masthead {
-    text-align: center;
-    padding: 3.5rem 1.5rem 2.5rem;
-    border-bottom: 1px solid var(--rule);
-    max-width: 740px;
-    margin: 0 auto;
-  }
+.masthead-ornament {
+  display: block;
+  width: 50px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 auto 1.2rem;
+}
 
-  .masthead-ornament {
-    display: block;
-    width: 50px;
-    height: 2px;
-    background: var(--accent);
-    margin: 0 auto 1.2rem;
-    border-radius: 1px;
-  }
+.masthead h1 {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-weight: 700;
+  font-size: clamp(2.2rem, 6vw, 3.4rem);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  line-height: 1.1;
+}
 
-  .masthead h1 {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-weight: 700;
-    font-size: clamp(2.2rem, 6vw, 3.4rem);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    line-height: 1.1;
-    color: var(--ink);
-  }
+.masthead .tagline {
+  font-style: italic;
+  font-size: 1.05rem;
+  color: var(--ink-muted);
+  margin-top: 0.6rem;
+}
 
-  .masthead .tagline {
-    font-family: 'Lora', Georgia, serif;
-    font-weight: 400;
-    font-style: italic;
-    font-size: 0.9rem;
-    color: var(--ink-muted);
-    margin-top: 0.6rem;
-    letter-spacing: 0.02em;
-  }
+/* --- INFO LINE --- */
+.info-line {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.85rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-muted);
+  font-weight: 500;
+}
 
-  /* --- INFO BANNER --- */
-  .info-banner {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 1.2rem 1.5rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    border-bottom: 1px solid var(--rule);
-    font-size: 0.76rem;
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    color: var(--ink-muted);
-    font-weight: 500;
-  }
+/* --- REVIEW BANNER --- */
+.review-banner {
+  max-width: 740px;
+  margin: 0 auto;
+  border-bottom: 1px solid var(--rule);
+}
 
-  .info-banner .word-count {
-    font-size: 0.72rem;
-    font-weight: 400;
-  }
+.review-banner a {
+  display: block;
+  text-align: center;
+  padding: 1.2rem 1.5rem;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  letter-spacing: 0.04em;
+  background: var(--bg-raised);
+  transition: background 0.2s, color 0.2s;
+}
 
-  .review-banner {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 1rem 1.5rem;
-    text-align: center;
-    border-bottom: 1px solid var(--rule);
-  }
+.review-banner a:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
 
-  .review-link {
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--accent);
-    text-decoration: none;
-    letter-spacing: 0.04em;
-    padding: 0.45rem 1.4rem;
-    border: 1px solid var(--accent-dim);
-    transition: background 0.2s, color 0.2s;
-  }
+/* --- ENTRIES --- */
+.entries {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 1.5rem 5rem;
+}
 
-  .review-link:hover {
-    background: var(--accent);
-    color: var(--bg);
-  }
+/* --- DATE GROUPS --- */
+.date-group {
+  padding: 3.5rem 0 0;
+}
 
-  /* --- ENTRIES CONTAINER --- */
-  .entries {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 0 1.5rem 5rem;
-  }
+.date-group + .date-group {
+  border-top: 1px solid var(--rule);
+  margin-top: 1rem;
+}
 
-  /* --- DATE GROUPS --- */
-  .date-group {
-    padding: 3.5rem 0 0;
-  }
+.date-heading {
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: var(--ink-muted);
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
 
-  .date-group + .date-group {
-    border-top: 1px solid var(--rule);
-    margin-top: 1rem;
-  }
+.date-group.today {
+  background: var(--highlight-bg);
+  margin: 0 -1.5rem;
+  padding: 3.5rem 1.5rem 0.5rem;
+  border-bottom: 2px solid var(--accent-dim);
+  position: relative;
+}
 
-  .date-heading {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 0.73rem;
-    font-weight: 500;
-    color: var(--ink-muted);
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    margin-bottom: 2rem;
-  }
+.date-group.today::before {
+  content: "TODAY";
+  position: absolute;
+  top: 1.2rem;
+  right: 1.5rem;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: var(--highlight-bg);
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--accent-dim);
+}
 
-  /* --- TODAY HIGHLIGHT --- */
-  .date-group.today {
-    background: var(--highlight-bg);
-    margin: 0 -1.5rem;
-    padding: 3.5rem 1.5rem 0.5rem;
-    border-bottom: 2px solid var(--accent-dim);
-    position: relative;
-  }
+/* --- ENTRIES --- */
+.entry {
+  padding-bottom: 3.5rem;
+  animation: fadeUp 0.4s ease both;
+}
 
-  .date-group.today::before {
-    content: "TODAY";
-    position: absolute;
-    top: 1.2rem;
-    right: 1.5rem;
-    font-family: 'Lora', Georgia, serif;
-    font-size: 0.62rem;
-    font-weight: 600;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--accent);
-    background: var(--highlight-bg);
-    padding: 0.2rem 0.65rem;
-    border: 1px solid var(--accent-dim);
-  }
+.entry + .entry {
+  padding-top: 3rem;
+  border-top: 1px dashed var(--rule);
+}
 
-  /* --- WORD ENTRIES --- */
-  .entry {
-    padding-bottom: 3.5rem;
-    animation: fadeUp 0.4s ease both;
-  }
+.entry-word {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.2rem, 5.5vw, 3rem);
+  font-weight: 700;
+  line-height: 1.12;
+  margin-bottom: 0.25rem;
+}
 
-  .entry + .entry {
-    padding-top: 3rem;
-    border-top: 1px dashed var(--rule);
-  }
+.entry-pos {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--ink-muted);
+  margin-bottom: 1.5rem;
+}
 
-  .entry-word {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: clamp(2.2rem, 5.5vw, 3rem);
-    font-weight: 700;
-    line-height: 1.12;
-    color: var(--ink);
-    margin-bottom: 0.15rem;
-  }
+.entry-definitions {
+  margin-bottom: 1.8rem;
+  font-style: normal;
+}
 
-  .entry-pos {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-style: italic;
-    font-size: 1.1rem;
-    color: var(--ink-muted);
-    margin-bottom: 1.4rem;
-  }
+.entry-def {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 0.6rem;
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1.1rem;
+  font-style: normal !important;
+  line-height: 1.7;
+  color: var(--ink);
+}
 
-  /* --- DEFINITIONS --- */
-  .entry-definitions {
-    margin-bottom: 1.6rem;
-    font-style: normal;
-  }
+.entry-def span {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-style: normal;
+}
 
-  .entry-def {
-    display: flex;
-    gap: 0.6rem;
-    margin-bottom: 0.5rem;
-    font-family: 'Libre Baskerville', Georgia, serif;
-    font-size: 1.05rem;
-    font-style: normal !important;
-    line-height: 1.7;
-    color: var(--ink);
-  }
+.entry-def-num {
+  font-size: 0.9rem;
+  color: var(--accent);
+  flex-shrink: 0;
+  padding-top: 0.2rem;
+  font-weight: 600;
+}
 
-  .entry-def span {
-    font-family: 'Libre Baskerville', Georgia, serif;
-    font-style: normal;
-  }
+.entry-etymology {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  padding-left: 1rem;
+  border-left: 2px solid var(--rule-light);
+}
 
-  .entry-def-num {
-    font-size: 0.78rem;
-    color: var(--accent);
-    flex-shrink: 0;
-    padding-top: 0.18rem;
-    font-weight: 600;
-  }
+.entry-etymology .etym-label {
+  font-weight: 600;
+  color: var(--ink-soft);
+  text-transform: uppercase;
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+}
 
-  /* --- ETYMOLOGY --- */
-  .entry-etymology {
-    font-size: 0.93rem;
-    font-weight: 400;
-    color: var(--ink-muted);
-    line-height: 1.7;
-    margin-bottom: 1.8rem;
-    padding-left: 1rem;
-    border-left: 2px solid var(--rule-light);
-  }
+.entry-etymology em {
+  color: var(--ink-soft);
+  font-style: italic;
+}
 
-  .entry-etymology .etym-label {
-    font-weight: 600;
-    color: var(--ink-soft);
-    text-transform: uppercase;
-    font-size: 0.7rem;
-    letter-spacing: 0.12em;
-  }
+.entry-sentence {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.25rem;
+  font-style: normal;
+  line-height: 1.7;
+  position: relative;
+  padding-left: 1.6rem;
+}
 
-  .entry-etymology em {
-    color: var(--ink-soft);
-    font-style: italic;
-  }
+.entry-sentence::before {
+  content: '\201C';
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 3.2rem;
+  color: var(--accent-dim);
+  position: absolute;
+  left: -0.2rem;
+  top: -0.55rem;
+  line-height: 1;
+}
 
-  /* --- SENTENCE --- */
-  .entry-sentence {
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 1.18rem;
-    font-style: normal;
-    line-height: 1.7;
-    color: var(--ink);
-    position: relative;
-    padding-left: 1.6rem;
-  }
+.entry-sentence .word-highlight {
+  font-weight: 700;
+  color: var(--accent-glow);
+}
 
-  .entry-sentence::before {
-    content: '\201C';
-    font-family: 'Cormorant Garamond', Georgia, serif;
-    font-size: 3.2rem;
-    color: var(--accent-dim);
-    position: absolute;
-    left: -0.2rem;
-    top: -0.55rem;
-    line-height: 1;
-  }
+/* --- QUIZ --- */
+.quiz-section { margin-top: 2rem; }
 
-  .entry-sentence .word-highlight {
-    font-weight: 700;
-    color: var(--accent-glow);
-  }
+.quiz-toggle {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--accent);
+  background: none;
+  border: 1px solid var(--accent-dim);
+  padding: 0.6rem 1.3rem;
+  cursor: pointer;
+  transition: background 0.2s, color 0.2s;
+}
 
-  /* --- QUIZ --- */
-  .quiz-section {
-    margin-top: 2rem;
-  }
+.quiz-toggle:hover { background: var(--accent); color: var(--bg); }
 
-  .quiz-toggle {
-    font-family: 'Lora', Georgia, serif;
-    font-size: 0.92rem;
-    font-weight: 600;
-    letter-spacing: 0.04em;
-    color: var(--accent);
-    background: none;
-    border: 1px solid var(--accent-dim);
-    padding: 0.55rem 1.2rem;
-    cursor: pointer;
-    transition: background 0.2s, color 0.2s;
-  }
+.quiz-options { display: none; margin-top: 1.2rem; }
+.quiz-options.open { display: block; }
 
-  .quiz-toggle:hover {
-    background: var(--accent);
-    color: var(--bg);
-  }
+.quiz-prompt-text {
+  font-size: 1rem;
+  color: var(--ink-muted);
+  margin-bottom: 0.8rem;
+  font-style: italic;
+}
 
-  .quiz-options {
-    display: none;
-    margin-top: 1.2rem;
-  }
+.quiz-prompt-text strong { color: var(--accent); font-weight: 600; }
 
-  .quiz-options.open {
-    display: block;
-  }
+.quiz-option {
+  display: block;
+  width: 100%;
+  text-align: left;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 1.05rem;
+  line-height: 1.6;
+  padding: 0.85rem 1rem;
+  margin-bottom: 0.5rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg-raised);
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: border-color 0.2s, background 0.2s;
+}
 
-  .quiz-prompt-text {
-    font-size: 0.95rem;
-    color: var(--ink-muted);
-    margin-bottom: 0.8rem;
-    font-style: italic;
-  }
+.quiz-option:hover:not(.answered) { border-color: var(--accent-dim); background: var(--bg-surface); }
+.quiz-option.correct { border-color: var(--correct); background: var(--correct-bg); color: var(--ink); cursor: default; }
+.quiz-option.wrong { border-color: var(--wrong); background: var(--wrong-bg); cursor: default; }
+.quiz-option.dimmed { opacity: 0.4; cursor: default; }
+.quiz-option .option-letter { font-weight: 600; color: var(--accent); margin-right: 0.4rem; }
 
-  .quiz-prompt-text strong {
-    color: var(--accent);
-    font-weight: 600;
-  }
+.quiz-result {
+  font-size: 1rem;
+  font-style: italic;
+  color: var(--ink-muted);
+  margin-top: 0.6rem;
+  display: none;
+}
 
-  .quiz-option {
-    display: block;
-    width: 100%;
-    text-align: left;
-    font-family: 'Lora', Georgia, serif;
-    font-size: 1rem;
-    line-height: 1.6;
-    padding: 0.8rem 1rem;
-    margin-bottom: 0.5rem;
-    border: 1px solid var(--rule-light);
-    background: var(--bg-raised);
-    color: var(--ink-soft);
-    cursor: pointer;
-    transition: border-color 0.2s, background 0.2s;
-  }
+.quiz-result.show { display: block; }
 
-  .quiz-option:hover:not(.answered) {
-    border-color: var(--accent-dim);
-    background: var(--bg-surface);
-  }
+.quiz-contact {
+  display: none;
+  margin-top: 0.4rem;
+  font-size: 0.95rem;
+  font-style: italic;
+  color: var(--ink-muted);
+}
 
-  .quiz-option.correct {
-    border-color: var(--correct);
-    background: var(--correct-bg);
-    color: var(--ink);
-    cursor: default;
-  }
+.quiz-contact.show { display: block; }
+.quiz-contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
+.quiz-contact a:hover { text-decoration: underline; }
 
-  .quiz-option.wrong {
-    border-color: var(--wrong);
-    background: var(--wrong-bg);
-    color: var(--ink-soft);
-    cursor: default;
-  }
+/* --- FOOTER --- */
+.archive-footer {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
 
-  .quiz-option.dimmed {
-    opacity: 0.4;
-    cursor: default;
-  }
+.archive-footer p {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
 
-  .quiz-option .option-letter {
-    font-weight: 600;
-    color: var(--accent);
-    margin-right: 0.4rem;
-  }
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
 
-  .quiz-result {
-    font-size: 0.95rem;
-    font-style: italic;
-    color: var(--ink-muted);
-    margin-top: 0.6rem;
-    display: none;
-  }
+/* --- MOBILE --- */
+@media (max-width: 600px) {
+  .masthead { padding: 2.5rem 1.2rem 2rem; }
+  .masthead .tagline { font-size: 1rem; }
+  .info-line { padding: 1rem 1.2rem; font-size: 0.85rem; }
+  .review-banner a { padding: 1.1rem 1.2rem; font-size: 1.05rem; }
+  .entries { padding: 0 1.2rem 4rem; }
+  .date-group { padding: 3rem 0 0; }
+  .date-group.today { margin: 0 -1.2rem; padding: 3rem 1.2rem 0.5rem; }
+  .date-heading { font-size: 0.85rem; margin-bottom: 1.8rem; }
+  .entry { padding-bottom: 3rem; }
+  .entry + .entry { padding-top: 2.5rem; }
+  .entry-pos { font-size: 1.15rem; }
+  .entry-def { font-size: 1.05rem; }
+  .entry-etymology { font-size: 0.95rem; }
+  .entry-sentence { font-size: 1.2rem; }
+  .quiz-section { margin-top: 1.8rem; }
+}
 
-  .quiz-result.show {
-    display: block;
-  }
+/* --- DESKTOP --- */
+@media (min-width: 1024px) {
+  .entries { padding: 0 2rem 6rem; }
+  .masthead { padding: 4rem 2rem 3rem; }
+  .date-group { padding: 3.5rem 0 0; }
+  .entry { padding-bottom: 3.5rem; }
+  .entry + .entry { padding-top: 3rem; }
+  .entry-def { font-size: 1.15rem; }
+  .entry-etymology { font-size: 1.05rem; }
+  .entry-sentence { font-size: 1.3rem; }
+  .quiz-option { font-size: 1.1rem; }
+}
 
-  .quiz-contact {
-    display: none;
-    margin-top: 0.4rem;
-    font-size: 0.92rem;
-    font-style: italic;
-    color: var(--ink-muted);
-  }
-
-  .quiz-contact.show {
-    display: block;
-  }
-
-  .quiz-contact a {
-    color: var(--accent);
-    text-decoration: none;
-    font-weight: 600;
-  }
-
-  .quiz-contact a:hover {
-    text-decoration: underline;
-  }
-
-  /* --- FOOTER --- */
-  .archive-footer {
-    max-width: 740px;
-    margin: 0 auto;
-    padding: 2rem 1.5rem;
-    border-top: 1px solid var(--rule);
-    text-align: center;
-  }
-
-  .archive-footer p {
-    font-size: 0.76rem;
-    color: var(--ink-muted);
-    letter-spacing: 0.06em;
-    text-transform: uppercase;
-    font-weight: 500;
-  }
-
-  /* --- ANIMATIONS --- */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(14px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  /* --- RESPONSIVE --- */
-  @media (max-width: 600px) {
-    .masthead { padding: 2.5rem 1.2rem 2rem; }
-    .masthead .tagline { font-size: 0.95rem; }
-    .info-banner { padding: 1rem 1.2rem; font-size: 0.82rem; }
-    .info-banner .word-count { font-size: 0.78rem; }
-    .review-banner { padding: 0.9rem 1.2rem; }
-    .entries { padding: 0 1.2rem 4rem; }
-    .date-group { padding: 3rem 0 0; }
-    .date-group + .date-group { margin-top: 0.5rem; }
-    .date-group.today { margin: 0 -1.2rem; padding: 3rem 1.2rem 0.5rem; }
-    .date-heading { font-size: 0.8rem; margin-bottom: 1.8rem; }
-    .entry { padding-bottom: 3rem; }
-    .entry + .entry { padding-top: 2.5rem; }
-    .entry-word { font-size: clamp(2rem, 8vw, 2.8rem); margin-bottom: 0.25rem; }
-    .entry-pos { font-size: 1.1rem; margin-bottom: 1.4rem; }
-    .entry-definitions { margin-bottom: 1.6rem; }
-    .entry-def { font-size: 1.05rem; margin-bottom: 0.6rem; }
-    .entry-def-num { font-size: 0.85rem; }
-    .entry-etymology { font-size: 0.95rem; margin-bottom: 1.8rem; }
-    .entry-etymology .etym-label { font-size: 0.72rem; }
-    .entry-sentence { font-size: 1.18rem; }
-    .quiz-section { margin-top: 1.8rem; }
-    .quiz-toggle { font-size: 0.9rem; padding: 0.55rem 1.1rem; }
-    .quiz-prompt-text { font-size: 0.95rem; }
-    .quiz-option { font-size: 0.98rem; padding: 0.75rem 0.9rem; }
-    .quiz-result { font-size: 0.92rem; }
-    .quiz-contact { font-size: 0.9rem; }
-  }
-
-  @media (min-width: 1024px) {
-    .entries { padding: 0 2rem 6rem; }
-    .masthead { padding: 4rem 2rem 3rem; }
-    .date-group { padding: 3.5rem 0 0; }
-    .entry { padding-bottom: 3.5rem; }
-    .entry + .entry { padding-top: 3rem; }
-    .entry-def { font-size: 1.12rem; }
-    .entry-etymology { font-size: 1rem; }
-    .entry-sentence { font-size: 1.25rem; }
-    .quiz-toggle { font-size: 0.95rem; }
-    .quiz-option { font-size: 1.05rem; }
-    .quiz-result { font-size: 1rem; }
-    .quiz-contact { font-size: 0.95rem; }
-  }
-
-  /* --- PRINT --- */
-  @media print {
-    body { background: #fff; color: #000; }
-    .entry { break-inside: avoid; }
-    .quiz-section { display: none; }
-  }
+@media print {
+  body { background: #fff; color: #000; }
+  .entry { break-inside: avoid; }
+  .quiz-section, .review-banner { display: none; }
+}
 </style>
 </head>
 <body>
@@ -498,185 +408,112 @@
   <p class="tagline">A word a day &mdash; with sentences that go too far</p>
 </header>
 
-<div class="info-banner">
+<div class="info-line">
   <span id="todayDate"></span>
-  <span class="word-count" id="wordCount"></span>
+  <span id="wordCount"></span>
 </div>
 
 <div class="review-banner">
-  <a href="review.html" class="review-link">Review &rarr;</a>
+  <a href="review.html">Review for Quiz &rarr;</a>
 </div>
 
-<main class="entries" id="entries">
-</main>
+<main class="entries" id="entries"></main>
 
 <footer class="archive-footer">
   <p>New word posted daily</p>
 </footer>
 
 <script>
-// --- Helpers ---
 function getTodayStr() {
-  const now = new Date();
-  return now.getFullYear() + '-' +
-    String(now.getMonth() + 1).padStart(2, '0') + '-' +
-    String(now.getDate()).padStart(2, '0');
+  const d = new Date();
+  return d.getFullYear() + '-' + String(d.getMonth()+1).padStart(2,'0') + '-' + String(d.getDate()).padStart(2,'0');
 }
 
-function formatDate(dateStr) {
-  const d = new Date(dateStr + 'T12:00:00');
-  return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+function formatDate(s) {
+  return new Date(s + 'T12:00:00').toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
 }
 
-function renderEtymology(text) {
-  return text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
-}
+function renderEtymology(t) { return t.replace(/\*([^*]+)\*/g, '<em>$1</em>'); }
 
-function renderSentence(sentence, word) {
-  const stem = word.length > 4 ? word.slice(0, -1) : word;
-  const regex = new RegExp('\\b(' + escapeRegex(stem) + '[a-z]*)\\b', 'gi');
-  return sentence.replace(regex, '<span class="word-highlight">$1</span>');
-}
-
-function escapeRegex(str) {
-  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+function renderSentence(s, w) {
+  const stem = w.length > 4 ? w.slice(0, -1) : w;
+  return s.replace(new RegExp('\\b(' + stem.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + '[a-z]*)\\b', 'gi'), '<span class="word-highlight">$1</span>');
 }
 
 function shuffleWithMapping(arr) {
-  const indices = arr.map((_, i) => i);
-  const shuffled = [...arr];
-  for (let i = shuffled.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    [indices[i], indices[j]] = [indices[j], indices[i]];
-  }
-  return { shuffled, indices };
+  const idx = arr.map((_, i) => i), sh = [...arr];
+  for (let i = sh.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [sh[i],sh[j]]=[sh[j],sh[i]]; [idx[i],idx[j]]=[idx[j],idx[i]]; }
+  return { shuffled: sh, indices: idx };
 }
 
-const LETTERS = ['A', 'B', 'C', 'D'];
+const L = ['A','B','C','D'];
 
-// --- Render ---
 function renderEntries(words) {
-  const container = document.getElementById('entries');
-  const todayStr = getTodayStr();
-
-  const published = words.filter(w => w.date <= todayStr);
-  const sorted = [...published].sort((a, b) => b.date.localeCompare(a.date));
-
-  // Group by date
-  const groups = [];
-  let currentDate = null;
-  for (const w of sorted) {
-    if (w.date !== currentDate) {
-      currentDate = w.date;
-      groups.push({ date: w.date, words: [w] });
-    } else {
-      groups[groups.length - 1].words.push(w);
-    }
-  }
+  const c = document.getElementById('entries'), today = getTodayStr();
+  const pub = words.filter(w => w.date <= today).sort((a,b) => b.date.localeCompare(a.date));
+  const groups = []; let cur = null;
+  pub.forEach(w => { if (w.date !== cur) { cur = w.date; groups.push({date:w.date,words:[w]}); } else groups[groups.length-1].words.push(w); });
 
   document.getElementById('todayDate').textContent = formatDate(groups[0]?.date || '');
-  document.getElementById('wordCount').textContent = published.length + ' words & counting';
+  document.getElementById('wordCount').textContent = pub.length + ' words & counting';
 
-  container.innerHTML = groups.map((group, gi) => {
-    const isToday = group.date === todayStr;
-    const entriesHtml = group.words.map((w, wi) => {
-      const defs = w.definitions.map((d, j) =>
-        `<div class="entry-def">
-          ${w.definitions.length > 1
-            ? `<span class="entry-def-num">${j + 1}.</span>`
-            : '<span class="entry-def-num">&bull;</span>'}
-          <span>${d}</span>
-        </div>`
+  c.innerHTML = groups.map((g, gi) => {
+    const isToday = g.date === today;
+    const entries = g.words.map(w => {
+      const defs = w.definitions.map((d,j) =>
+        `<div class="entry-def">${w.definitions.length > 1 ? `<span class="entry-def-num">${j+1}.</span>` : '<span class="entry-def-num">&bull;</span>'}<span>${d}</span></div>`
       ).join('');
 
-      let quizHtml = '';
-      if (w.quiz && w.quiz.options && w.quiz.options.length === 4) {
-        const qid = `quiz-${w.word}-${gi}`;
+      let quiz = '';
+      if (w.quiz?.options?.length === 4) {
+        const qid = `q-${w.word}-${gi}`;
         const { shuffled, indices } = shuffleWithMapping(w.quiz.options);
-        const correctShuffledIndex = indices.indexOf(w.quiz.correct);
-
-        const optionsHtml = shuffled.map((opt, oi) =>
-          `<button class="quiz-option" data-qid="${qid}" data-idx="${oi}" data-correct="${oi === correctShuffledIndex}" onclick="handleQuiz(this)">
-            <span class="option-letter">${LETTERS[oi]}.</span> ${opt}
-          </button>`
-        ).join('');
-
-        quizHtml = `
-          <div class="quiz-section">
-            <button class="quiz-toggle" onclick="toggleQuiz('${qid}')">Test Your Understanding</button>
-            <div class="quiz-options" id="${qid}">
-              <p class="quiz-prompt-text">Which sentence uses <strong>${w.word}</strong> correctly?</p>
-              ${optionsHtml}
-              <p class="quiz-result" id="${qid}-result"></p>
-              <p class="quiz-contact" id="${qid}-contact">Disagree? Contact <a href="sms:6317660898">John</a>.</p>
-            </div>
+        const ci = indices.indexOf(w.quiz.correct);
+        quiz = `<div class="quiz-section">
+          <button class="quiz-toggle" onclick="toggleQuiz('${qid}')">Test Your Understanding</button>
+          <div class="quiz-options" id="${qid}">
+            <p class="quiz-prompt-text">Which sentence uses <strong>${w.word}</strong> correctly?</p>
+            ${shuffled.map((o,i) => `<button class="quiz-option" data-qid="${qid}" data-correct="${i===ci}" onclick="handleQuiz(this)"><span class="option-letter">${L[i]}.</span> ${o}</button>`).join('')}
+            <p class="quiz-result" id="${qid}-r"></p>
+            <p class="quiz-contact" id="${qid}-c">Disagree? Contact <a href="sms:6317660898">John</a>.</p>
           </div>
-        `;
+        </div>`;
       }
 
-      return `
-        <article class="entry" id="word-${w.word}">
-          <h2 class="entry-word">${w.word}</h2>
-          <div class="entry-pos">${w.partOfSpeech}</div>
-          <div class="entry-definitions">${defs}</div>
-          <div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;${renderEtymology(w.etymology)}</div>
-          <div class="entry-sentence">${renderSentence(w.sentence, w.word)}</div>
-          ${quizHtml}
-        </article>
-      `;
+      return `<article class="entry" id="word-${w.word}">
+        <h2 class="entry-word">${w.word}</h2>
+        <div class="entry-pos">${w.partOfSpeech}</div>
+        <div class="entry-definitions">${defs}</div>
+        <div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;${renderEtymology(w.etymology)}</div>
+        <div class="entry-sentence">${renderSentence(w.sentence, w.word)}</div>
+        ${quiz}
+      </article>`;
     }).join('');
 
-    return `
-      <section class="date-group${isToday ? ' today' : ''}">
-        <div class="date-heading">${formatDate(group.date)}</div>
-        ${entriesHtml}
-      </section>
-    `;
+    return `<section class="date-group${isToday?' today':''}"><div class="date-heading">${formatDate(g.date)}</div>${entries}</section>`;
   }).join('');
 }
 
-// --- Quiz interactions ---
-function toggleQuiz(qid) {
-  document.getElementById(qid).classList.toggle('open');
-}
+function toggleQuiz(id) { document.getElementById(id).classList.toggle('open'); }
 
 function handleQuiz(btn) {
   if (btn.classList.contains('answered')) return;
-  const qid = btn.dataset.qid;
-  const isCorrect = btn.dataset.correct === 'true';
-  const allBtns = document.querySelectorAll(`[data-qid="${qid}"]`);
-  const resultEl = document.getElementById(`${qid}-result`);
-  const contactEl = document.getElementById(`${qid}-contact`);
-
-  allBtns.forEach(b => {
+  const qid = btn.dataset.qid, ok = btn.dataset.correct === 'true';
+  document.querySelectorAll(`[data-qid="${qid}"]`).forEach(b => {
     b.classList.add('answered');
-    if (b.dataset.correct === 'true') {
-      b.classList.add('correct');
-    } else if (b === btn && !isCorrect) {
-      b.classList.add('wrong');
-    } else {
-      b.classList.add('dimmed');
-    }
+    if (b.dataset.correct === 'true') b.classList.add('correct');
+    else if (b === btn && !ok) b.classList.add('wrong');
+    else b.classList.add('dimmed');
   });
-
-  resultEl.classList.add('show');
-  if (isCorrect) {
-    resultEl.textContent = 'Correct.';
-  } else {
-    resultEl.textContent = 'Not quite — the correct answer is highlighted above.';
-    contactEl.classList.add('show');
-  }
+  const r = document.getElementById(`${qid}-r`);
+  r.classList.add('show');
+  if (ok) { r.textContent = 'Correct.'; }
+  else { r.textContent = 'Not quite — the correct answer is highlighted above.'; document.getElementById(`${qid}-c`).classList.add('show'); }
 }
 
-// --- Load data ---
-fetch('words.json')
-  .then(r => r.json())
-  .then(words => renderEntries(words))
-  .catch(err => {
-    document.getElementById('entries').innerHTML =
-      '<p style="text-align:center;padding:3rem;color:var(--ink-muted);">Unable to load words.</p>';
-  });
+fetch('words.json').then(r=>r.json()).then(renderEntries).catch(()=>{
+  document.getElementById('entries').innerHTML='<p style="text-align:center;padding:3rem;color:var(--ink-muted)">Unable to load words.</p>';
+});
 </script>
 </body>
 </html>
