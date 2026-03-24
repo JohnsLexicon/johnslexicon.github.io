@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>John's Lexicon — Daily Vocabulary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1714;
+    --paper: #f5f0e8;
+    --paper-dark: #ebe4d8;
+    --accent: #8b2500;
+    --accent-light: #b8451a;
+    --muted: #7a7265;
+    --rule: #c8bfb0;
+    --highlight: #fdf6e3;
+    --correct: #2d6a35;
+    --correct-bg: #e8f5e9;
+    --wrong: #8b2500;
+    --wrong-bg: #fce8e6;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html {
+    scroll-behavior: smooth;
+    background: var(--paper);
+  }
+
+  body {
+    font-family: 'Lora', Georgia, serif;
+    color: var(--ink);
+    background: var(--paper);
+    line-height: 1.65;
+    font-weight: 400;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* --- HEADER --- */
+  .masthead {
+    text-align: center;
+    padding: 3rem 1.5rem 2rem;
+    border-bottom: 3px double var(--ink);
+    max-width: 720px;
+    margin: 0 auto;
+  }
+
+  .masthead-rule {
+    display: block;
+    width: 60px;
+    height: 2px;
+    background: var(--accent);
+    margin: 0 auto 1rem;
+  }
+
+  .masthead h1 {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 6vw, 3.2rem);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    color: var(--ink);
+  }
+
+  .masthead .tagline {
+    font-family: 'Lora', Georgia, serif;
+    font-weight: 400;
+    font-style: italic;
+    font-size: 0.88rem;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* --- TODAY BANNER --- */
+  .today-banner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1rem 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--rule);
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+  }
+
+  .today-banner .word-count {
+    font-size: 0.74rem;
+    font-weight: 400;
+  }
+
+  /* --- WORD ENTRIES --- */
+  .entries {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0 1.5rem 4rem;
+  }
+
+  .date-group {
+    padding: 2.5rem 0 0;
+  }
+
+  .date-group + .date-group {
+    border-top: 1px solid var(--rule);
+  }
+
+  .date-heading {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.74rem;
+    font-weight: 500;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    margin-bottom: 1.8rem;
+  }
+
+  .entry {
+    padding-bottom: 2.5rem;
+    animation: fadeUp 0.4s ease both;
+  }
+
+  .entry + .entry {
+    padding-top: 1.8rem;
+    border-top: 1px dashed var(--rule);
+  }
+
+  .date-group.today {
+    background: var(--highlight);
+    margin: 0 -1.5rem;
+    padding: 2.5rem 1.5rem 0;
+    border-bottom: 2px solid var(--accent);
+    position: relative;
+  }
+
+  .date-group.today::before {
+    content: "TODAY";
+    position: absolute;
+    top: 0.8rem;
+    right: 1.5rem;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--paper);
+    padding: 0.15rem 0.6rem;
+    border: 1px solid var(--accent);
+  }
+
+  .entry-word {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 2.8rem);
+    font-weight: 700;
+    line-height: 1.15;
+    color: var(--ink);
+    margin-bottom: 0.1rem;
+  }
+
+  .entry-pos {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--muted);
+    margin-bottom: 1rem;
+  }
+
+  .entry-definitions {
+    margin-bottom: 1.2rem;
+  }
+
+  .entry-def {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.4rem;
+    font-size: 0.95rem;
+    line-height: 1.6;
+  }
+
+  .entry-def-num {
+    font-size: 0.78rem;
+    color: var(--accent);
+    flex-shrink: 0;
+    padding-top: 0.18rem;
+    font-weight: 600;
+  }
+
+  .entry-etymology {
+    font-size: 0.85rem;
+    font-weight: 400;
+    color: var(--muted);
+    line-height: 1.65;
+    margin-bottom: 1.4rem;
+    padding-left: 1rem;
+    border-left: 2px solid var(--rule);
+  }
+
+  .entry-etymology .etym-label {
+    font-weight: 600;
+    color: var(--ink);
+    text-transform: uppercase;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+  }
+
+  .entry-sentence {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 1.15rem;
+    font-style: italic;
+    line-height: 1.65;
+    color: var(--ink);
+    position: relative;
+    padding-left: 1.5rem;
+  }
+
+  .entry-sentence::before {
+    content: '\201C';
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    font-size: 3rem;
+    color: var(--accent);
+    position: absolute;
+    left: -0.15rem;
+    top: -0.6rem;
+    line-height: 1;
+  }
+
+  .entry-sentence .word-highlight {
+    font-weight: 700;
+    font-style: italic;
+  }
+
+  /* --- QUIZ --- */
+  .quiz-section {
+    margin-top: 1.2rem;
+  }
+
+  .quiz-toggle {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    color: var(--accent);
+    background: none;
+    border: 1px solid var(--accent);
+    padding: 0.4rem 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+  }
+
+  .quiz-toggle:hover {
+    background: var(--accent);
+    color: var(--paper);
+  }
+
+  .quiz-options {
+    display: none;
+    margin-top: 1rem;
+    padding-left: 0;
+  }
+
+  .quiz-options.open {
+    display: block;
+  }
+
+  .quiz-option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.88rem;
+    line-height: 1.55;
+    padding: 0.65rem 0.9rem;
+    margin-bottom: 0.5rem;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink);
+    cursor: pointer;
+    transition: border-color 0.2s, background 0.2s;
+  }
+
+  .quiz-option:hover:not(.answered) {
+    border-color: var(--accent);
+    background: var(--highlight);
+  }
+
+  .quiz-option.correct {
+    border-color: var(--correct);
+    background: var(--correct-bg);
+    cursor: default;
+  }
+
+  .quiz-option.wrong {
+    border-color: var(--wrong);
+    background: var(--wrong-bg);
+    cursor: default;
+    opacity: 0.7;
+  }
+
+  .quiz-option.dimmed {
+    opacity: 0.5;
+    cursor: default;
+  }
+
+  .quiz-option .option-letter {
+    font-weight: 600;
+    color: var(--accent);
+    margin-right: 0.4rem;
+  }
+
+  .quiz-result {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 0.5rem;
+    display: none;
+  }
+
+  .quiz-result.show {
+    display: block;
+  }
+
+  /* --- FOOTER --- */
+  .archive-nav {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 1.5rem;
+    border-top: 3px double var(--ink);
+    text-align: center;
+  }
+
+  .archive-nav p {
+    font-size: 0.78rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+
+  /* --- ANIMATIONS --- */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* --- RESPONSIVE --- */
+  @media (max-width: 480px) {
+    .masthead { padding: 2rem 1rem 1.5rem; }
+    .entries { padding: 0 1rem 3rem; }
+    .date-group.today { margin: 0 -1rem; padding: 2rem 1rem 0; }
+    .today-banner { padding: 0.8rem 1rem; }
+  }
+
+  /* --- PRINT --- */
+  @media print {
+    .entry { break-inside: avoid; }
+    .date-group.today { background: none; border: 2px solid #000; }
+    .quiz-section { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <span class="masthead-rule"></span>
+  <h1>John's Lexicon</h1>
+  <p class="tagline">A word a day &mdash; with sentences that go too far</p>
+</header>
+
+<div class="today-banner">
+  <span id="todayDate"></span>
+  <span class="word-count" id="wordCount"></span>
+</div>
+
+<main class="entries" id="entries">
+</main>
+
+<footer class="archive-nav">
+  <p>New word posted daily</p>
+</footer>
+
+<script>
+// --- Helpers ---
+function getTodayStr() {
+  const now = new Date();
+  return now.getFullYear() + '-' +
+    String(now.getMonth() + 1).padStart(2, '0') + '-' +
+    String(now.getDate()).padStart(2, '0');
+}
+
+function formatDate(dateStr) {
+  const d = new Date(dateStr + 'T12:00:00');
+  return d.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+}
+
+// Convert *text* to <em>text</em>
+function renderEtymology(text) {
+  return text.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+}
+
+// Bold the vocabulary word (and inflected forms) in the sentence
+function renderSentence(sentence, word) {
+  // Build regex that matches the word stem (handles inflections like -ed, -s, -ing, -es)
+  const stem = word.length > 4 ? word.slice(0, -1) : word;
+  const regex = new RegExp('\\b(' + escapeRegex(stem) + '[a-z]*)\\b', 'gi');
+  return sentence.replace(regex, '<span class="word-highlight">$1</span>');
+}
+
+function escapeRegex(str) {
+  return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+// Shuffle array (Fisher-Yates) and return mapping
+function shuffleWithMapping(arr) {
+  const indices = arr.map((_, i) => i);
+  const shuffled = [...arr];
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    [indices[i], indices[j]] = [indices[j], indices[i]];
+  }
+  return { shuffled, indices };
+}
+
+const LETTERS = ['A', 'B', 'C', 'D'];
+
+// --- Render ---
+function renderEntries(words) {
+  const container = document.getElementById('entries');
+  const todayStr = getTodayStr();
+
+  // Filter out future-dated words
+  const published = words.filter(w => w.date <= todayStr);
+  // Sort by date descending
+  const sorted = [...published].sort((a, b) => b.date.localeCompare(a.date));
+
+  // Group by date
+  const groups = [];
+  let currentDate = null;
+  for (const w of sorted) {
+    if (w.date !== currentDate) {
+      currentDate = w.date;
+      groups.push({ date: w.date, words: [w] });
+    } else {
+      groups[groups.length - 1].words.push(w);
+    }
+  }
+
+  document.getElementById('todayDate').textContent = formatDate(groups[0]?.date || '');
+  document.getElementById('wordCount').textContent = published.length + ' words & counting';
+
+  container.innerHTML = groups.map((group, gi) => {
+    const isToday = group.date === todayStr;
+    const entriesHtml = group.words.map((w, wi) => {
+      const defs = w.definitions.map((d, j) =>
+        `<div class="entry-def">
+          ${w.definitions.length > 1
+            ? `<span class="entry-def-num">${j + 1}.</span>`
+            : '<span class="entry-def-num">&bull;</span>'}
+          <span>${d}</span>
+        </div>`
+      ).join('');
+
+      // Quiz section
+      let quizHtml = '';
+      if (w.quiz && w.quiz.options && w.quiz.options.length === 4) {
+        const qid = `quiz-${w.word}-${gi}`;
+        const { shuffled, indices } = shuffleWithMapping(w.quiz.options);
+        // Find where the correct answer ended up
+        const correctShuffledIndex = indices.indexOf(w.quiz.correct);
+
+        const optionsHtml = shuffled.map((opt, oi) =>
+          `<button class="quiz-option" data-qid="${qid}" data-idx="${oi}" data-correct="${oi === correctShuffledIndex}" onclick="handleQuiz(this)">
+            <span class="option-letter">${LETTERS[oi]}.</span> ${opt}
+          </button>`
+        ).join('');
+
+        quizHtml = `
+          <div class="quiz-section">
+            <button class="quiz-toggle" onclick="toggleQuiz('${qid}')">Test Your Understanding</button>
+            <div class="quiz-options" id="${qid}">
+              <p style="font-size:0.82rem;color:var(--muted);margin-bottom:0.7rem;font-style:italic;">Which sentence uses <strong>${w.word}</strong> correctly?</p>
+              ${optionsHtml}
+              <p class="quiz-result" id="${qid}-result"></p>
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <article class="entry" id="word-${w.word}">
+          <h2 class="entry-word">${w.word}</h2>
+          <div class="entry-pos">${w.partOfSpeech}</div>
+          <div class="entry-definitions">${defs}</div>
+          <div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;${renderEtymology(w.etymology)}</div>
+          <div class="entry-sentence">${renderSentence(w.sentence, w.word)}</div>
+          ${quizHtml}
+        </article>
+      `;
+    }).join('');
+
+    return `
+      <section class="date-group${isToday ? ' today' : ''}">
+        <div class="date-heading">${formatDate(group.date)}</div>
+        ${entriesHtml}
+      </section>
+    `;
+  }).join('');
+}
+
+// --- Quiz interactions ---
+function toggleQuiz(qid) {
+  const el = document.getElementById(qid);
+  el.classList.toggle('open');
+}
+
+function handleQuiz(btn) {
+  if (btn.classList.contains('answered')) return;
+  const qid = btn.dataset.qid;
+  const isCorrect = btn.dataset.correct === 'true';
+  const allBtns = document.querySelectorAll(`[data-qid="${qid}"]`);
+  const resultEl = document.getElementById(`${qid}-result`);
+
+  allBtns.forEach(b => {
+    b.classList.add('answered');
+    if (b.dataset.correct === 'true') {
+      b.classList.add('correct');
+    } else if (b === btn && !isCorrect) {
+      b.classList.add('wrong');
+    } else {
+      b.classList.add('dimmed');
+    }
+  });
+
+  resultEl.classList.add('show');
+  resultEl.textContent = isCorrect ? 'Correct.' : 'Not quite — the correct answer is highlighted above.';
+}
+
+// --- Load data ---
+fetch('words.json')
+  .then(r => r.json())
+  .then(words => renderEntries(words))
+  .catch(err => {
+    document.getElementById('entries').innerHTML =
+      '<p style="text-align:center;padding:3rem;color:#7a7265;">Unable to load words.</p>';
+  });
+</script>
+</body>
+</html>
