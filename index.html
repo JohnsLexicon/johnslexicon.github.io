@@ -49,6 +49,26 @@ body {
   margin: 0 auto;
 }
 
+.epigraph {
+  margin-bottom: 2rem;
+}
+
+.epigraph p {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem;
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--ink-soft);
+}
+
+.epigraph-attr {
+  display: block;
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.95rem;
+  color: var(--ink-muted);
+  margin-top: 0.5rem;
+}
+
 .masthead-ornament {
   display: block;
   width: 50px;
@@ -521,6 +541,10 @@ body {
 <body>
 
 <header class="masthead">
+  <div class="epigraph">
+    <p>&ldquo;The love of learning, the sequestered nooks,<br>And all the sweet serenity of books&rdquo;</p>
+    <span class="epigraph-attr">&mdash; Henry Wadsworth Longfellow</span>
+  </div>
   <span class="masthead-ornament"></span>
   <h1>John's Lexicon</h1>
   <p class="tagline">A word a day &mdash; with sentences that go too far</p>
