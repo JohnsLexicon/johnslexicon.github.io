@@ -8,7 +8,7 @@
 <title>John's Lexicon — Daily Vocabulary</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=Noto+Serif:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
   --bg: #141a1e;
@@ -220,9 +220,11 @@ body {
 }
 
 .pron-ipa {
-  font-size: 0.92rem;
+  font-family: 'Noto Serif', Georgia, serif;
+  font-size: 1.05rem;
   color: var(--ink-muted);
   position: relative;
+  letter-spacing: 0.02em;
 }
 
 .ipa-sym {
@@ -232,6 +234,8 @@ body {
   display: inline-block;
   border-bottom: 1px dotted var(--rule-light);
   transition: color 0.15s;
+  font-family: 'Noto Serif', Georgia, serif;
+  padding: 0 0.05rem;
 }
 
 .ipa-sym:hover { color: var(--accent); }
@@ -244,13 +248,13 @@ body {
   background: var(--bg-surface);
   border: 1px solid var(--accent-dim);
   color: var(--ink);
-  font-size: 0.9rem;
-  padding: 0.5rem 0.8rem;
+  font-size: 0.95rem;
+  padding: 0.55rem 0.9rem;
   white-space: nowrap;
   z-index: 100;
   pointer-events: none;
   font-style: normal;
-  font-family: 'Lora', Georgia, serif;
+  font-family: 'Noto Serif', Georgia, serif;
   line-height: 1.4;
 }
 
@@ -544,47 +548,49 @@ function renderSentence(s, w) {
 
 // IPA symbol explanations — multi-char symbols must come first
 const IPA_MAP = [
-  ['dʒ', '"j" as in judge'],
-  ['tʃ', '"ch" as in church'],
-  ['aɪ', '"eye" as in price'],
-  ['eɪ', '"ay" as in face'],
-  ['ɔɪ', '"oy" as in choice'],
-  ['oʊ', '"oh" as in goat'],
-  ['aʊ', '"ow" as in mouth'],
-  ['iː', 'long "ee" as in see'],
-  ['uː', 'long "oo" as in food'],
-  ['ɔː', '"aw" as in law'],
-  ['ɜː', '"ur" as in bird'],
-  ['ɑː', '"ah" as in father'],
-  ['ˈ', 'primary stress'],
-  ['ˌ', 'secondary stress'],
-  ['ə', '"uh" as in about'],
-  ['æ', '"a" as in cat'],
-  ['ɪ', 'short "i" as in kit'],
-  ['ɛ', '"e" as in bed'],
-  ['ɔ', '"aw" as in thought'],
-  ['ʊ', 'short "oo" as in foot'],
-  ['ʃ', '"sh" as in ship'],
-  ['ʒ', '"zh" as in measure'],
-  ['θ', '"th" as in think'],
-  ['ð', '"th" as in this'],
-  ['ŋ', '"ng" as in sing'],
-  ['ɜ', '"ur" as in nurse'],
-  ['ɑ', '"ah" as in father'],
+  ['dʒ', 'the J sound, as in judge'],
+  ['tʃ', 'the CH sound, as in church'],
+  ['aɪ', 'the EYE sound, as in price'],
+  ['eɪ', 'the AY sound, as in face'],
+  ['ɔɪ', 'the OY sound, as in choice'],
+  ['oʊ', 'the OH sound, as in goat'],
+  ['aʊ', 'the OW sound, as in mouth'],
+  ['iː', 'long EE, as in see'],
+  ['uː', 'long OO, as in food'],
+  ['ɔː', 'the AW sound, as in law'],
+  ['ɜː', 'the UR sound, as in bird'],
+  ['ɑː', 'the AH sound, as in father'],
+  ['ˈ', 'primary stress on next syllable'],
+  ['ˌ', 'secondary stress on next syllable'],
+  ['ə', 'the UH sound, as in about'],
+  ['æ', 'the A in cat'],
+  ['ɪ', 'short I, as in kit'],
+  ['ɛ', 'the E in bed'],
+  ['ɔ', 'the AW sound, as in thought'],
+  ['ʊ', 'short OO, as in foot'],
+  ['ʃ', 'the SH sound, as in ship'],
+  ['ʒ', 'the ZH sound, as in measure'],
+  ['θ', 'the TH in think (voiceless)'],
+  ['ð', 'the TH in this (voiced)'],
+  ['ŋ', 'the NG sound, as in sing'],
+  ['ɜ', 'the UR sound, as in nurse'],
+  ['ɑ', 'the AH sound, as in father'],
 ];
+
+// Build a quick lookup from symbol to description
+const IPA_LOOKUP = {};
+IPA_MAP.forEach(([sym, desc]) => { IPA_LOOKUP[sym] = desc; });
 
 function renderIPA(ipa) {
   if (!ipa) return '';
   let result = '';
   let i = 0;
   while (i < ipa.length) {
-    // Skip slashes, dots, and spaces
     if ('/. '.includes(ipa[i])) { result += ipa[i]; i++; continue; }
-    // Try multi-char symbols first (length 2), then single
     let matched = false;
-    for (const [sym, desc] of IPA_MAP) {
+    for (const [sym] of IPA_MAP) {
       if (ipa.substring(i, i + sym.length) === sym) {
-        result += `<span class="ipa-sym" onclick="showIpaTip(this, '${desc}')">${sym}</span>`;
+        result += `<span class="ipa-sym" data-ipa="${sym}">${sym}</span>`;
         i += sym.length;
         matched = true;
         break;
@@ -667,20 +673,20 @@ function handleQuiz(btn) {
   else { r.textContent = 'Not quite — the correct answer is highlighted above.'; document.getElementById(`${qid}-c`).classList.add('show'); }
 }
 
-function showIpaTip(el, desc) {
-  // Remove any existing tooltip
+// IPA tooltip via event delegation
+document.addEventListener('click', function(e) {
+  // Remove any existing tooltip first
   document.querySelectorAll('.ipa-tooltip').forEach(t => t.remove());
+  const sym = e.target.closest('.ipa-sym');
+  if (!sym) return;
+  const key = sym.dataset.ipa;
+  const desc = IPA_LOOKUP[key];
+  if (!desc) return;
   const tip = document.createElement('span');
   tip.className = 'ipa-tooltip';
   tip.textContent = desc;
-  el.appendChild(tip);
-  // Close on next tap anywhere
-  setTimeout(() => {
-    document.addEventListener('click', function closer(e) {
-      if (!el.contains(e.target)) { tip.remove(); document.removeEventListener('click', closer); }
-    });
-  }, 10);
-}
+  sym.appendChild(tip);
+});
 
 fetch('words.json').then(r=>r.json()).then(renderEntries).catch(()=>{
   document.getElementById('entries').innerHTML='<p style="text-align:center;padding:3rem;color:var(--ink-muted)">Unable to load words.</p>';
