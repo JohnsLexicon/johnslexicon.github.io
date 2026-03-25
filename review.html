@@ -324,6 +324,19 @@ body {
 .quiz-choice.wrong { border-color: var(--wrong); background: var(--wrong-bg); cursor: default; }
 .quiz-choice.dimmed { opacity: 0.35; cursor: default; }
 
+.speed-choice {
+  transition: none !important;
+}
+
+.speed-choice.answered {
+  pointer-events: none;
+}
+
+.speed-choice:hover:not(.answered) {
+  border-color: var(--rule-light);
+  background: var(--bg-raised);
+}
+
 .wrong-delay-bar {
   height: 3px;
   background: var(--wrong);
@@ -575,10 +588,10 @@ function getFlashcardStatus(total, againCount) {
 }
 
 function getSpeedStatus(score) {
-  if (score >= 20) return 'Immaculate';
-  if (score >= 15) return 'Perspicacious';
-  if (score >= 10) return 'Middling';
-  if (score >= 5) return 'Inadequate';
+  if (score >= 18) return 'Immaculate';
+  if (score >= 13) return 'Perspicacious';
+  if (score >= 8) return 'Middling';
+  if (score >= 4) return 'Inadequate';
   return 'Dreadful';
 }
 
@@ -677,21 +690,28 @@ function ansFill(btn,cw) {
 // === SPEED ROUND ===
 let sTimer=null,sTime=60,sScore=0;
 function startSpeed() {
-  document.getElementById('gameArea').innerHTML=`<div style="text-align:center;padding:2.5rem"><p style="font-size:1.15rem;color:var(--ink-soft);margin-bottom:1rem">60 seconds. Definition appears. Pick the right word. Go fast.</p><button class="speed-start" onclick="beginSpeed()">Start</button></div>`;
+  document.getElementById('gameArea').innerHTML=`<div style="text-align:center;padding:2.5rem"><p style="font-size:1.15rem;color:var(--ink-soft);margin-bottom:1rem">60 seconds. Pick the word that matches the definition.</p><button class="speed-start" onclick="beginSpeed()">Start</button></div>`;
 }
 function beginSpeed() { sTime=60; sScore=0; recordStreak(); showSpeedQ(); document.getElementById('gameArea').scrollIntoView({behavior:'smooth',block:'start'}); sTimer=setInterval(()=>{sTime--;const e=document.getElementById('sT');if(e)e.textContent=sTime+'s';if(sTime<=0){clearInterval(sTimer);endSpeed();}},1000); }
 function showSpeedQ() {
   const a=document.getElementById('gameArea'), w=WORDS[Math.floor(Math.random()*WORDS.length)], opts=shuffle([w,...pick(WORDS,3,w.word)]);
-  a.innerHTML=`<div class="speed-hud"><div class="speed-timer" id="sT">${sTime}s</div><div class="speed-score">Score: <strong id="sS">${sScore}</strong></div></div>
+  a.innerHTML=`<div class="speed-hud"><div class="speed-timer" id="sT">${sTime}s</div><div class="speed-score">Score: <strong>${sScore}</strong></div></div>
     <div class="quiz-question"><span class="q-label">Which word?</span>${w.definitions[0]}</div>
-    <div class="quiz-choices">${opts.map(o=>`<button class="quiz-choice" data-word="${o.word}" onclick="ansSpeed(this,'${w.word}')">${o.word}</button>`).join('')}</div>`;
+    <div class="quiz-choices speed-choices">${opts.map(o=>`<button class="quiz-choice speed-choice" data-word="${o.word}" onclick="ansSpeed(this,'${w.word}')">${o.word}</button>`).join('')}</div>`;
 }
 function ansSpeed(btn,cw) {
   if(btn.classList.contains('answered'))return;
   const ok=btn.dataset.word===cw;
   if(ok){sScore++;setBox(cw,Math.min(4,getBox(cw)+1));}else setBox(cw,1);
-  updateProgress(); btn.classList.add(ok?'correct':'wrong','answered');
-  setTimeout(()=>{if(sTime>0)showSpeedQ();},300);
+  updateProgress();
+  // Disable all buttons immediately
+  document.querySelectorAll('.speed-choice').forEach(b=>{ b.classList.add('answered'); b.disabled=true; });
+  btn.classList.add(ok?'correct':'wrong');
+  if(ok) {
+    setTimeout(()=>{if(sTime>0) showSpeedQ();},150);
+  } else {
+    setTimeout(()=>{if(sTime>0)showSpeedQ();},500);
+  }
 }
 function endSpeed() {
   document.getElementById('gameArea').innerHTML=renderResults(sScore, 'words in 60 seconds', getSpeedStatus(sScore), 'startSpeed()');
