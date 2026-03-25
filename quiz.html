@@ -247,18 +247,34 @@ function startQuiz() {
 }
 
 // ============ SECTION 1: MULTIPLE CHOICE ============
+// Store shuffled option order per question for scoring
+let mcShuffled = [];
+
+function shuffleOptions(options, correct) {
+  const indexed = options.map((o, i) => ({ text: o, origIdx: i }));
+  for (let i = indexed.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [indexed[i], indexed[j]] = [indexed[j], indexed[i]];
+  }
+  const correctIdx = indexed.findIndex(o => o.text === correct);
+  return { shuffled: indexed.map(o => o.text), correctIdx };
+}
+
 function renderMC() {
   const container = document.getElementById('mcSection');
+  mcShuffled = MC_QUESTIONS.map(q => shuffleOptions(q.options, q.correct));
+
   container.innerHTML = MC_QUESTIONS.map((q, qi) => {
+    const opts = mcShuffled[qi].shuffled;
     if (q.type === 'def') {
       return `<div class="mc-question">
         <div class="mc-prompt"><span class="q-num">${qi+1}.</span> Which definition matches <strong>${q.word}</strong>?</div>
-        <div class="mc-choices">${q.options.map((o,oi) => `<button class="mc-choice" data-qi="${qi}" data-oi="${oi}" onclick="selectMC(${qi},${oi},this)">${o}</button>`).join('')}</div>
+        <div class="mc-choices">${opts.map((o,oi) => `<button class="mc-choice" data-qi="${qi}" data-oi="${oi}" onclick="selectMC(${qi},${oi},this)">${o}</button>`).join('')}</div>
       </div>`;
     } else {
       return `<div class="mc-question">
         <div class="mc-prompt"><span class="q-num">${qi+1}.</span> ${q.sentence.replace('________','<span class="blank">________</span>')}</div>
-        <div class="mc-choices">${q.options.map((o,oi) => `<button class="mc-choice" data-qi="${qi}" data-oi="${oi}" onclick="selectMC(${qi},${oi},this)">${o}</button>`).join('')}</div>
+        <div class="mc-choices">${opts.map((o,oi) => `<button class="mc-choice" data-qi="${qi}" data-oi="${oi}" onclick="selectMC(${qi},${oi},this)">${o}</button>`).join('')}</div>
       </div>`;
     }
   }).join('');
@@ -326,9 +342,7 @@ function scoreQuiz() {
   let mcScore = 0;
   MC_QUESTIONS.forEach((q, i) => {
     if (mcAnswers[i] === null) return;
-    const selected = q.options[mcAnswers[i]];
-    if (q.type === 'def' && selected === q.correct) mcScore++;
-    if (q.type === 'fill' && selected === q.correct) mcScore++;
+    if (mcAnswers[i] === mcShuffled[i].correctIdx) mcScore++;
   });
 
   let matchScore = 0;
@@ -360,9 +374,8 @@ function submitQuiz() {
   let mcDetail = '';
   MC_QUESTIONS.forEach((q,i) => {
     const word = q.word;
-    const picked = mcAnswers[i] !== null ? q.options[mcAnswers[i]] : '[no answer]';
-    const correct = q.correct;
-    const isRight = picked === correct;
+    const picked = mcAnswers[i] !== null ? mcShuffled[i].shuffled[mcAnswers[i]] : '[no answer]';
+    const isRight = mcAnswers[i] === mcShuffled[i].correctIdx;
     mcDetail += word + ': ' + (isRight ? 'CORRECT' : 'WRONG (picked: ' + picked.substring(0,40) + ')') + '\n';
   });
 
