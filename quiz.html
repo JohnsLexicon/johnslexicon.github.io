@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#141a1e">
+<title>Quiz — John's Lexicon</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Lora:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #141a1e; --bg-raised: #1b2228; --bg-surface: #232c33;
+  --ink: #e4e8ec; --ink-soft: #b0b8c2; --ink-muted: #6e7a86;
+  --accent: #3dd8c5; --accent-glow: #5eeadb; --accent-dim: #2ba898;
+  --rule: #2a343c; --rule-light: #344049;
+  --correct: #5cd67a; --correct-bg: #1a2e1f;
+  --wrong: #e05c5c; --wrong-bg: #2b1c1c;
+}
+* { margin:0; padding:0; box-sizing:border-box; }
+html { background:var(--bg); }
+body { font-family:'Lora',Georgia,serif; color:var(--ink); background:var(--bg); line-height:1.65; -webkit-font-smoothing:antialiased; }
+
+.quiz-container { max-width:700px; margin:0 auto; padding:1.5rem; min-height:100vh; }
+
+/* --- TIMER BAR --- */
+.timer-bar { position:fixed; top:0; left:0; right:0; z-index:200; background:var(--bg-raised); border-bottom:1px solid var(--rule); padding:0.6rem 1.5rem; display:flex; justify-content:space-between; align-items:center; display:none; }
+.timer-bar.visible { display:flex; }
+.timer-time { font-family:'Cormorant Garamond',Georgia,serif; font-size:1.6rem; font-weight:700; color:var(--accent-glow); }
+.timer-progress { font-size:0.95rem; color:var(--ink-muted); }
+.timer-spacer { height:3.2rem; display:none; }
+.timer-spacer.visible { display:block; }
+
+/* --- START SCREEN --- */
+.start-screen { text-align:center; padding:4rem 1rem; }
+.start-screen h1 { font-family:'Cormorant Garamond',Georgia,serif; font-size:2.5rem; font-weight:700; text-transform:uppercase; letter-spacing:0.06em; margin-bottom:1rem; }
+.start-screen p { font-size:1.1rem; color:var(--ink-soft); margin-bottom:0.6rem; line-height:1.7; }
+.start-screen .start-btn { display:inline-block; margin-top:2rem; font-family:'Lora',Georgia,serif; font-size:1.2rem; font-weight:700; color:var(--bg); background:var(--accent); border:none; padding:1rem 3rem; cursor:pointer; letter-spacing:0.04em; }
+.start-screen .start-btn:hover { background:var(--accent-glow); }
+
+/* --- SECTION HEADERS --- */
+.section-header { font-family:'Cormorant Garamond',Georgia,serif; font-size:1.5rem; font-weight:700; color:var(--accent); text-transform:uppercase; letter-spacing:0.06em; margin:2.5rem 0 1.5rem; padding-bottom:0.8rem; border-bottom:1px solid var(--rule); }
+
+/* --- MC QUESTION --- */
+.mc-question { margin-bottom:2rem; padding:1.5rem; background:var(--bg-raised); border:1px solid var(--rule-light); }
+.mc-prompt { font-family:'Libre Baskerville',Georgia,serif; font-size:1.1rem; line-height:1.7; color:var(--ink); margin-bottom:1rem; }
+.mc-prompt .q-num { color:var(--accent); font-weight:700; margin-right:0.4rem; }
+.mc-prompt .blank { color:var(--accent); font-weight:700; border-bottom:2px solid var(--accent-dim); }
+.mc-choices { display:flex; flex-direction:column; gap:0.4rem; }
+.mc-choice { font-family:'Lora',Georgia,serif; font-size:1rem; text-align:left; padding:0.75rem 1rem; border:1px solid var(--rule-light); background:var(--bg); color:var(--ink-soft); cursor:pointer; transition:border-color 0.15s; }
+.mc-choice:hover { border-color:var(--accent-dim); color:var(--ink); }
+.mc-choice.selected { border-color:var(--accent); color:var(--accent); background:var(--bg-surface); }
+
+/* --- MATCHING --- */
+.match-section { margin-bottom:2rem; }
+.match-instructions { font-size:1rem; color:var(--ink-muted); font-style:italic; margin-bottom:1.5rem; }
+.match-grid { display:grid; grid-template-columns:1fr 1fr; gap:1rem 2rem; }
+.match-col-label { font-size:0.8rem; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--ink-muted); margin-bottom:0.5rem; text-align:center; }
+.match-item { padding:0.8rem 1rem; border:1px solid var(--rule-light); background:var(--bg-raised); text-align:center; cursor:pointer; transition:all 0.15s; font-size:1rem; margin-bottom:0.5rem; }
+.match-item:hover { border-color:var(--accent-dim); }
+.match-item.selected { border-color:var(--accent); color:var(--accent); background:var(--bg-surface); }
+.match-item.matched { border-color:var(--correct); opacity:0.7; cursor:default; }
+.match-word { font-family:'Cormorant Garamond',Georgia,serif; font-size:1.3rem; font-weight:700; }
+.match-def { font-family:'Libre Baskerville',Georgia,serif; font-size:0.92rem; line-height:1.5; color:var(--ink-soft); }
+.match-pair-label { font-size:0.7rem; font-weight:700; color:var(--correct); text-transform:uppercase; letter-spacing:0.08em; margin-top:0.3rem; }
+.match-colors { display:flex; flex-wrap:wrap; gap:0.5rem; margin-top:1rem; }
+.match-legend { font-size:0.85rem; padding:0.3rem 0.6rem; border:1px solid; }
+
+/* --- SENTENCE WRITING --- */
+.sentence-prompt { margin-bottom:2rem; padding:1.5rem; background:var(--bg-raised); border:1px solid var(--rule-light); }
+.sentence-word { font-family:'Cormorant Garamond',Georgia,serif; font-size:1.8rem; font-weight:700; margin-bottom:0.3rem; }
+.sentence-pos { font-family:'Cormorant Garamond',Georgia,serif; font-style:italic; font-size:1.1rem; color:var(--accent-dim); margin-bottom:0.8rem; }
+.sentence-def { font-family:'Libre Baskerville',Georgia,serif; font-size:1.05rem; line-height:1.6; color:var(--ink-soft); margin-bottom:1rem; }
+.sentence-input { width:100%; min-height:80px; padding:0.8rem; font-family:'Lora',Georgia,serif; font-size:1rem; color:var(--ink); background:var(--bg); border:1px solid var(--rule-light); outline:none; resize:vertical; line-height:1.6; }
+.sentence-input:focus { border-color:var(--accent); }
+
+/* --- SUBMIT --- */
+.submit-section { text-align:center; padding:2rem 0 4rem; }
+.name-label { font-size:1.05rem; color:var(--ink-soft); margin-bottom:0.8rem; display:block; }
+.name-input { font-family:'Lora',Georgia,serif; font-size:1.1rem; padding:0.8rem 1rem; width:100%; max-width:400px; color:var(--ink); background:var(--bg-raised); border:1px solid var(--rule-light); outline:none; text-align:center; margin-bottom:1.5rem; }
+.name-input:focus { border-color:var(--accent); }
+.submit-btn { font-family:'Lora',Georgia,serif; font-size:1.15rem; font-weight:700; color:var(--bg); background:var(--accent); border:none; padding:1rem 3rem; cursor:pointer; }
+.submit-btn:hover { background:var(--accent-glow); }
+.submit-btn:disabled { opacity:0.5; cursor:not-allowed; }
+.submit-msg { font-size:1.1rem; color:var(--accent); margin-top:1rem; display:none; }
+.submit-msg.show { display:block; }
+
+/* --- TIME UP --- */
+.time-up-overlay { position:fixed; inset:0; background:rgba(20,26,30,0.95); z-index:300; display:flex; align-items:center; justify-content:center; display:none; }
+.time-up-overlay.show { display:flex; }
+.time-up-box { text-align:center; padding:3rem; }
+.time-up-box h2 { font-family:'Cormorant Garamond',Georgia,serif; font-size:2.5rem; color:var(--wrong); margin-bottom:1rem; }
+.time-up-box p { font-size:1.1rem; color:var(--ink-soft); margin-bottom:1.5rem; }
+.time-up-box button { font-family:'Lora',Georgia,serif; font-size:1.1rem; font-weight:600; color:var(--bg); background:var(--accent); border:none; padding:0.8rem 2.5rem; cursor:pointer; }
+
+@media (max-width:600px) {
+  .quiz-container { padding:1.2rem; }
+  .match-grid { grid-template-columns:1fr; gap:0.5rem; }
+  .match-grid .match-col-label:nth-child(2) { margin-top:1rem; }
+  .mc-choice { font-size:0.98rem; }
+  .timer-bar { padding:0.5rem 1.2rem; }
+}
+</style>
+</head>
+<body>
+
+<div class="timer-bar" id="timerBar">
+  <div class="timer-time" id="timerDisplay">15:00</div>
+  <div class="timer-progress" id="timerProgress"></div>
+</div>
+<div class="timer-spacer" id="timerSpacer"></div>
+
+<div class="time-up-overlay" id="timeUpOverlay">
+  <div class="time-up-box">
+    <h2>Time</h2>
+    <p>Your answers up to this point will be submitted.</p>
+    <button onclick="forceSubmit()">Submit What I Have</button>
+  </div>
+</div>
+
+<div class="quiz-container" id="quizContainer">
+  <div class="start-screen" id="startScreen">
+    <h1>Vocabulary Quiz</h1>
+    <button class="start-btn" onclick="startQuiz()">Begin</button>
+  </div>
+
+  <div id="quizContent" style="display:none">
+
+    <div class="section-header">Section 1 — Multiple Choice</div>
+    <div id="mcSection"></div>
+
+    <div class="section-header">Section 2 — Match the T-Words</div>
+    <div class="match-section">
+      <p class="match-instructions">Tap a word, then tap its definition to connect them.</p>
+      <div class="match-grid" id="matchGrid"></div>
+    </div>
+
+    <div class="section-header">Section 3 — Use It in a Sentence</div>
+
+    <div class="sentence-prompt">
+      <div class="sentence-word">valediction</div>
+      <div class="sentence-pos">noun</div>
+      <div class="sentence-def">The action of saying farewell; a statement or address made as a farewell</div>
+      <textarea class="sentence-input" id="sentValediction" placeholder="Write a sentence using valediction..."></textarea>
+    </div>
+
+    <div class="sentence-prompt">
+      <div class="sentence-word">paroxysm</div>
+      <div class="sentence-pos">noun</div>
+      <div class="sentence-def">A sudden fit, attack, or outburst; a sudden violent emotion or action</div>
+      <textarea class="sentence-input" id="sentParoxysm" placeholder="Write a sentence using paroxysm..."></textarea>
+    </div>
+
+    <div class="submit-section">
+      <label class="name-label">Your name</label>
+      <input type="text" class="name-input" id="nameInput" placeholder="First and last name">
+      <br>
+      <button class="submit-btn" id="submitBtn" onclick="submitQuiz()">Submit Quiz</button>
+      <p class="submit-msg" id="submitMsg">Submitted. Thank you.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============ QUIZ DATA ============
+// Section 1: 18 MC questions (no valediction, paroxysm, or T-words)
+const MC_QUESTIONS = [
+  { type:'def', word:'elegiac', correct:'Expressing sorrow often for something now past', options:['Expressing sorrow often for something now past','Extremely generous or lavish','Relating to a formal argument or debate','Having a tendency to wander aimlessly'] },
+  { type:'fill', word:'eviscerate', sentence:'The critic ________ the novel in a review so brutal the publisher pulled it from shelves.', correct:'eviscerated', options:['eviscerated','elaborated','extricated','elevated'] },
+  { type:'def', word:'defenestrate', correct:'Throw someone out of a window; remove from a position of power', options:['Throw someone out of a window; remove from a position of power','To officially pardon or forgive','To decorate or embellish excessively','To speak on behalf of another person'] },
+  { type:'fill', word:'sartorial', sentence:'His ________ instincts led him to own fourteen nearly identical navy blazers.', correct:'sartorial', options:['sartorial','satirical','sectorial','senatorial'] },
+  { type:'def', word:'slapdash', correct:'Done too hurriedly and carelessly; haphazard', options:['Done too hurriedly and carelessly; haphazard','Delivered with great force and precision','Characterized by subtle wit','Moving at tremendous speed'] },
+  { type:'fill', word:'dalliance', sentence:'What began as an innocent ________ with watercolor painting consumed her entire garage.', correct:'dalliance', options:['dalliance','defiance','diligence','disturbance'] },
+  { type:'def', word:'peroration', correct:'The concluding part of a speech; a highly rhetorical speech', options:['The concluding part of a speech; a highly rhetorical speech','The slow wearing away of rock by water','A surgical procedure to repair tissue','The act of walking around a boundary'] },
+  { type:'fill', word:'neophobic', sentence:'The ________ board rejected every innovation, clinging to processes unchanged since founding.', correct:'neophobic', options:['neophobic','neoclassical','nephritic','nomadic'] },
+  { type:'def', word:'effusive', correct:'Expressing feelings of gratitude or pleasure in an unrestrained manner', options:['Expressing feelings of gratitude or pleasure in an unrestrained manner','Tending to spread outward in all directions','Deliberately vague or hard to understand','Having a corrosive or wearing effect'] },
+  { type:'fill', word:'propriety', sentence:'The ambassador\'s rigid sense of ________ meant he would rather endure a four-hour dinner in a stiff collar than risk a faux pas.', correct:'propriety', options:['propriety','prosperity','proclivity','proximity'] },
+  { type:'def', word:'mendicant', correct:'Beggar', options:['Beggar','A skilled craftsman','A religious teacher','A traveling merchant'] },
+  { type:'fill', word:'jocularity', sentence:'His surface ________ did little to hide his malicious intent.', correct:'jocularity', options:['jocularity','jurisprudence','juxtaposition','juvenility'] },
+  { type:'def', word:'inexorable', correct:'Impossible to stop or prevent', options:['Impossible to stop or prevent','Capable of being forgiven','Extremely detailed and precise','Lacking any clear purpose'] },
+  { type:'fill', word:'defalcate', sentence:'The treasurer managed to ________ thousands from the charity before the audit caught up.', correct:'defalcate', options:['defalcate','defecate','deflect','delegate'] },
+  { type:'def', word:'adenoidal', correct:'Exhibiting characteristics of enlarged adenoids such as nasal voice and mouth breathing', options:['Exhibiting characteristics of enlarged adenoids such as nasal voice and mouth breathing','Relating to the glands that produce adrenaline','Having an unusually sharp sense of smell','Prone to sudden allergic reactions'] },
+  { type:'fill', word:'vertiginous', sentence:'The ________ mountain road wound along cliff edges with no guardrails.', correct:'vertiginous', options:['vertiginous','voluminous','venomous','vivacious'] },
+  { type:'def', word:'frippery', correct:'Showy or unnecessary ornament in architecture, dress, or language', options:['Showy or unnecessary ornament in architecture, dress, or language','A brief period of celebration','A deep crack in rock or earth','A type of lightweight fabric'] },
+  { type:'def', word:'thaumaturge', correct:'A worker of wonders and performer of miracles; a magician', options:['A worker of wonders and performer of miracles; a magician','A senior advisor to a monarch','An instrument for measuring heat','A collector of rare manuscripts'] },
+];
+
+// Section 2: T-word matching
+const MATCH_WORDS = [
+  { word:'turpitude', def:'Inherent baseness; depravity' },
+  { word:'turgid', def:'Excessively embellished in style or language; swollen' },
+  { word:'turbid', def:'Cloudy, opaque, or thick with suspended matter' },
+  { word:'torrid', def:'Parched with heat; scorching; ardent, passionate' },
+  { word:'tepid', def:'Moderately warm; lukewarm; lacking passion or zest' },
+  { word:'torpid', def:'Mentally or physically inactive; lethargic' },
+];
+
+const MATCH_COLORS = ['#3dd8c5','#e8a44e','#e05c5c','#5cd67a','#a78bfa','#f472b6'];
+
+// ============ STATE ============
+let timer = null;
+let timeLeft = 15 * 60;
+let mcAnswers = new Array(MC_QUESTIONS.length).fill(null);
+let matchPairs = {};
+let selectedWord = null;
+let quizSubmitted = false;
+
+// ============ TIMER ============
+function startTimer() {
+  document.getElementById('timerBar').classList.add('visible');
+  document.getElementById('timerSpacer').classList.add('visible');
+  updateTimerDisplay();
+  timer = setInterval(() => {
+    timeLeft--;
+    updateTimerDisplay();
+    if (timeLeft <= 0) { clearInterval(timer); showTimeUp(); }
+  }, 1000);
+}
+
+function updateTimerDisplay() {
+  const m = Math.floor(timeLeft / 60);
+  const s = timeLeft % 60;
+  document.getElementById('timerDisplay').textContent = m + ':' + String(s).padStart(2,'0');
+  if (timeLeft <= 60) document.getElementById('timerDisplay').style.color = 'var(--wrong)';
+  const answered = mcAnswers.filter(a => a !== null).length + Object.keys(matchPairs).length;
+  document.getElementById('timerProgress').textContent = answered + '/26 answered';
+}
+
+function showTimeUp() {
+  document.getElementById('timeUpOverlay').classList.add('show');
+}
+
+function forceSubmit() {
+  document.getElementById('timeUpOverlay').classList.remove('show');
+  submitQuiz();
+}
+
+// ============ QUIZ START ============
+function startQuiz() {
+  document.getElementById('startScreen').style.display = 'none';
+  document.getElementById('quizContent').style.display = 'block';
+  renderMC();
+  renderMatch();
+  startTimer();
+  window.scrollTo(0, 0);
+}
+
+// ============ SECTION 1: MULTIPLE CHOICE ============
+function renderMC() {
+  const container = document.getElementById('mcSection');
+  container.innerHTML = MC_QUESTIONS.map((q, qi) => {
+    if (q.type === 'def') {
+      return `<div class="mc-question">
+        <div class="mc-prompt"><span class="q-num">${qi+1}.</span> Which definition matches <strong>${q.word}</strong>?</div>
+        <div class="mc-choices">${q.options.map((o,oi) => `<button class="mc-choice" data-qi="${qi}" data-oi="${oi}" onclick="selectMC(${qi},${oi},this)">${o}</button>`).join('')}</div>
+      </div>`;
+    } else {
+      return `<div class="mc-question">
+        <div class="mc-prompt"><span class="q-num">${qi+1}.</span> ${q.sentence.replace('________','<span class="blank">________</span>')}</div>
+        <div class="mc-choices">${q.options.map((o,oi) => `<button class="mc-choice" data-qi="${qi}" data-oi="${oi}" onclick="selectMC(${qi},${oi},this)">${o}</button>`).join('')}</div>
+      </div>`;
+    }
+  }).join('');
+}
+
+function selectMC(qi, oi, btn) {
+  mcAnswers[qi] = oi;
+  document.querySelectorAll(`[data-qi="${qi}"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  updateTimerDisplay();
+}
+
+// ============ SECTION 2: MATCHING ============
+function renderMatch() {
+  const grid = document.getElementById('matchGrid');
+  const shuffledDefs = [...MATCH_WORDS].sort(() => Math.random() - 0.5);
+
+  let html = '<div>';
+  html += '<div class="match-col-label">Words</div>';
+  MATCH_WORDS.forEach((w,i) => {
+    html += `<div class="match-item match-word" data-mword="${w.word}" data-midx="${i}" onclick="selectMatchWord(this)">${w.word}</div>`;
+  });
+  html += '</div><div>';
+  html += '<div class="match-col-label">Definitions</div>';
+  shuffledDefs.forEach((w,i) => {
+    html += `<div class="match-item match-def" data-mdef="${w.word}" onclick="selectMatchDef(this)">${w.def}</div>`;
+  });
+  html += '</div>';
+  grid.innerHTML = html;
+}
+
+function selectMatchWord(el) {
+  if (el.classList.contains('matched')) return;
+  document.querySelectorAll('.match-word').forEach(e => e.classList.remove('selected'));
+  el.classList.add('selected');
+  selectedWord = el.dataset.mword;
+}
+
+function selectMatchDef(el) {
+  if (!selectedWord || el.classList.contains('matched')) return;
+  const defWord = el.dataset.mdef;
+  const pairNum = Object.keys(matchPairs).length;
+  const color = MATCH_COLORS[pairNum % MATCH_COLORS.length];
+
+  matchPairs[selectedWord] = defWord;
+
+  // Mark both as matched with color
+  const wordEl = document.querySelector(`[data-mword="${selectedWord}"]`);
+  wordEl.classList.remove('selected');
+  wordEl.classList.add('matched');
+  wordEl.style.borderColor = color;
+  wordEl.style.color = color;
+  wordEl.innerHTML += `<div class="match-pair-label" style="color:${color}">${pairNum+1}</div>`;
+
+  el.classList.add('matched');
+  el.style.borderColor = color;
+  el.innerHTML += `<div class="match-pair-label" style="color:${color}">${pairNum+1}</div>`;
+
+  selectedWord = null;
+  updateTimerDisplay();
+}
+
+// ============ SCORING ============
+function scoreQuiz() {
+  let mcScore = 0;
+  MC_QUESTIONS.forEach((q, i) => {
+    if (mcAnswers[i] === null) return;
+    const selected = q.options[mcAnswers[i]];
+    if (q.type === 'def' && selected === q.correct) mcScore++;
+    if (q.type === 'fill' && selected === q.correct) mcScore++;
+  });
+
+  let matchScore = 0;
+  Object.entries(matchPairs).forEach(([word, defWord]) => {
+    if (word === defWord) matchScore++;
+  });
+
+  return { mc: mcScore, mcTotal: MC_QUESTIONS.length, match: matchScore, matchTotal: MATCH_WORDS.length, total: mcScore + matchScore, totalPossible: MC_QUESTIONS.length + MATCH_WORDS.length };
+}
+
+// ============ SUBMIT ============
+function submitQuiz() {
+  if (quizSubmitted) return;
+  const name = document.getElementById('nameInput').value.trim();
+  if (!name) { document.getElementById('nameInput').style.borderColor = 'var(--wrong)'; document.getElementById('nameInput').focus(); return; }
+
+  quizSubmitted = true;
+  if (timer) clearInterval(timer);
+  const btn = document.getElementById('submitBtn');
+  btn.disabled = true;
+  btn.textContent = 'Submitting...';
+
+  const scores = scoreQuiz();
+  const sent1 = document.getElementById('sentValediction').value.trim();
+  const sent2 = document.getElementById('sentParoxysm').value.trim();
+  const sentences = 'Valediction: ' + (sent1 || '[blank]') + ' | Paroxysm: ' + (sent2 || '[blank]');
+
+  // MC detail
+  let mcDetail = '';
+  MC_QUESTIONS.forEach((q,i) => {
+    const word = q.word;
+    const picked = mcAnswers[i] !== null ? q.options[mcAnswers[i]] : '[no answer]';
+    const correct = q.correct;
+    const isRight = picked === correct;
+    mcDetail += word + ': ' + (isRight ? 'CORRECT' : 'WRONG (picked: ' + picked.substring(0,40) + ')') + '\n';
+  });
+
+  // Match detail
+  let matchDetail = '';
+  MATCH_WORDS.forEach(w => {
+    const picked = matchPairs[w.word] || '[unmatched]';
+    const isRight = picked === w.word;
+    matchDetail += w.word + ' → ' + (isRight ? 'CORRECT' : 'WRONG (matched to ' + picked + ')') + '\n';
+  });
+
+  const payload = {
+    name: name,
+    score: scores.total,
+    total: scores.totalPossible,
+    mc_score: scores.mc + '/' + scores.mcTotal,
+    match_score: scores.match + '/' + scores.matchTotal,
+    sentences: sentences,
+    mc_detail: mcDetail,
+    match_detail: matchDetail,
+    time_remaining: Math.floor(timeLeft/60) + ':' + String(timeLeft%60).padStart(2,'0')
+  };
+
+  // REPLACE THIS URL with your Google Apps Script deployment URL
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxdId1OgLtIbtkdlRaIqmhTi-kAObYC1fT4QROP_2v_JFjDeLO2pWqshiqoFedqGHNY_A/exec';
+
+  fetch(SHEET_URL, {
+    method: 'POST',
+    mode: 'no-cors',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  }).then(() => {
+    btn.textContent = 'Submitted';
+    document.getElementById('submitMsg').classList.add('show');
+  }).catch(() => {
+    btn.textContent = 'Submitted';
+    document.getElementById('submitMsg').classList.add('show');
+  });
+}
+</script>
+</body>
+</html>
