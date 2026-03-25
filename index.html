@@ -55,7 +55,7 @@ body {
 
 .epigraph p {
   font-family: 'Cormorant Garamond', Georgia, serif;
-  font-size: 1.2rem;
+  font-size: 1.5rem;
   font-style: italic;
   line-height: 1.7;
   color: var(--ink-soft);
@@ -64,7 +64,7 @@ body {
 .epigraph-attr {
   display: block;
   font-family: 'Lora', Georgia, serif;
-  font-size: 0.95rem;
+  font-size: 1.1rem;
   color: var(--ink-muted);
   margin-top: 0.5rem;
 }
@@ -89,7 +89,7 @@ body {
 .masthead .tagline {
   font-style: italic;
   font-size: 1.2rem;
-  color: var(--ink-muted);
+  color: var(--ink-soft);
   margin-top: 0.6rem;
 }
 
@@ -513,7 +513,7 @@ body {
   </div>
   <span class="masthead-ornament"></span>
   <h1>John's Lexicon</h1>
-  <p class="tagline">A word a day &mdash; with sentences that go too far</p>
+  <p class="tagline">A word a day, with sentences that go too far</p>
 </header>
 
 <div class="info-line">
@@ -618,7 +618,7 @@ function renderEntries(words) {
   pub.forEach(w => { if (w.date !== cur) { cur = w.date; groups.push({date:w.date,words:[w]}); } else groups[groups.length-1].words.push(w); });
 
   document.getElementById('todayDate').textContent = formatDate(groups[0]?.date || '');
-  document.getElementById('wordCount').textContent = pub.length + ' words & counting';
+  document.getElementById('wordCount').innerHTML = '<span style="color:var(--accent)">' + pub.length + '</span> words & counting';
 
   c.innerHTML = groups.map((g, gi) => {
     const isToday = g.date === today;
