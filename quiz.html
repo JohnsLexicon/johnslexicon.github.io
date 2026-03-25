@@ -21,7 +21,10 @@
 html { background:var(--bg); }
 body { font-family:'Lora',Georgia,serif; color:var(--ink); background:var(--bg); line-height:1.65; -webkit-font-smoothing:antialiased; }
 
-.quiz-container { max-width:700px; margin:0 auto; padding:1.5rem; min-height:100vh; }
+.quiz-container { max-width:700px; margin:0 auto; padding:1.5rem; min-height:100vh; -webkit-user-select:none; user-select:none; }
+
+/* Re-enable selection only on text inputs */
+.sentence-input, .name-input { -webkit-user-select:text; user-select:text; }
 
 /* --- TIMER BAR --- */
 .timer-bar { position:fixed; top:0; left:0; right:0; z-index:200; background:var(--bg-raised); border-bottom:1px solid var(--rule); padding:0.6rem 1.5rem; display:flex; justify-content:space-between; align-items:center; display:none; }
@@ -126,6 +129,10 @@ body { font-family:'Lora',Georgia,serif; color:var(--ink); background:var(--bg);
 
   <div id="quizContent" style="display:none">
 
+    <div style="text-align:center;padding:1rem 1.5rem;margin-bottom:1.5rem;border:1px solid var(--rule-light);background:var(--bg-raised);font-size:0.95rem;color:var(--ink-muted);line-height:1.6;">
+      This quiz contains an embedded monitoring tool that flags tab switches, app switches, and external lookups during the session. Your submission will be marked accordingly.
+    </div>
+
     <div class="section-header">Section 1 — Multiple Choice</div>
     <div id="mcSection"></div>
 
@@ -139,15 +146,11 @@ body { font-family:'Lora',Georgia,serif; color:var(--ink); background:var(--bg);
 
     <div class="sentence-prompt">
       <div class="sentence-word">valediction</div>
-      <div class="sentence-pos">noun</div>
-      <div class="sentence-def">The action of saying farewell; a statement or address made as a farewell</div>
       <textarea class="sentence-input" id="sentValediction" placeholder="Write a sentence using valediction..."></textarea>
     </div>
 
     <div class="sentence-prompt">
       <div class="sentence-word">paroxysm</div>
-      <div class="sentence-pos">noun</div>
-      <div class="sentence-def">A sudden fit, attack, or outburst; a sudden violent emotion or action</div>
       <textarea class="sentence-input" id="sentParoxysm" placeholder="Write a sentence using paroxysm..."></textarea>
     </div>
 
@@ -182,7 +185,7 @@ const MC_QUESTIONS = [
   { type:'fill', word:'defalcate', sentence:'The treasurer managed to ________ thousands from the charity before the audit caught up.', correct:'defalcate', options:['defalcate','defecate','deflect','delegate'] },
   { type:'def', word:'adenoidal', correct:'Having a nasal voice and mouth breathing from swollen glands', options:['Having a nasal voice and mouth breathing from swollen glands','Relating to the glands responsible for producing adrenaline','Possessing an unusually sharp and discerning sense of smell','Being prone to sudden and unpredictable allergic reactions'] },
   { type:'fill', word:'vertiginous', sentence:'The ________ mountain road wound along cliff edges with no guardrails.', correct:'vertiginous', options:['vertiginous','voluminous','venomous','vivacious'] },
-  { type:'def', word:'frippery', correct:'Showy or unnecessary ornament in dress or language', options:['Showy or unnecessary ornament in dress or language','A brief and spontaneous period of celebration','A deep and widening crack in rock or earth','A lightweight and loosely woven type of fabric'] },
+  { type:'def', word:'frippery', correct:'Showy or unnecessary ornament in dress or language', options:['Showy or unnecessary ornament in dress or language','Brief and spontaneous celebration','Deep, widening crack in rock or earth','Lightweight and loosely woven fabric'] },
   { type:'def', word:'thaumaturge', correct:'A performer of wonders or miracles; a magician', options:['A performer of wonders or miracles; a magician','A senior political advisor serving a monarch','An instrument designed for measuring heat output','A scholar who collects rare historical manuscripts'] },
 ];
 
@@ -196,7 +199,7 @@ const MATCH_WORDS = [
   { word:'torpid', def:'Mentally or physically inactive; lethargic' },
 ];
 
-const MATCH_COLORS = ['#3dd8c5','#e8a44e','#e05c5c','#5cd67a','#a78bfa','#f472b6'];
+const MATCH_COLORS = ['#3dd8c5','#a78bfa','#5cd67a','#7ab8f5','#f0b86e','#f472b6'];
 
 // ============ STATE ============
 let timer = null;
@@ -205,6 +208,15 @@ let mcAnswers = new Array(MC_QUESTIONS.length).fill(null);
 let matchPairs = {};
 let selectedWord = null;
 let quizSubmitted = false;
+let tabSwitches = 0;
+
+// Block right-click context menu (prevents desktop lookups)
+document.addEventListener('contextmenu', e => { if (!e.target.closest('.sentence-input,.name-input')) e.preventDefault(); });
+
+// Track tab/app switches
+document.addEventListener('visibilitychange', () => {
+  if (document.hidden && !quizSubmitted && timer) tabSwitches++;
+});
 
 // ============ TIMER ============
 function startTimer() {
@@ -396,11 +408,11 @@ function submitQuiz() {
     sentences: sentences,
     mc_detail: mcDetail,
     match_detail: matchDetail,
-    time_remaining: Math.floor(timeLeft/60) + ':' + String(timeLeft%60).padStart(2,'0')
+    time_remaining: Math.floor(timeLeft/60) + ':' + String(timeLeft%60).padStart(2,'0'),
+    tab_switches: tabSwitches
   };
 
-  // REPLACE THIS URL with your Google Apps Script deployment URL
-  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxdId1OgLtIbtkdlRaIqmhTi-kAObYC1fT4QROP_2v_JFjDeLO2pWqshiqoFedqGHNY_A/exec';
+  const SHEET_URL = 'https://script.google.com/macros/s/AKfycbxxiimgFLNyZG9ab_SPkFmAmyhNgci8ooL5O9B9trFtQKb4WggRGSyRfnbf45hKO_V-ZQ/exec';
 
   fetch(SHEET_URL, {
     method: 'POST',
