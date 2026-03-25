@@ -427,6 +427,41 @@ body {
 .quiz-contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .quiz-contact a:hover { text-decoration: underline; }
 
+/* --- SORT BAR --- */
+.sort-bar {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 1rem 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.sort-label {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  font-weight: 500;
+  margin-right: 0.3rem;
+}
+
+.sort-btn {
+  font-family: 'Lora', Georgia, serif;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink-muted);
+  background: none;
+  border: 1px solid var(--rule-light);
+  padding: 0.4rem 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.sort-btn:hover { border-color: var(--accent-dim); color: var(--ink-soft); }
+.sort-btn.active { border-color: var(--accent); color: var(--accent); background: var(--bg-raised); }
+
 /* --- FOOTER --- */
 .archive-footer {
   max-width: 740px;
@@ -479,6 +514,7 @@ body {
   .quiz-contact { font-size: 1rem; }
   .quiz-section { margin-top: 1.8rem; }
   .entry-pronunciation { font-size: 1rem; }
+  .sort-bar { padding: 0.9rem 1.2rem; }
 }
 
 /* --- DESKTOP --- */
@@ -523,6 +559,12 @@ body {
 
 <div class="review-banner">
   <a href="review.html">Review for Quiz &rarr;</a>
+</div>
+
+<div class="sort-bar">
+  <span class="sort-label">Sort by</span>
+  <button class="sort-btn active" id="sortDate" onclick="sortWords('date')">Date</button>
+  <button class="sort-btn" id="sortAlpha" onclick="sortWords('alpha')">A &ndash; Z</button>
 </div>
 
 <main class="entries" id="entries"></main>
@@ -610,52 +652,86 @@ function shuffleWithMapping(arr) {
 }
 
 const L = ['A','B','C','D'];
+let ALL_WORDS = [];
+let currentSort = 'date';
 
-function renderEntries(words) {
+function renderEntry(w, gi) {
+  const defs = w.definitions.map((d,j) =>
+    `<div class="entry-def">${w.definitions.length > 1 ? `<span class="entry-def-num">${j+1}.</span>` : '<span class="entry-def-num">&bull;</span>'}<span>${d}</span></div>`
+  ).join('');
+
+  let quiz = '';
+  if (w.quiz?.options?.length === 4) {
+    const qid = `q-${w.word}-${gi}`;
+    const { shuffled, indices } = shuffleWithMapping(w.quiz.options);
+    const ci = indices.indexOf(w.quiz.correct);
+    quiz = `<div class="quiz-section">
+      <button class="quiz-toggle" onclick="toggleQuiz('${qid}')">Test Your Understanding</button>
+      <div class="quiz-options" id="${qid}">
+        <p class="quiz-prompt-text">Which sentence uses <strong>${w.word}</strong> correctly?</p>
+        ${shuffled.map((o,i) => `<button class="quiz-option" data-qid="${qid}" data-correct="${i===ci}" onclick="handleQuiz(this)"><span class="option-letter">${L[i]}.</span> ${o}</button>`).join('')}
+        <p class="quiz-result" id="${qid}-r"></p>
+        <p class="quiz-contact" id="${qid}-c">Disagree? Contact <a href="sms:6317660898">John</a>.</p>
+      </div>
+    </div>`;
+  }
+
+  return `<article class="entry" id="word-${w.word}">
+    <h2 class="entry-word">${w.word}</h2>
+    ${w.pronunciation ? `<div class="entry-pronunciation"><span class="pron-simple">${w.pronunciation}</span>${w.ipa ? `<span class="pron-ipa">${renderIPA(w.ipa)}</span>` : ''}</div>` : ''}
+    <div class="entry-pos">${w.partOfSpeech}</div>
+    <div class="entry-definitions">${defs}</div>
+    <div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;${renderEtymology(w.etymology)}</div>
+    <div class="entry-sentence">${renderSentence(w.sentence, w.word)}</div>
+    ${quiz}
+  </article>`;
+}
+
+function renderByDate(words) {
   const c = document.getElementById('entries'), today = getTodayStr();
-  const pub = words.filter(w => w.date <= today).sort((a,b) => b.date.localeCompare(a.date));
+  const pub = words.sort((a,b) => b.date.localeCompare(a.date));
   const groups = []; let cur = null;
   pub.forEach(w => { if (w.date !== cur) { cur = w.date; groups.push({date:w.date,words:[w]}); } else groups[groups.length-1].words.push(w); });
 
-  document.getElementById('todayDate').textContent = formatDate(groups[0]?.date || '');
-  document.getElementById('wordCount').innerHTML = '<span style="color:var(--accent)">' + pub.length + '</span> words & counting';
-
   c.innerHTML = groups.map((g, gi) => {
     const isToday = g.date === today;
-    const entries = g.words.map(w => {
-      const defs = w.definitions.map((d,j) =>
-        `<div class="entry-def">${w.definitions.length > 1 ? `<span class="entry-def-num">${j+1}.</span>` : '<span class="entry-def-num">&bull;</span>'}<span>${d}</span></div>`
-      ).join('');
-
-      let quiz = '';
-      if (w.quiz?.options?.length === 4) {
-        const qid = `q-${w.word}-${gi}`;
-        const { shuffled, indices } = shuffleWithMapping(w.quiz.options);
-        const ci = indices.indexOf(w.quiz.correct);
-        quiz = `<div class="quiz-section">
-          <button class="quiz-toggle" onclick="toggleQuiz('${qid}')">Test Your Understanding</button>
-          <div class="quiz-options" id="${qid}">
-            <p class="quiz-prompt-text">Which sentence uses <strong>${w.word}</strong> correctly?</p>
-            ${shuffled.map((o,i) => `<button class="quiz-option" data-qid="${qid}" data-correct="${i===ci}" onclick="handleQuiz(this)"><span class="option-letter">${L[i]}.</span> ${o}</button>`).join('')}
-            <p class="quiz-result" id="${qid}-r"></p>
-            <p class="quiz-contact" id="${qid}-c">Disagree? Contact <a href="sms:6317660898">John</a>.</p>
-          </div>
-        </div>`;
-      }
-
-      return `<article class="entry" id="word-${w.word}">
-        <h2 class="entry-word">${w.word}</h2>
-        ${w.pronunciation ? `<div class="entry-pronunciation"><span class="pron-simple">${w.pronunciation}</span>${w.ipa ? `<span class="pron-ipa">${renderIPA(w.ipa)}</span>` : ''}</div>` : ''}
-        <div class="entry-pos">${w.partOfSpeech}</div>
-        <div class="entry-definitions">${defs}</div>
-        <div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;${renderEtymology(w.etymology)}</div>
-        <div class="entry-sentence">${renderSentence(w.sentence, w.word)}</div>
-        ${quiz}
-      </article>`;
-    }).join('');
-
+    const entries = g.words.map(w => renderEntry(w, gi)).join('');
     return `<section class="date-group${isToday?' today':''}"><div class="date-heading">${formatDate(g.date)}</div>${entries}</section>`;
   }).join('');
+}
+
+function renderAlpha(words) {
+  const c = document.getElementById('entries');
+  const sorted = [...words].sort((a,b) => a.word.localeCompare(b.word));
+
+  // Group by first letter
+  const groups = []; let curLetter = null;
+  sorted.forEach(w => {
+    const letter = w.word[0].toUpperCase();
+    if (letter !== curLetter) { curLetter = letter; groups.push({letter, words:[w]}); }
+    else groups[groups.length-1].words.push(w);
+  });
+
+  c.innerHTML = groups.map((g, gi) => {
+    const entries = g.words.map(w => renderEntry(w, gi)).join('');
+    return `<section class="date-group"><div class="date-heading">${g.letter}</div>${entries}</section>`;
+  }).join('');
+}
+
+function renderEntries(words) {
+  const today = getTodayStr();
+  ALL_WORDS = words.filter(w => w.date <= today);
+  document.getElementById('todayDate').textContent = formatDate(ALL_WORDS[0]?.date || '');
+  document.getElementById('wordCount').innerHTML = '<span style="color:var(--accent)">' + ALL_WORDS.length + '</span> words & counting';
+  renderByDate([...ALL_WORDS]);
+}
+
+function sortWords(mode) {
+  currentSort = mode;
+  document.getElementById('sortDate').classList.toggle('active', mode === 'date');
+  document.getElementById('sortAlpha').classList.toggle('active', mode === 'alpha');
+  if (mode === 'date') renderByDate([...ALL_WORDS]);
+  else renderAlpha([...ALL_WORDS]);
 }
 
 function toggleQuiz(id) { document.getElementById(id).classList.toggle('open'); }
