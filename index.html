@@ -358,9 +358,9 @@ body {
 .quiz-section { margin-top: 2rem; }
 
 .quiz-toggle {
-  font-family: 'Lora', Georgia, serif;
+  font-family: 'Libre Baskerville', Georgia, serif;
   font-size: 1rem;
-  font-weight: 600;
+  font-weight: 400;
   color: var(--accent);
   background: none;
   border: 1px solid var(--accent-dim);
@@ -687,23 +687,40 @@ body {
 
 /* --- SENTENCE SUBMISSIONS --- */
 .submit-sentence {
-  margin-top: 1.5rem;
+  margin-top: 1.8rem;
+  position: relative;
 }
 
 .submit-sentence-toggle {
-  font-family: 'Lora', Georgia, serif;
-  font-size: 0.95rem;
-  font-weight: 600;
-  color: var(--accent-dim);
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 400;
+  color: var(--accent);
   background: none;
   border: none;
   cursor: pointer;
-  padding: 0;
+  padding: 0.5rem 0;
   font-style: italic;
   transition: color 0.2s;
+  text-align: left;
+  line-height: 1.6;
+  position: relative;
+  padding-left: 2.5rem;
 }
 
-.submit-sentence-toggle:hover { color: var(--accent); }
+.submit-sentence-toggle::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: -0.8rem;
+  width: 2rem;
+  height: 2.8rem;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 48' fill='none'%3E%3Cpath d='M16 44 C14 30 10 20 16 8 C17 6 18 5 16 4' stroke='%233dd8c5' stroke-width='2' stroke-linecap='round' fill='none' stroke-dasharray='2,3'/%3E%3Cpath d='M12 10 L16 3 L20 10' stroke='%233dd8c5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' fill='none'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.submit-sentence-toggle:hover { color: var(--accent-glow); }
 
 .sentence-form {
   display: none;
@@ -1098,7 +1115,7 @@ function renderEntry(w, gi) {
     '<div class="entry-sentence">' + renderSentence(w.sentence, w.word) + '</div>' +
     '<div class="featured-sentences" id="featured-' + w.word + '"></div>' +
     '<div class="submit-sentence">' +
-    '<button class="submit-sentence-toggle" onclick="toggleSentenceForm(\'sf-' + w.word + '\')">Think you can produce a more unhinged sentence using this word? Enter it with your name to be featured on the leaderboard.</button>' +
+    '<button class="submit-sentence-toggle" onclick="toggleSentenceForm(\'sf-' + w.word + '\')">Can you produce a more unhinged sentence using this word? Enter it with your name to be featured on the leaderboard.</button>' +
     '<div class="sentence-form" id="sf-' + w.word + '">' +
     '<textarea class="sentence-form-input" id="si-' + w.word + '" placeholder="Use ' + w.word + ' in a sentence..."></textarea>' +
     '<div class="sentence-form-row">' +

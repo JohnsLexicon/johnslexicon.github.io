@@ -235,8 +235,10 @@ function updateTimerDisplay() {
   const s = timeLeft % 60;
   document.getElementById('timerDisplay').textContent = m + ':' + String(s).padStart(2,'0');
   if (timeLeft <= 60) document.getElementById('timerDisplay').style.color = 'var(--wrong)';
-  const answered = mcAnswers.filter(a => a !== null).length + Object.keys(matchPairs).length;
-  document.getElementById('timerProgress').textContent = answered + '/26 answered';
+  const mcCount = mcAnswers.filter(a => a !== null).length;
+  const matchCount = Object.keys(matchPairs).length;
+  const sentCount = (document.getElementById('sentValediction')?.value.trim() ? 1 : 0) + (document.getElementById('sentParoxysm')?.value.trim() ? 1 : 0);
+  document.getElementById('timerProgress').textContent = (mcCount + matchCount + sentCount) + '/26 answered';
 }
 
 function showTimeUp() {
@@ -255,6 +257,8 @@ function startQuiz() {
   renderMC();
   renderMatch();
   startTimer();
+  document.getElementById('sentValediction').addEventListener('input', updateTimerDisplay);
+  document.getElementById('sentParoxysm').addEventListener('input', updateTimerDisplay);
   window.scrollTo(0, 0);
 }
 
@@ -420,12 +424,23 @@ function submitQuiz() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(payload)
   }).then(() => {
-    btn.textContent = 'Submitted';
-    document.getElementById('submitMsg').classList.add('show');
+    showConfirmation(name, scores);
   }).catch(() => {
-    btn.textContent = 'Submitted';
-    document.getElementById('submitMsg').classList.add('show');
+    showConfirmation(name, scores);
   });
+}
+
+function showConfirmation(name, scores) {
+  document.getElementById('timerBar').classList.remove('visible');
+  document.getElementById('timerSpacer').classList.remove('visible');
+  document.getElementById('quizContent').innerHTML = `
+    <div style="text-align:center;padding:4rem 1.5rem;">
+      <h2 style="font-family:'Cormorant Garamond',Georgia,serif;font-size:2.2rem;font-weight:700;margin-bottom:1rem;">Submitted</h2>
+      <p style="font-size:1.15rem;color:var(--ink-soft);margin-bottom:0.5rem;">${name}</p>
+      <p style="font-size:1.05rem;color:var(--ink-muted);">${scores.total} / ${scores.totalPossible}</p>
+    </div>
+  `;
+  window.scrollTo(0, 0);
 }
 </script>
 </body>
