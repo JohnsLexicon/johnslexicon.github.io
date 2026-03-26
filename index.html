@@ -601,24 +601,89 @@ body {
 .grouped-view {
   max-width: 740px;
   margin: 0 auto;
-  padding: 0 1.5rem 4rem;
+  padding: 1.5rem;
 }
 
-.grouped-section {
-  padding: 2.5rem 0 0;
+.group-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 0.8rem;
 }
 
-.grouped-section + .grouped-section {
-  border-top: 1px solid var(--rule);
+.group-tile {
+  padding: 1.2rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg-raised);
+  cursor: pointer;
+  text-align: center;
+  transition: all 0.2s;
 }
 
-.grouped-heading {
+.group-tile:hover { border-color: var(--accent-dim); }
+.group-tile.active { border-color: var(--accent); background: var(--bg-surface); }
+
+.group-tile-name {
   font-family: 'Cormorant Garamond', Georgia, serif;
   font-size: 1.4rem;
   font-weight: 700;
-  color: var(--accent);
-  margin-bottom: 1.5rem;
+  color: var(--ink);
 }
+
+.group-tile.active .group-tile-name { color: var(--accent); }
+
+.group-tile-count {
+  font-size: 0.85rem;
+  color: var(--ink-muted);
+  margin-top: 0.2rem;
+}
+
+.group-expanded {
+  margin-top: 1.2rem;
+  display: none;
+}
+
+.group-expanded.open { display: block; }
+
+.group-word-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.group-word-tile {
+  padding: 0.8rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg-raised);
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.group-word-tile:hover { border-color: var(--accent-dim); }
+.group-word-tile.active { border-color: var(--accent); background: var(--bg-surface); }
+
+.group-word-tile-name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.group-word-tile.active .group-word-tile-name { color: var(--accent); }
+
+.group-word-tile-pos {
+  font-size: 0.8rem;
+  color: var(--accent-dim);
+  font-style: italic;
+}
+
+.group-word-detail {
+  display: none;
+  margin-bottom: 1rem;
+}
+
+.group-word-detail.open { display: block; }
 
 /* --- FOOTER --- */
 .archive-footer {
@@ -677,7 +742,9 @@ body {
   .flip-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 1rem 1.2rem; }
   .flip-card { height: 110px; }
   .web-container { padding: 1rem 1.2rem; }
-  .grouped-view { padding: 0 1.2rem 3rem; }
+  .grouped-view { padding: 1rem 1.2rem; }
+  .group-tiles { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
+  .group-word-tiles { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
 }
 
 /* --- DESKTOP --- */
@@ -906,7 +973,7 @@ const ORIGINS = {
 };
 
 const CLUSTERS = [
-  { title:'The T-Words', desc:'Six Latin words that sound alike and love to be confused', words:['turgid','turbid','turpitude','torrid','torpid','tepid'] },
+  { title:'The T-Words', desc:'Seven Latin words that sound alike and love to be confused', words:['turgid','turbid','turpitude','torrid','torpid','tepid','taciturn'] },
   { title:'Acts of Removal', desc:'Latin verbs for taking things out — of windows, bodies, and accounts', words:['defenestrate','eviscerate','defalcate'] },
   { title:'Greek Roots', desc:'Words built from Greek that never quite naturalized into plain English', words:['thaumaturge','neophobic','paroxysm','adenoidal','elegiac'] },
   { title:'Speech & Silence', desc:'The spectrum from saying too much to saying nothing at all', words:['peroration','effusive','taciturn','jocularity'] },
@@ -961,12 +1028,25 @@ function renderByPOS(container) {
   const order = ['noun','verb','adjective','adverb'];
   const posLabels = { noun:'Nouns', verb:'Verbs', adjective:'Adjectives', adverb:'Adverbs' };
 
-  container.innerHTML = `<div class="grouped-view">${order.filter(p => groups[p]).map(pos =>
-    `<div class="grouped-section">
-      <div class="grouped-heading">${posLabels[pos] || pos} (${groups[pos].length})</div>
-      ${groups[pos].sort((a,b) => a.word.localeCompare(b.word)).map(w => renderEntry(w, 0)).join('')}
-    </div>`
-  ).join('')}</div>`;
+  container.innerHTML = `<div class="grouped-view">
+    <div class="group-tiles">${order.filter(p => groups[p]).map(pos =>
+      `<div class="group-tile" onclick="toggleGroup(this, 'pos-${pos}')">
+        <div class="group-tile-name">${posLabels[pos]}</div>
+        <div class="group-tile-count">${groups[pos].length} words</div>
+      </div>`
+    ).join('')}</div>
+    ${order.filter(p => groups[p]).map(pos => {
+      const words = groups[pos].sort((a,b) => a.word.localeCompare(b.word));
+      return `<div class="group-expanded" id="pos-${pos}">
+        <div class="group-word-tiles">${words.map(w =>
+          `<div class="group-word-tile" onclick="toggleGroupWord(this, 'pwd-${pos}-${w.word}')">
+            <div class="group-word-tile-name">${w.word}</div>
+          </div>`
+        ).join('')}</div>
+        ${words.map(w => `<div class="group-word-detail" id="pwd-${pos}-${w.word}">${renderEntry(w, 0)}</div>`).join('')}
+      </div>`;
+    }).join('')}
+  </div>`;
 }
 
 function renderByOrigin(container) {
@@ -978,12 +1058,26 @@ function renderByOrigin(container) {
   });
   const order = ['Latin','Greek','French','French/Latin','Middle English','English'];
 
-  container.innerHTML = `<div class="grouped-view">${order.filter(o => groups[o]).map(origin =>
-    `<div class="grouped-section">
-      <div class="grouped-heading">${origin} (${groups[origin].length})</div>
-      ${groups[origin].sort((a,b) => a.word.localeCompare(b.word)).map(w => renderEntry(w, 0)).join('')}
-    </div>`
-  ).join('')}</div>`;
+  container.innerHTML = `<div class="grouped-view">
+    <div class="group-tiles">${order.filter(o => groups[o]).map(origin =>
+      `<div class="group-tile" onclick="toggleGroup(this, 'orig-${origin.replace(/\//g,'-')}')">
+        <div class="group-tile-name">${origin}</div>
+        <div class="group-tile-count">${groups[origin].length} words</div>
+      </div>`
+    ).join('')}</div>
+    ${order.filter(o => groups[o]).map(origin => {
+      const words = groups[origin].sort((a,b) => a.word.localeCompare(b.word));
+      const id = 'orig-' + origin.replace(/\//g,'-');
+      return `<div class="group-expanded" id="${id}">
+        <div class="group-word-tiles">${words.map(w =>
+          `<div class="group-word-tile" onclick="toggleGroupWord(this, 'owd-${id}-${w.word}')">
+            <div class="group-word-tile-name">${w.word}</div>
+          </div>`
+        ).join('')}</div>
+        ${words.map(w => `<div class="group-word-detail" id="owd-${id}-${w.word}">${renderEntry(w, 0)}</div>`).join('')}
+      </div>`;
+    }).join('')}
+  </div>`;
 }
 
 function renderWeb(container) {
@@ -1009,9 +1103,38 @@ function toggleQuiz(id) { document.getElementById(id).classList.toggle('open'); 
 function toggleWebDetail(id) {
   const el = document.getElementById(id);
   if (!el) return;
-  // Close others in same cluster
   el.parentElement.querySelectorAll('.web-word-detail').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
   el.classList.toggle('open');
+}
+
+function toggleGroup(tile, id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  // Close all expanded groups
+  document.querySelectorAll('.group-expanded').forEach(g => g.classList.remove('open'));
+  document.querySelectorAll('.group-tile').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.group-word-detail').forEach(d => d.classList.remove('open'));
+  document.querySelectorAll('.group-word-tile').forEach(t => t.classList.remove('active'));
+  if (!isOpen) {
+    el.classList.add('open');
+    tile.classList.add('active');
+    setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'start' }), 100);
+  }
+}
+
+function toggleGroupWord(tile, id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  const isOpen = el.classList.contains('open');
+  // Close other word details in same group
+  el.parentElement.querySelectorAll('.group-word-detail').forEach(d => d.classList.remove('open'));
+  el.parentElement.querySelectorAll('.group-word-tile').forEach(t => t.classList.remove('active'));
+  if (!isOpen) {
+    el.classList.add('open');
+    tile.classList.add('active');
+    setTimeout(() => el.scrollIntoView({ behavior:'smooth', block:'nearest' }), 100);
+  }
 }
 
 function handleQuiz(btn) {
