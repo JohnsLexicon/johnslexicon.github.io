@@ -685,29 +685,19 @@ body {
 
 .group-word-detail.open { display: block; }
 
-/* --- SENTENCE SUBMISSIONS --- */
-.submit-sentence {
-  margin-top: 1.8rem;
+/* --- SENTENCE CHALLENGE --- */
+.challenge-toggle {
+  margin-left: 0.5rem;
 }
 
-.submit-sentence-toggle {
+.challenge-prompt {
   font-family: 'Libre Baskerville', Georgia, serif;
   font-size: 1.05rem;
-  font-weight: 400;
-  color: var(--accent);
-  background: var(--bg-raised);
-  border: 1px solid var(--accent-dim);
-  cursor: pointer;
-  padding: 1rem 1.3rem;
   font-style: italic;
-  transition: background 0.2s, border-color 0.2s;
-  text-align: left;
+  color: var(--accent);
   line-height: 1.6;
-  display: block;
-  width: 100%;
+  margin-bottom: 1rem;
 }
-
-.submit-sentence-toggle:hover { background: var(--bg-surface); border-color: var(--accent); }
 
 .sentence-form {
   display: none;
@@ -1078,11 +1068,36 @@ function renderEntry(w, gi) {
     }).join('');
     quiz = '<div class="quiz-section">' +
       '<button class="quiz-toggle" onclick="toggleQuiz(\'' + qid + '\')">Test Your Understanding</button>' +
+      '<button class="quiz-toggle challenge-toggle" onclick="toggleSentenceForm(\'sf-' + w.word + '\')">Challenge</button>' +
       '<div class="quiz-options" id="' + qid + '">' +
       '<p class="quiz-prompt-text">Which sentence uses <strong>' + w.word + '</strong> correctly?</p>' +
       opts +
       '<p class="quiz-result" id="' + qid + '-r"></p>' +
       '<p class="quiz-contact" id="' + qid + '-c">Disagree? Contact <a href="sms:6317660898">John</a>.</p>' +
+      '</div>' +
+      '<div class="sentence-form" id="sf-' + w.word + '">' +
+      '<p class="challenge-prompt">Can you produce a more unhinged sentence using this word? Enter it with your name to be featured on the leaderboard.</p>' +
+      '<textarea class="sentence-form-input" id="si-' + w.word + '" placeholder="Use ' + w.word + ' in a sentence..."></textarea>' +
+      '<div class="sentence-form-row">' +
+      '<input type="text" class="sentence-form-name" id="sn-' + w.word + '" placeholder="Your name">' +
+      '<button class="sentence-form-submit" onclick="submitSentence(\'' + w.word + '\')">Submit</button>' +
+      '</div>' +
+      '<p class="sentence-form-msg" id="sm-' + w.word + '"></p>' +
+      '</div>' +
+      '</div>';
+  }
+
+  if (!quiz) {
+    quiz = '<div class="quiz-section">' +
+      '<button class="quiz-toggle challenge-toggle" onclick="toggleSentenceForm(\'sf-' + w.word + '\')">Challenge</button>' +
+      '<div class="sentence-form" id="sf-' + w.word + '">' +
+      '<p class="challenge-prompt">Can you produce a more unhinged sentence using this word? Enter it with your name to be featured on the leaderboard.</p>' +
+      '<textarea class="sentence-form-input" id="si-' + w.word + '" placeholder="Use ' + w.word + ' in a sentence..."></textarea>' +
+      '<div class="sentence-form-row">' +
+      '<input type="text" class="sentence-form-name" id="sn-' + w.word + '" placeholder="Your name">' +
+      '<button class="sentence-form-submit" onclick="submitSentence(\'' + w.word + '\')">Submit</button>' +
+      '</div>' +
+      '<p class="sentence-form-msg" id="sm-' + w.word + '"></p>' +
       '</div></div>';
   }
 
@@ -1101,16 +1116,6 @@ function renderEntry(w, gi) {
     '<div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;' + renderEtymology(w.etymology) + '</div>' +
     '<div class="entry-sentence">' + renderSentence(w.sentence, w.word) + '</div>' +
     '<div class="featured-sentences" id="featured-' + w.word + '"></div>' +
-    '<div class="submit-sentence">' +
-    '<button class="submit-sentence-toggle" onclick="toggleSentenceForm(\'sf-' + w.word + '\')">Can you produce a more unhinged sentence using this word? Enter it with your name to be featured on the leaderboard.</button>' +
-    '<div class="sentence-form" id="sf-' + w.word + '">' +
-    '<textarea class="sentence-form-input" id="si-' + w.word + '" placeholder="Use ' + w.word + ' in a sentence..."></textarea>' +
-    '<div class="sentence-form-row">' +
-    '<input type="text" class="sentence-form-name" id="sn-' + w.word + '" placeholder="Your name">' +
-    '<button class="sentence-form-submit" onclick="submitSentence(\'' + w.word + '\')">Submit</button>' +
-    '</div>' +
-    '<p class="sentence-form-msg" id="sm-' + w.word + '"></p>' +
-    '</div></div>' +
     quiz +
     '</article>';
 }
