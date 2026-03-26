@@ -427,40 +427,198 @@ body {
 .quiz-contact a { color: var(--accent); text-decoration: none; font-weight: 600; }
 .quiz-contact a:hover { text-decoration: underline; }
 
-/* --- SORT BAR --- */
-.sort-bar {
+/* --- VIEW BAR --- */
+.view-bar {
   max-width: 740px;
   margin: 0 auto;
   padding: 1rem 1.5rem;
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.5rem;
   border-bottom: 1px solid var(--rule);
 }
 
-.sort-label {
+.view-label {
   font-size: 0.9rem;
   color: var(--ink-muted);
   text-transform: uppercase;
   letter-spacing: 0.06em;
   font-weight: 500;
   margin-right: 0.3rem;
+  width: 100%;
+  margin-bottom: 0.2rem;
 }
 
-.sort-btn {
+.view-btn {
   font-family: 'Lora', Georgia, serif;
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 600;
   color: var(--ink-muted);
   background: none;
   border: 1px solid var(--rule-light);
-  padding: 0.4rem 1rem;
+  padding: 0.4rem 0.85rem;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.sort-btn:hover { border-color: var(--accent-dim); color: var(--ink-soft); }
-.sort-btn.active { border-color: var(--accent); color: var(--accent); background: var(--bg-raised); }
+.view-btn:hover { border-color: var(--accent-dim); color: var(--ink-soft); }
+.view-btn.active { border-color: var(--accent); color: var(--accent); background: var(--bg-raised); }
+
+/* --- FLIP GRID --- */
+.flip-grid {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 1.5rem;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 0.8rem;
+}
+
+.flip-card {
+  perspective: 800px;
+  cursor: pointer;
+  height: 120px;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.5s;
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner { transform: rotateY(180deg); }
+
+.flip-card-front, .flip-card-back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  backface-visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0.8rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg-raised);
+}
+
+.flip-card-back {
+  transform: rotateY(180deg);
+  background: var(--bg-surface);
+  border-color: var(--accent-dim);
+}
+
+.flip-card-word {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.flip-card-pos {
+  font-size: 0.8rem;
+  color: var(--accent-dim);
+  font-style: italic;
+  margin-top: 0.2rem;
+}
+
+.flip-card-def {
+  font-family: 'Libre Baskerville', Georgia, serif;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--ink-soft);
+  text-align: center;
+  overflow: hidden;
+}
+
+/* --- CONNECTIONS WEB --- */
+.web-container {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.web-cluster {
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg-raised);
+}
+
+.web-cluster-title {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.3rem;
+}
+
+.web-cluster-desc {
+  font-size: 0.9rem;
+  color: var(--ink-muted);
+  font-style: italic;
+  margin-bottom: 1rem;
+}
+
+.web-words {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.web-word {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--ink);
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--rule-light);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.web-word:hover { border-color: var(--accent); color: var(--accent); }
+
+.web-word-detail {
+  margin-top: 1rem;
+  padding: 1rem;
+  border-top: 1px solid var(--rule);
+  font-size: 1rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+  display: none;
+}
+
+.web-word-detail.open { display: block; }
+
+.web-word-detail strong { color: var(--ink); }
+
+/* --- GROUPED VIEW (origin, pos) --- */
+.grouped-view {
+  max-width: 740px;
+  margin: 0 auto;
+  padding: 0 1.5rem 4rem;
+}
+
+.grouped-section {
+  padding: 2.5rem 0 0;
+}
+
+.grouped-section + .grouped-section {
+  border-top: 1px solid var(--rule);
+}
+
+.grouped-heading {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 1.5rem;
+}
 
 /* --- FOOTER --- */
 .archive-footer {
@@ -514,7 +672,12 @@ body {
   .quiz-contact { font-size: 1rem; }
   .quiz-section { margin-top: 1.8rem; }
   .entry-pronunciation { font-size: 1rem; }
-  .sort-bar { padding: 0.9rem 1.2rem; }
+  .view-bar { padding: 0.9rem 1.2rem; }
+  .view-btn { font-size: 0.85rem; padding: 0.35rem 0.7rem; }
+  .flip-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 1rem 1.2rem; }
+  .flip-card { height: 110px; }
+  .web-container { padding: 1rem 1.2rem; }
+  .grouped-view { padding: 0 1.2rem 3rem; }
 }
 
 /* --- DESKTOP --- */
@@ -561,13 +724,19 @@ body {
   <a href="review.html">Review for Quiz &rarr;</a>
 </div>
 
-<div class="sort-bar">
-  <span class="sort-label">Sort by</span>
-  <button class="sort-btn active" id="sortDate" onclick="sortWords('date')">Date</button>
-  <button class="sort-btn" id="sortAlpha" onclick="sortWords('alpha')">A &ndash; Z</button>
+<div class="view-bar">
+  <span class="view-label">View</span>
+  <button class="view-btn active" onclick="setView('date')">Date</button>
+  <button class="view-btn" onclick="setView('alpha')">A &ndash; Z</button>
+  <button class="view-btn" onclick="setView('flip')">Flip Grid</button>
+  <button class="view-btn" onclick="setView('pos')">Part of Speech</button>
+  <button class="view-btn" onclick="setView('origin')">Origin</button>
+  <button class="view-btn" onclick="setView('web')">Connections</button>
 </div>
 
-<main class="entries" id="entries"></main>
+<div id="mainContent">
+  <main class="entries" id="entries"></main>
+</div>
 
 <footer class="archive-footer">
   <p>New word posted daily</p>
@@ -653,7 +822,6 @@ function shuffleWithMapping(arr) {
 
 const L = ['A','B','C','D'];
 let ALL_WORDS = [];
-let currentSort = 'date';
 
 function renderEntry(w, gi) {
   const defs = w.definitions.map((d,j) =>
@@ -726,15 +894,125 @@ function renderEntries(words) {
   renderByDate([...ALL_WORDS]);
 }
 
-function sortWords(mode) {
-  currentSort = mode;
-  document.getElementById('sortDate').classList.toggle('active', mode === 'date');
-  document.getElementById('sortAlpha').classList.toggle('active', mode === 'alpha');
-  if (mode === 'date') renderByDate([...ALL_WORDS]);
-  else renderAlpha([...ALL_WORDS]);
+// === WORD METADATA ===
+const ORIGINS = {
+  'elegiac':'Greek','eviscerate':'Latin','defenestrate':'Latin','sartorial':'Latin',
+  'slapdash':'English','paroxysm':'Greek','dalliance':'Middle English','peroration':'Latin',
+  'turgid':'Latin','turbid':'Latin','turpitude':'Latin','torrid':'Latin','tepid':'Latin',
+  'torpid':'Latin','thaumaturge':'Greek','neophobic':'Greek','effusive':'Latin',
+  'propriety':'French/Latin','mendicant':'Latin','jocularity':'Latin','inexorable':'Latin',
+  'defalcate':'Latin','adenoidal':'Greek','vertiginous':'Latin','frippery':'French',
+  'valediction':'Latin','taciturn':'Latin'
+};
+
+const CLUSTERS = [
+  { title:'The T-Words', desc:'Six Latin words that sound alike and love to be confused', words:['turgid','turbid','turpitude','torrid','torpid','tepid'] },
+  { title:'Acts of Removal', desc:'Latin verbs for taking things out — of windows, bodies, and accounts', words:['defenestrate','eviscerate','defalcate'] },
+  { title:'Greek Roots', desc:'Words built from Greek that never quite naturalized into plain English', words:['thaumaturge','neophobic','paroxysm','adenoidal','elegiac'] },
+  { title:'Speech & Silence', desc:'The spectrum from saying too much to saying nothing at all', words:['peroration','effusive','taciturn','jocularity'] },
+];
+
+function setView(mode) {
+  document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
+  document.querySelector(`[onclick="setView('${mode}')"]`).classList.add('active');
+  const content = document.getElementById('mainContent');
+
+  if (mode === 'date') {
+    content.innerHTML = '<main class="entries" id="entries"></main>';
+    renderByDate([...ALL_WORDS]);
+  } else if (mode === 'alpha') {
+    content.innerHTML = '<main class="entries" id="entries"></main>';
+    renderAlpha([...ALL_WORDS]);
+  } else if (mode === 'flip') {
+    renderFlipGrid(content);
+  } else if (mode === 'pos') {
+    renderByPOS(content);
+  } else if (mode === 'origin') {
+    renderByOrigin(content);
+  } else if (mode === 'web') {
+    renderWeb(content);
+  }
+}
+
+function renderFlipGrid(container) {
+  const sorted = [...ALL_WORDS].sort((a,b) => a.word.localeCompare(b.word));
+  container.innerHTML = `<div class="flip-grid">${sorted.map(w =>
+    `<div class="flip-card" onclick="this.classList.toggle('flipped')">
+      <div class="flip-card-inner">
+        <div class="flip-card-front">
+          <div class="flip-card-word">${w.word}</div>
+          <div class="flip-card-pos">${w.partOfSpeech}</div>
+        </div>
+        <div class="flip-card-back">
+          <div class="flip-card-def">${w.definitions[0]}</div>
+        </div>
+      </div>
+    </div>`
+  ).join('')}</div>`;
+}
+
+function renderByPOS(container) {
+  const groups = {};
+  ALL_WORDS.forEach(w => {
+    const pos = w.partOfSpeech;
+    if (!groups[pos]) groups[pos] = [];
+    groups[pos].push(w);
+  });
+  const order = ['noun','verb','adjective','adverb'];
+  const posLabels = { noun:'Nouns', verb:'Verbs', adjective:'Adjectives', adverb:'Adverbs' };
+
+  container.innerHTML = `<div class="grouped-view">${order.filter(p => groups[p]).map(pos =>
+    `<div class="grouped-section">
+      <div class="grouped-heading">${posLabels[pos] || pos} (${groups[pos].length})</div>
+      ${groups[pos].sort((a,b) => a.word.localeCompare(b.word)).map(w => renderEntry(w, 0)).join('')}
+    </div>`
+  ).join('')}</div>`;
+}
+
+function renderByOrigin(container) {
+  const groups = {};
+  ALL_WORDS.forEach(w => {
+    const origin = ORIGINS[w.word] || 'Other';
+    if (!groups[origin]) groups[origin] = [];
+    groups[origin].push(w);
+  });
+  const order = ['Latin','Greek','French','French/Latin','Middle English','English'];
+
+  container.innerHTML = `<div class="grouped-view">${order.filter(o => groups[o]).map(origin =>
+    `<div class="grouped-section">
+      <div class="grouped-heading">${origin} (${groups[origin].length})</div>
+      ${groups[origin].sort((a,b) => a.word.localeCompare(b.word)).map(w => renderEntry(w, 0)).join('')}
+    </div>`
+  ).join('')}</div>`;
+}
+
+function renderWeb(container) {
+  container.innerHTML = `<div class="web-container">${CLUSTERS.map((c, ci) =>
+    `<div class="web-cluster">
+      <div class="web-cluster-title">${c.title}</div>
+      <div class="web-cluster-desc">${c.desc}</div>
+      <div class="web-words">${c.words.map(wName => {
+        const w = ALL_WORDS.find(x => x.word === wName);
+        return w ? `<div class="web-word" onclick="toggleWebDetail('wd-${ci}-${wName}')">${w.word}</div>` : '';
+      }).join('')}</div>
+      ${c.words.map(wName => {
+        const w = ALL_WORDS.find(x => x.word === wName);
+        if (!w) return '';
+        return `<div class="web-word-detail" id="wd-${ci}-${wName}"><strong>${w.word}</strong> (${w.partOfSpeech}) — ${w.definitions[0]}</div>`;
+      }).join('')}
+    </div>`
+  ).join('')}</div>`;
 }
 
 function toggleQuiz(id) { document.getElementById(id).classList.toggle('open'); }
+
+function toggleWebDetail(id) {
+  const el = document.getElementById(id);
+  if (!el) return;
+  // Close others in same cluster
+  el.parentElement.querySelectorAll('.web-word-detail').forEach(d => { if (d.id !== id) d.classList.remove('open'); });
+  el.classList.toggle('open');
+}
 
 function handleQuiz(btn) {
   if (btn.classList.contains('answered')) return;
