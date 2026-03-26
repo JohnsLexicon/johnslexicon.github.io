@@ -1,4 +1,24 @@
-[
+[  {
+    "date": "2026-03-25",
+    "word": "taciturn",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "Reserved or uncommunicative in speech; saying little"
+    ],
+    "etymology": "From Latin *taciturnitas*, from *tacitus* 'silent', from *tacēre* 'be silent'",
+    "pronunciation": "TAS-ih-turn",
+    "ipa": "/ˈtæs.ɪ.tɜːrn/",
+    "sentence": "Even during the alien invasion, Kevin stayed perfectly taciturn, offering the invaders nothing but a single raised middle finger.",
+    "quiz": {
+      "correct": 3,
+      "options": [
+        "The taciturn agreement between the two nations was never formally announced but understood by both sides.",
+        "She delivered a taciturn rejection of the proposal, listing every flaw in withering detail.",
+        "The taciturn rhythm of the drums built steadily until the entire audience was standing.",
+        "The new hire was so taciturn that three weeks passed before anyone in the office heard him speak a complete sentence."
+      ]
+    }
+  },
   {
     "date": "2026-03-24",
     "word": "elegiac",
