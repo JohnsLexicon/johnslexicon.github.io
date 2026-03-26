@@ -1059,80 +1059,87 @@ const L = ['A','B','C','D'];
 let ALL_WORDS = [];
 
 function renderEntry(w, gi) {
-  const defs = w.definitions.map((d,j) =>
-    `<div class="entry-def">${w.definitions.length > 1 ? `<span class="entry-def-num">${j+1}.</span>` : '<span class="entry-def-num">&bull;</span>'}<span>${d}</span></div>`
-  ).join('');
+  var defs = w.definitions.map(function(d,j) {
+    var num = w.definitions.length > 1 ? '<span class="entry-def-num">' + (j+1) + '.</span>' : '<span class="entry-def-num">&bull;</span>';
+    return '<div class="entry-def">' + num + '<span>' + d + '</span></div>';
+  }).join('');
 
-  let quiz = '';
-  if (w.quiz?.options?.length === 4) {
-    const qid = `q-${w.word}-${gi}`;
-    const { shuffled, indices } = shuffleWithMapping(w.quiz.options);
-    const ci = indices.indexOf(w.quiz.correct);
-    quiz = `<div class="quiz-section">
-      <button class="quiz-toggle" onclick="toggleQuiz('${qid}')">Test Your Understanding</button>
-      <div class="quiz-options" id="${qid}">
-        <p class="quiz-prompt-text">Which sentence uses <strong>${w.word}</strong> correctly?</p>
-        ${shuffled.map((o,i) => `<button class="quiz-option" data-qid="${qid}" data-correct="${i===ci}" onclick="handleQuiz(this)"><span class="option-letter">${L[i]}.</span> ${o}</button>`).join('')}
-        <p class="quiz-result" id="${qid}-r"></p>
-        <p class="quiz-contact" id="${qid}-c">Disagree? Contact <a href="sms:6317660898">John</a>.</p>
-      </div>
-    </div>`;
+  var quiz = '';
+  if (w.quiz && w.quiz.options && w.quiz.options.length === 4) {
+    var qid = 'q-' + w.word + '-' + gi;
+    var sh = shuffleWithMapping(w.quiz.options);
+    var ci = sh.indices.indexOf(w.quiz.correct);
+    var opts = sh.shuffled.map(function(o,i) {
+      return '<button class="quiz-option" data-qid="' + qid + '" data-correct="' + (i===ci) + '" onclick="handleQuiz(this)"><span class="option-letter">' + L[i] + '.</span> ' + o + '</button>';
+    }).join('');
+    quiz = '<div class="quiz-section">' +
+      '<button class="quiz-toggle" onclick="toggleQuiz(\'' + qid + '\')">Test Your Understanding</button>' +
+      '<div class="quiz-options" id="' + qid + '">' +
+      '<p class="quiz-prompt-text">Which sentence uses <strong>' + w.word + '</strong> correctly?</p>' +
+      opts +
+      '<p class="quiz-result" id="' + qid + '-r"></p>' +
+      '<p class="quiz-contact" id="' + qid + '-c">Disagree? Contact <a href="sms:6317660898">John</a>.</p>' +
+      '</div></div>';
   }
 
-  return `<article class="entry" id="word-${w.word}">
-    <h2 class="entry-word">${w.word}</h2>
-    ${w.pronunciation ? `<div class="entry-pronunciation"><span class="pron-simple">${w.pronunciation}</span>${w.ipa ? `<span class="pron-ipa">${renderIPA(w.ipa)}</span>` : ''}</div>` : ''}
-    <div class="entry-pos">${w.partOfSpeech}</div>
-    <div class="entry-definitions">${defs}</div>
-    <div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;${renderEtymology(w.etymology)}</div>
-    <div class="entry-sentence">${renderSentence(w.sentence, w.word)}</div>
-    <div class="featured-sentences" id="featured-${w.word}"></div>
-    <div class="submit-sentence">
-      <button class="submit-sentence-toggle" onclick="toggleSentenceForm('sf-${w.word}')">Think you can write a better sentence?</button>
-      <div class="sentence-form" id="sf-${w.word}">
-        <textarea class="sentence-form-input" id="si-${w.word}" placeholder="Use ${w.word} in a sentence..."></textarea>
-        <div class="sentence-form-row">
-          <input type="text" class="sentence-form-name" id="sn-${w.word}" placeholder="Your name">
-          <button class="sentence-form-submit" onclick="submitSentence('${w.word}')">Submit</button>
-        </div>
-        <p class="sentence-form-msg" id="sm-${w.word}"></p>
-      </div>
-    </div>
-    ${quiz}
-  </article>`;
-    ${quiz}
-  </article>`;
+  var pron = '';
+  if (w.pronunciation) {
+    pron = '<div class="entry-pronunciation"><span class="pron-simple">' + w.pronunciation + '</span>';
+    if (w.ipa) pron += '<span class="pron-ipa">' + renderIPA(w.ipa) + '</span>';
+    pron += '</div>';
+  }
+
+  return '<article class="entry" id="word-' + w.word + '">' +
+    '<h2 class="entry-word">' + w.word + '</h2>' +
+    pron +
+    '<div class="entry-pos">' + w.partOfSpeech + '</div>' +
+    '<div class="entry-definitions">' + defs + '</div>' +
+    '<div class="entry-etymology"><span class="etym-label">Origin</span>&ensp;' + renderEtymology(w.etymology) + '</div>' +
+    '<div class="entry-sentence">' + renderSentence(w.sentence, w.word) + '</div>' +
+    '<div class="featured-sentences" id="featured-' + w.word + '"></div>' +
+    '<div class="submit-sentence">' +
+    '<button class="submit-sentence-toggle" onclick="toggleSentenceForm(\'sf-' + w.word + '\')">Think you can write a better sentence?</button>' +
+    '<div class="sentence-form" id="sf-' + w.word + '">' +
+    '<textarea class="sentence-form-input" id="si-' + w.word + '" placeholder="Use ' + w.word + ' in a sentence..."></textarea>' +
+    '<div class="sentence-form-row">' +
+    '<input type="text" class="sentence-form-name" id="sn-' + w.word + '" placeholder="Your name">' +
+    '<button class="sentence-form-submit" onclick="submitSentence(\'' + w.word + '\')">Submit</button>' +
+    '</div>' +
+    '<p class="sentence-form-msg" id="sm-' + w.word + '"></p>' +
+    '</div></div>' +
+    quiz +
+    '</article>';
 }
 
 function renderByDate(words) {
-  const c = document.getElementById('entries'), today = getTodayStr();
-  const pub = words.sort((a,b) => b.date.localeCompare(a.date));
-  const groups = []; let cur = null;
-  pub.forEach(w => { if (w.date !== cur) { cur = w.date; groups.push({date:w.date,words:[w]}); } else groups[groups.length-1].words.push(w); });
-
-  c.innerHTML = groups.map((g, gi) => {
-    const isToday = g.date === today;
-    const entries = g.words.map(w => renderEntry(w, gi)).join('');
-    return `<section class="date-group${isToday?' today':''}"><div class="date-heading">${formatDate(g.date)}</div>${entries}</section>`;
-  }).join('');
+  var c = document.getElementById('entries'), today = getTodayStr();
+  var pub = words.sort(function(a,b) { return b.date.localeCompare(a.date); });
+  var groups = []; var cur = null;
+  pub.forEach(function(w) { if (w.date !== cur) { cur = w.date; groups.push({date:w.date,words:[w]}); } else groups[groups.length-1].words.push(w); });
+  var html = '';
+  groups.forEach(function(g, gi) {
+    var isToday = g.date === today;
+    var entries = g.words.map(function(w) { return renderEntry(w, gi); }).join('');
+    html += '<section class="date-group' + (isToday ? ' today' : '') + '"><div class="date-heading">' + formatDate(g.date) + '</div>' + entries + '</section>';
+  });
+  c.innerHTML = html;
 }
 
 function renderAlpha(words) {
-  const c = document.getElementById('entries');
-  const sorted = [...words].sort((a,b) => a.word.localeCompare(b.word));
-
-  // Group by first letter
-  const groups = []; let curLetter = null;
-  sorted.forEach(w => {
-    const letter = w.word[0].toUpperCase();
-    if (letter !== curLetter) { curLetter = letter; groups.push({letter, words:[w]}); }
+  var c = document.getElementById('entries');
+  var sorted = words.slice().sort(function(a,b) { return a.word.localeCompare(b.word); });
+  var groups = []; var curLetter = null;
+  sorted.forEach(function(w) {
+    var letter = w.word[0].toUpperCase();
+    if (letter !== curLetter) { curLetter = letter; groups.push({letter:letter, words:[w]}); }
     else groups[groups.length-1].words.push(w);
   });
-
-  c.innerHTML = groups.map((g, gi) => {
-    const entries = g.words.map(w => renderEntry(w, gi)).join('');
-    return `<section class="date-group"><div class="date-heading">${g.letter}</div>${entries}</section>`;
-  }).join('');
+  var html = '';
+  groups.forEach(function(g, gi) {
+    var entries = g.words.map(function(w) { return renderEntry(w, gi); }).join('');
+    html += '<section class="date-group"><div class="date-heading">' + g.letter + '</div>' + entries + '</section>';
+  });
+  c.innerHTML = html;
 }
 
 function renderEntries(words) {
@@ -1188,20 +1195,17 @@ function setView(mode) {
 }
 
 function renderFlipGrid(container) {
-  const sorted = [...ALL_WORDS].sort((a,b) => a.word.localeCompare(b.word));
-  container.innerHTML = `<div class="flip-grid">${sorted.map(w =>
-    `<div class="flip-card" onclick="this.classList.toggle('flipped')">
-      <div class="flip-card-inner">
-        <div class="flip-card-front">
-          <div class="flip-card-word">${w.word}</div>
-          <div class="flip-card-pos">${w.partOfSpeech}</div>
-        </div>
-        <div class="flip-card-back">
-          <div class="flip-card-def">${w.definitions[0]}</div>
-        </div>
-      </div>
-    </div>`
-  ).join('')}</div>`;
+  var sorted = ALL_WORDS.slice().sort(function(a,b) { return a.word.localeCompare(b.word); });
+  var html = '<div class="flip-grid">';
+  sorted.forEach(function(w) {
+    html += '<div class="flip-card" onclick="this.classList.toggle(\'flipped\')">' +
+      '<div class="flip-card-inner">' +
+      '<div class="flip-card-front"><div class="flip-card-word">' + w.word + '</div><div class="flip-card-pos">' + w.partOfSpeech + '</div></div>' +
+      '<div class="flip-card-back"><div class="flip-card-def">' + w.definitions[0] + '</div></div>' +
+      '</div></div>';
+  });
+  html += '</div>';
+  container.innerHTML = html;
 }
 
 function renderByPOS(container) {
@@ -1397,14 +1401,13 @@ function loadFeatured() {
 }
 
 function displayFeatured(data) {
-  data.forEach(item => {
-    const el = document.getElementById('featured-' + item.word);
+  data.forEach(function(item) {
+    var el = document.getElementById('featured-' + item.word);
     if (!el) return;
     if (!el.innerHTML.includes(item.sentence)) {
-      el.innerHTML += `<div class="featured-item">
-        <div class="featured-text">&ldquo;${item.sentence}&rdquo;</div>
-        <div class="featured-author">&mdash; ${item.name}</div>
-      </div>`;
+      el.innerHTML += '<div class="featured-item">' +
+        '<div class="featured-text">&ldquo;' + item.sentence + '&rdquo;</div>' +
+        '<div class="featured-author">&mdash; ' + item.name + '</div></div>';
     }
   });
 }
@@ -1417,32 +1420,29 @@ function renderLeaderboard(container) {
 
   container.innerHTML = '<div class="leaderboard"><div class="lb-empty">Loading...</div></div>';
 
-  const render = (data) => {
-    const counts = {};
-    data.forEach(item => { counts[item.name] = (counts[item.name] || 0) + 1; });
-    const sorted = Object.entries(counts).sort((a,b) => b[1] - a[1]);
+  var render = function(data) {
+    var counts = {};
+    data.forEach(function(item) { counts[item.name] = (counts[item.name] || 0) + 1; });
+    var sorted = Object.entries(counts).sort(function(a,b) { return b[1] - a[1]; });
 
     if (sorted.length === 0) {
       container.innerHTML = '<div class="leaderboard"><div class="leaderboard-title">The Unhinged Leaderboard</div><div class="leaderboard-subtitle">Most featured sentences</div><div class="lb-empty">No featured sentences yet. Submit one.</div></div>';
       return;
     }
 
-    container.innerHTML = `<div class="leaderboard">
-      <div class="leaderboard-title">The Unhinged Leaderboard</div>
-      <div class="leaderboard-subtitle">Most featured sentences</div>
-      ${sorted.map((s, i) => `<div class="lb-entry">
-        <div class="lb-rank">${i + 1}</div>
-        <div class="lb-name">${s[0]}</div>
-        <div class="lb-count">${s[1]} sentence${s[1] > 1 ? 's' : ''}</div>
-      </div>`).join('')}
-    </div>`;
+    var html = '<div class="leaderboard"><div class="leaderboard-title">The Unhinged Leaderboard</div><div class="leaderboard-subtitle">Most featured sentences</div>';
+    sorted.forEach(function(s, i) {
+      html += '<div class="lb-entry"><div class="lb-rank">' + (i+1) + '</div><div class="lb-name">' + s[0] + '</div><div class="lb-count">' + s[1] + ' sentence' + (s[1] > 1 ? 's' : '') + '</div></div>';
+    });
+    html += '</div>';
+    container.innerHTML = html;
   };
 
   if (featuredData) { render(featuredData); return; }
   fetch(SENTENCES_URL)
-    .then(r => r.json())
-    .then(data => { featuredData = data; render(data); })
-    .catch(() => { container.innerHTML = '<div class="leaderboard"><div class="lb-empty">Unable to load leaderboard.</div></div>'; });
+    .then(function(r) { return r.json(); })
+    .then(function(data) { featuredData = data; render(data); })
+    .catch(function() { container.innerHTML = '<div class="leaderboard"><div class="lb-empty">Unable to load leaderboard.</div></div>'; });
 }
 
 fetch('words.json').then(r=>r.json()).then(words => { renderEntries(words); loadFeatured(); }).catch(()=>{
