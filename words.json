@@ -1,4 +1,25 @@
 [  {
+    "date": "2026-03-26",
+    "word": "tacit",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "expressed or carried on without words or speech",
+      "implied or indicated (as by an act or by silence) but not actually expressed"
+    ],
+    "etymology": "Middle French or Latin; Middle French *tacite*, from Latin *tacitus* silent, from past participle of *tacēre* to be silent; akin to Old High German *dagēn* to be silent",
+    "pronunciation": "TAS-it",
+    "ipa": "/ˈtasət/",
+    "sentence": "The cult leader’s tacit agreement with his followers was simple: he would never explicitly say they should drink the punch, but when he started softly humming \"Sweet Caroline,\" everyone understood it was time to ascend.",
+    "quiz": {
+      "correct": 3,
+      "options": [
+        "He was a tacit man who rarely spoke more than a few words at dinner parties.",
+        "The fabric had a tacit quality, smooth and cool against her fingertips.",
+        "Stonewall Jackson flanked the opponent from both sides, a brilliant tacit that won them the battle.",
+        "The neighbors had a tacit agreement not to mow their lawns before 9 AM."
+      ]
+    }
+  },  {
     "date": "2026-03-25",
     "word": "taciturn",
     "partOfSpeech": "adjective",
