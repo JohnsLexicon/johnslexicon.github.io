@@ -883,29 +883,36 @@ body {
   .entries { padding: 0 1.2rem 4rem; }
   .date-group { padding: 3rem 0 0; }
   .date-group.today { margin: 0 -1.2rem; padding: 3rem 1.2rem 0.5rem; }
-  .date-heading { font-size: 0.9rem; margin-bottom: 1.8rem; }
+  .date-heading { font-size: 1rem; margin-bottom: 1.8rem; }
   .entry { padding-bottom: 3rem; }
   .entry + .entry { padding-top: 2.5rem; }
-  .entry-pos { font-size: 1.3rem; }
-  .entry-def { font-size: 1.15rem; }
-  .entry-def-num { font-size: 1rem; }
-  .entry-etymology { font-size: 1.05rem; }
-  .entry-sentence { font-size: 1.2rem; }
-  .quiz-toggle { font-size: 1.05rem; }
-  .quiz-prompt-text { font-size: 1.05rem; }
-  .quiz-option { font-size: 1.05rem; padding: 0.9rem 1rem; }
-  .quiz-result { font-size: 1.05rem; }
-  .quiz-contact { font-size: 1rem; }
-  .quiz-section { margin-top: 1.8rem; }
-  .entry-pronunciation { font-size: 1rem; }
-  .view-bar { padding: 0.9rem 1.2rem; }
-  .view-btn { font-size: 0.85rem; padding: 0.35rem 0.7rem; }
-  .flip-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); padding: 1rem 1.2rem; }
-  .flip-card { height: 110px; }
+  .entry-pos { font-size: 1.4rem; }
+  .entry-def { font-size: 1.25rem; }
+  .entry-def-num { font-size: 1.1rem; }
+  .entry-etymology { font-size: 1.15rem; }
+  .entry-sentence { font-size: 1.35rem; }
+  .entry-pronunciation { font-size: 1.15rem; }
+  .quiz-section { margin-top: 1.8rem; text-align: center; }
+  .quiz-toggle { font-size: 1.1rem; display: block; width: 100%; margin-bottom: 0.6rem; }
+  .challenge-toggle { margin-left: 0; }
+  .quiz-prompt-text { font-size: 1.15rem; text-align: left; }
+  .quiz-option { font-size: 1.15rem; padding: 1rem 1.1rem; }
+  .quiz-result { font-size: 1.15rem; }
+  .quiz-contact { font-size: 1.1rem; }
+  .challenge-prompt { font-size: 1.15rem; text-align: left; }
+  .sentence-form-input { font-size: 1.1rem; }
+  .sentence-form-name { font-size: 1.05rem; }
+  .view-bar { padding: 0.9rem 1.2rem; justify-content: center; }
+  .view-label { text-align: center; }
+  .view-btn { font-size: 0.9rem; padding: 0.4rem 0.75rem; }
+  .flip-grid { grid-template-columns: 1fr; padding: 1rem 1.2rem; }
+  .flip-card { height: 100px; }
   .web-container { padding: 1rem 1.2rem; }
   .grouped-view { padding: 1rem 1.2rem; }
   .group-tiles { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); }
   .group-word-tiles { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+  .pron-ipa { font-size: 1.1rem; }
+  .ipa-sym { font-size: 1.1rem; }
 }
 
 /* --- DESKTOP --- */
@@ -1012,8 +1019,8 @@ const IPA_MAP = [
   ['ʊ', 'short OO, as in foot'],
   ['ʃ', 'the SH sound, as in ship'],
   ['ʒ', 'the ZH sound, as in measure'],
-  ['θ', 'the TH in think (voiceless)'],
-  ['ð', 'the TH in this (voiced)'],
+  ['θ', 'the TH in think'],
+  ['ð', 'the TH in this'],
   ['ŋ', 'the NG sound, as in sing'],
   ['ɜ', 'the UR sound, as in nurse'],
   ['ɑ', 'the AH sound, as in father'],
@@ -1174,7 +1181,7 @@ const CLUSTERS = [
   { title:'The T-Words', desc:'Eight Latin words that sound alike and love to be confused', words:['turgid','turbid','turpitude','torrid','torpid','tepid','taciturn','tacit'] },
   { title:'Acts of Removal', desc:'Latin verbs for taking things out — of windows, bodies, and accounts', words:['defenestrate','eviscerate','defalcate'] },
   { title:'Greek Roots', desc:'Words built from Greek that never quite naturalized into plain English', words:['thaumaturge','neophobic','paroxysm','adenoidal','elegiac'] },
-  { title:'Speech & Silence', desc:'The spectrum from saying too much to saying nothing at all', words:['peroration','effusive','taciturn','jocularity'] },
+  { title:'Speech & Silence', desc:'The spectrum from saying too much to saying nothing at all', words:['peroration','effusive','taciturn','tacit','jocularity'] },
 ];
 
 function setView(mode) {
@@ -1278,28 +1285,36 @@ function renderByOrigin(container) {
 }
 
 function renderWeb(container) {
-  let html = '<div class="web-container">';
-  CLUSTERS.forEach((c, ci) => {
-    html += '<div class="web-cluster">';
-    html += '<div class="web-cluster-title">' + c.title + '</div>';
-    html += '<div class="web-cluster-desc">' + c.desc + '</div>';
-    html += '<div class="web-words">';
-    c.words.forEach(wName => {
-      const w = ALL_WORDS.find(x => x.word === wName);
-      if (w) html += '<div class="web-word" onclick="toggleWebDetail(\'wd-' + ci + '-' + wName + '\')">' + w.word + '</div>';
+  var tiles = '';
+  var panels = '';
+  CLUSTERS.forEach(function(c, ci) {
+    var cid = 'web-' + ci;
+    tiles += '<div class="group-tile" onclick="toggleGroup(this, \'' + cid + '\')">' +
+      '<div class="group-tile-name">' + c.title + '</div>' +
+      '<div class="group-tile-count">' + c.words.length + ' words</div></div>';
+    var wordTiles = '';
+    var wordDetails = '';
+    c.words.forEach(function(wName) {
+      var w = ALL_WORDS.find(function(x) { return x.word === wName; });
+      if (!w) return;
+      wordTiles += '<div class="group-word-tile" onclick="toggleGroupWord(this, \'wwd-' + ci + '-' + w.word + '\')">' +
+        '<div class="group-word-tile-name">' + w.word + '</div></div>';
+      wordDetails += '<div class="group-word-detail" id="wwd-' + ci + '-' + w.word + '">' + renderEntry(w, 0) + '</div>';
     });
-    html += '</div>';
-    c.words.forEach(wName => {
-      const w = ALL_WORDS.find(x => x.word === wName);
-      if (w) html += '<div class="web-word-detail" id="wd-' + ci + '-' + wName + '"><strong>' + w.word + '</strong> (' + w.partOfSpeech + ') — ' + w.definitions[0] + '</div>';
-    });
-    html += '</div>';
+    panels += '<div class="group-expanded" id="' + cid + '">' +
+      '<div class="group-word-tiles">' + wordTiles + '</div>' + wordDetails + '</div>';
   });
-  html += '</div>';
-  container.innerHTML = html;
+  container.innerHTML = '<div class="grouped-view"><div class="group-tiles">' + tiles + '</div>' + panels + '</div>';
 }
 
-function toggleQuiz(id) { document.getElementById(id).classList.toggle('open'); }
+function toggleQuiz(id) {
+  var el = document.getElementById(id);
+  var isOpen = el.classList.contains('open');
+  // Close sibling sentence form if open
+  var parent = el.closest('.quiz-section');
+  if (parent) { var sf = parent.querySelector('.sentence-form'); if (sf) sf.classList.remove('open'); }
+  el.classList.toggle('open');
+}
 
 function toggleWebDetail(id) {
   const el = document.getElementById(id);
@@ -1373,7 +1388,10 @@ const SENTENCES_URL = 'https://script.google.com/macros/s/AKfycbwq2h82q1evUE8sC5
 let featuredData = null;
 
 function toggleSentenceForm(id) {
-  document.getElementById(id).classList.toggle('open');
+  var el = document.getElementById(id);
+  var parent = el.closest('.quiz-section');
+  if (parent) { var qo = parent.querySelector('.quiz-options'); if (qo) qo.classList.remove('open'); }
+  el.classList.toggle('open');
 }
 
 function submitSentence(word) {
