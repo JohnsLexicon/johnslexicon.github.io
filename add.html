@@ -272,6 +272,52 @@
 
   .copy-btn.copied { background: #5cd67a; color: var(--paper); border-color: #5cd67a; }
 
+  .connections-area {
+    margin-top: 0.3rem;
+  }
+
+  .conn-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .conn-chip {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 0.82rem;
+    padding: 0.4rem 0.7rem;
+    border: 1px solid var(--rule);
+    background: var(--field-bg);
+    color: var(--muted);
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+
+  .conn-chip:hover { border-color: var(--accent); color: var(--ink); }
+  .conn-chip.selected { border-color: var(--accent); background: #182226; color: var(--accent); }
+
+  .conn-add-row {
+    display: flex;
+    gap: 0.4rem;
+  }
+
+  .conn-add-row input { flex: 1; }
+
+  .conn-add-btn {
+    font-family: 'Lora', Georgia, serif;
+    font-size: 1rem;
+    font-weight: 600;
+    padding: 0.55rem 0.8rem;
+    background: none;
+    border: 1px solid var(--rule);
+    color: var(--accent);
+    cursor: pointer;
+    flex-shrink: 0;
+  }
+
+  .conn-add-btn:hover { border-color: var(--accent); }
+
   .instructions {
     margin-top: 1.5rem;
     font-size: 0.82rem;
@@ -324,6 +370,16 @@
 <label for="wordSentence">Sentence</label>
 <textarea id="wordSentence" rows="3" placeholder="Your example sentence. The vocabulary word will be auto-bolded on the site."></textarea>
 
+<label>Connections <span style="font-weight:400;text-transform:none;letter-spacing:0">(select all that apply)</span></label>
+<div class="connections-area" id="connectionsArea">
+  <div class="conn-chips" id="connChips"></div>
+  <div class="conn-add-row">
+    <input type="text" id="connNew" placeholder="New connection group name">
+    <button class="conn-add-btn" onclick="addConnection()">+</button>
+  </div>
+</div>
+<p class="hint">These must match the connection group names in index.html exactly</p>
+
 <hr class="section-divider">
 
 <label>Quiz — Test Your Understanding</label>
@@ -365,6 +421,47 @@ const today = new Date();
 document.getElementById('wordDate').value = today.getFullYear() + '-' +
   String(today.getMonth() + 1).padStart(2, '0') + '-' +
   String(today.getDate()).padStart(2, '0');
+
+// Connections management
+const DEFAULT_CONNECTIONS = ['The T-Words', 'Acts of Removal', 'Greek Roots', 'Speech & Silence'];
+let allConnections = [...DEFAULT_CONNECTIONS];
+let selectedConnections = new Set();
+
+function renderConnChips() {
+  const container = document.getElementById('connChips');
+  container.innerHTML = allConnections.map(c => {
+    const sel = selectedConnections.has(c) ? ' selected' : '';
+    return '<div class="conn-chip' + sel + '" onclick="toggleConn(this, \'' + c.replace(/'/g, "\\'") + '\')">' + c + '</div>';
+  }).join('');
+}
+
+function toggleConn(chip, name) {
+  if (selectedConnections.has(name)) {
+    selectedConnections.delete(name);
+    chip.classList.remove('selected');
+  } else {
+    selectedConnections.add(name);
+    chip.classList.add('selected');
+  }
+}
+
+function addConnection() {
+  const input = document.getElementById('connNew');
+  const name = input.value.trim();
+  if (!name) return;
+  if (!allConnections.includes(name)) {
+    allConnections.push(name);
+  }
+  selectedConnections.add(name);
+  input.value = '';
+  renderConnChips();
+}
+
+document.getElementById('connNew').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') { e.preventDefault(); addConnection(); }
+});
+
+renderConnChips();
 
 // Definitions management
 function addDef() {
@@ -438,6 +535,9 @@ function generateJSON() {
     sentence: sentence
   };
 
+  // Connections (for reference — must also update CLUSTERS in index.html)
+  const conns = [...selectedConnections];
+
   // Quiz (optional)
   const quizOptions = [
     document.getElementById('quizA').value.trim(),
@@ -453,7 +553,12 @@ function generateJSON() {
     };
   }
 
-  const json = '  ' + JSON.stringify(entry, null, 2).split('\n').join('\n  ') + ',';
+  let json = '  ' + JSON.stringify(entry, null, 2).split('\n').join('\n  ') + ',';
+
+  if (conns.length > 0) {
+    json += '\n\n  // CONNECTIONS — add "' + word.toLowerCase() + '" to these CLUSTERS in index.html:\n';
+    conns.forEach(c => { json += '  //   • ' + c + '\n'; });
+  }
 
   document.getElementById('outputBox').textContent = json;
   document.getElementById('outputSection').classList.add('visible');

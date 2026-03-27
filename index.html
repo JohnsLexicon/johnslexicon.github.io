@@ -862,6 +862,90 @@ body {
   text-transform: uppercase;
 }
 
+/* --- NEURAL WEB --- */
+.neural-container {
+  max-width: 100%;
+  margin: 0 auto;
+  position: relative;
+  overflow: hidden;
+  background: #0a0e11;
+}
+
+.neural-container canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.neural-tooltip {
+  position: absolute;
+  pointer-events: none;
+  background: rgba(10, 14, 17, 0.92);
+  border: 1px solid var(--accent-dim);
+  padding: 0.8rem 1rem;
+  font-family: 'Lora', Georgia, serif;
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 280px;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 10;
+}
+
+.neural-tooltip.visible { opacity: 1; }
+
+.neural-tooltip .nt-word {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: var(--accent);
+  margin-bottom: 0.2rem;
+}
+
+.neural-tooltip .nt-pos {
+  font-style: italic;
+  color: var(--accent-dim);
+  font-size: 0.85rem;
+}
+
+.neural-tooltip .nt-def {
+  color: var(--ink-soft);
+  font-size: 0.85rem;
+  margin-top: 0.3rem;
+}
+
+.neural-tooltip .nt-clusters {
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  margin-top: 0.4rem;
+  font-style: italic;
+}
+
+.neural-legend {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  font-size: 0.75rem;
+  color: var(--ink-muted);
+  font-family: 'Lora', Georgia, serif;
+  z-index: 5;
+}
+
+.neural-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.3rem;
+}
+
+.neural-legend-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
@@ -942,7 +1026,7 @@ body {
 
 <header class="masthead">
   <div class="epigraph">
-    <p>&ldquo;The love of learning, the sequestered nooks,<br>And all the sweet serenity of books&rdquo;</p>
+    <p>&ldquo;The love of learning,<br>the sequestered nooks,<br>And all the sweet serenity of books&rdquo;</p>
     <span class="epigraph-attr">&mdash; Henry Wadsworth Longfellow</span>
   </div>
   <span class="masthead-ornament"></span>
@@ -967,6 +1051,8 @@ body {
   <button class="view-btn" onclick="setView('pos')">Part of Speech</button>
   <button class="view-btn" onclick="setView('origin')">Origin</button>
   <button class="view-btn" onclick="setView('web')">Connections</button>
+  <button class="view-btn" onclick="setView('neural')">Neural Web</button>
+  <button class="view-btn" onclick="setView('syllables')">Syllables</button>
   <button class="view-btn" onclick="setView('leaderboard')">Leaderboard</button>
 </div>
 
@@ -1178,10 +1264,10 @@ const ORIGINS = {
 };
 
 const CLUSTERS = [
-  { title:'The T-Words', desc:'Eight Latin words that sound alike and love to be confused', words:['turgid','turbid','turpitude','torrid','torpid','tepid','taciturn','tacit'] },
-  { title:'Acts of Removal', desc:'Latin verbs for taking things out — of windows, bodies, and accounts', words:['defenestrate','eviscerate','defalcate'] },
-  { title:'Greek Roots', desc:'Words built from Greek that never quite naturalized into plain English', words:['thaumaturge','neophobic','paroxysm','adenoidal','elegiac'] },
-  { title:'Speech & Silence', desc:'The spectrum from saying too much to saying nothing at all', words:['peroration','effusive','taciturn','tacit','jocularity'] },
+  { title:'The T-Words', desc:'Eight Latin words that sound alike and love to be confused', words:['tacit','taciturn','tepid','torpid','torrid','turbid','turgid','turpitude'] },
+  { title:'Acts of Removal', desc:'Latin verbs for taking things out — of windows, bodies, and accounts', words:['defalcate','defenestrate','eviscerate'] },
+  { title:'Greek Roots', desc:'Words built from Greek that never quite naturalized into plain English', words:['adenoidal','elegiac','neophobic','paroxysm','thaumaturge'] },
+  { title:'Speech & Silence', desc:'The spectrum from saying too much to saying nothing at all', words:['effusive','jocularity','peroration','tacit','taciturn'] },
 ];
 
 function setView(mode) {
@@ -1205,6 +1291,10 @@ function setView(mode) {
     renderByOrigin(content);
   } else if (mode === 'web') {
     renderWeb(content);
+  } else if (mode === 'neural') {
+    renderNeuralWeb(content);
+  } else if (mode === 'syllables') {
+    renderBySyllables(content);
   } else if (mode === 'leaderboard') {
     renderLeaderboard(content);
   }
@@ -1284,6 +1374,395 @@ function renderByOrigin(container) {
   container.innerHTML = '<div class="grouped-view"><div class="group-tiles">' + tiles + '</div>' + panels + '</div>';
 }
 
+function getSyllableCount(w) {
+  if (w.pronunciation) return w.pronunciation.split('-').length;
+  return 1;
+}
+
+function renderBySyllables(container) {
+  const groups = {};
+  ALL_WORDS.forEach(w => {
+    const count = getSyllableCount(w);
+    if (!groups[count]) groups[count] = [];
+    groups[count].push(w);
+  });
+  const order = Object.keys(groups).map(Number).sort((a,b) => a - b);
+  const syllableLabels = { 1:'One Syllable', 2:'Two Syllables', 3:'Three Syllables', 4:'Four Syllables', 5:'Five Syllables', 6:'Six Syllables' };
+
+  let tiles = '';
+  let panels = '';
+  order.forEach(count => {
+    const label = syllableLabels[count] || count + ' Syllables';
+    const id = 'syl-' + count;
+    tiles += '<div class="group-tile" onclick="toggleGroup(this, \'' + id + '\')">' +
+      '<div class="group-tile-name">' + label + '</div>' +
+      '<div class="group-tile-count">' + groups[count].length + ' words</div></div>';
+    const words = groups[count].sort((a,b) => a.word.localeCompare(b.word));
+    let wordTiles = '';
+    let wordDetails = '';
+    words.forEach(w => {
+      wordTiles += '<div class="group-word-tile" onclick="toggleGroupWord(this, \'sywd-' + count + '-' + w.word + '\')">' +
+        '<div class="group-word-tile-name">' + w.word + '</div></div>';
+      wordDetails += '<div class="group-word-detail" id="sywd-' + count + '-' + w.word + '">' + renderEntry(w, 0) + '</div>';
+    });
+    panels += '<div class="group-expanded" id="' + id + '">' +
+      '<div class="group-word-tiles">' + wordTiles + '</div>' + wordDetails + '</div>';
+  });
+  container.innerHTML = '<div class="grouped-view"><div class="group-tiles">' + tiles + '</div>' + panels + '</div>';
+}
+
+function renderNeuralWeb(container) {
+  const CLUSTER_COLORS = ['#3dd8c5','#e05c5c','#d4a843','#8b7fd4','#5cb8e0','#d47fb8'];
+  const height = Math.max(600, window.innerHeight - 200);
+
+  // Build nodes and edges from CLUSTERS
+  const nodeMap = {};
+  const edges = [];
+  const wordClusters = {};
+
+  CLUSTERS.forEach((c, ci) => {
+    c.words.forEach(wName => {
+      const w = ALL_WORDS.find(x => x.word === wName);
+      if (!w) return;
+      if (!nodeMap[wName]) {
+        nodeMap[wName] = { word: wName, data: w, x: 0, y: 0, vx: 0, vy: 0, clusters: [] };
+        wordClusters[wName] = [];
+      }
+      nodeMap[wName].clusters.push(ci);
+      wordClusters[wName].push(c.title);
+    });
+    // Connect all words within this cluster
+    for (let i = 0; i < c.words.length; i++) {
+      for (let j = i + 1; j < c.words.length; j++) {
+        if (nodeMap[c.words[i]] && nodeMap[c.words[j]]) {
+          edges.push({ source: c.words[i], target: c.words[j], cluster: ci });
+        }
+      }
+    }
+  });
+
+  // Also add unconnected words as isolated nodes
+  ALL_WORDS.forEach(w => {
+    if (!nodeMap[w.word]) {
+      nodeMap[w.word] = { word: w.word, data: w, x: 0, y: 0, vx: 0, vy: 0, clusters: [] };
+      wordClusters[w.word] = [];
+    }
+  });
+
+  const nodes = Object.values(nodeMap);
+
+  // HTML
+  container.innerHTML = '<div class="neural-container" style="height:' + height + 'px">' +
+    '<canvas id="neuralCanvas"></canvas>' +
+    '<div class="neural-tooltip" id="neuralTooltip"><div class="nt-word"></div><div class="nt-pos"></div><div class="nt-def"></div><div class="nt-clusters"></div></div>' +
+    '<div class="neural-legend" id="neuralLegend"></div></div>';
+
+  const cntr = container.querySelector('.neural-container');
+  const canvas = document.getElementById('neuralCanvas');
+  const ctx = canvas.getContext('2d');
+  const tooltip = document.getElementById('neuralTooltip');
+  const legend = document.getElementById('neuralLegend');
+
+  // Legend
+  let legendHtml = '';
+  CLUSTERS.forEach((c, i) => {
+    legendHtml += '<div class="neural-legend-item"><div class="neural-legend-dot" style="background:' + CLUSTER_COLORS[i % CLUSTER_COLORS.length] + '"></div>' + c.title + '</div>';
+  });
+  legendHtml += '<div class="neural-legend-item"><div class="neural-legend-dot" style="background:#4a5568"></div>Unconnected</div>';
+  legend.innerHTML = legendHtml;
+
+  // Sizing
+  let W, H, dpr;
+  function resize() {
+    const rect = cntr.getBoundingClientRect();
+    dpr = window.devicePixelRatio || 1;
+    W = rect.width;
+    H = rect.height;
+    canvas.width = W * dpr;
+    canvas.height = H * dpr;
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Initialize positions in a rough circle
+  nodes.forEach((n, i) => {
+    const angle = (i / nodes.length) * Math.PI * 2;
+    const radius = Math.min(W, H) * 0.3;
+    n.x = W / 2 + Math.cos(angle) * radius + (Math.random() - 0.5) * 60;
+    n.y = H / 2 + Math.sin(angle) * radius + (Math.random() - 0.5) * 60;
+  });
+
+  // Force simulation parameters
+  const springLength = 120;
+  const springStrength = 0.004;
+  const repulsion = 3000;
+  const centerGravity = 0.01;
+  const damping = 0.88;
+  let hovered = null;
+  let dragging = null;
+  let time = 0;
+
+  function simulate() {
+    // Reset forces
+    nodes.forEach(n => { n.fx = 0; n.fy = 0; });
+
+    // Repulsion between all nodes
+    for (let i = 0; i < nodes.length; i++) {
+      for (let j = i + 1; j < nodes.length; j++) {
+        let dx = nodes[j].x - nodes[i].x;
+        let dy = nodes[j].y - nodes[i].y;
+        let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+        let force = repulsion / (dist * dist);
+        let fx = (dx / dist) * force;
+        let fy = (dy / dist) * force;
+        nodes[i].fx -= fx;
+        nodes[i].fy -= fy;
+        nodes[j].fx += fx;
+        nodes[j].fy += fy;
+      }
+    }
+
+    // Spring forces along edges
+    edges.forEach(e => {
+      const a = nodeMap[e.source];
+      const b = nodeMap[e.target];
+      if (!a || !b) return;
+      let dx = b.x - a.x;
+      let dy = b.y - a.y;
+      let dist = Math.sqrt(dx * dx + dy * dy) || 1;
+      let force = (dist - springLength) * springStrength;
+      let fx = (dx / dist) * force;
+      let fy = (dy / dist) * force;
+      a.fx += fx;
+      a.fy += fy;
+      b.fx -= fx;
+      b.fy -= fy;
+    });
+
+    // Center gravity
+    nodes.forEach(n => {
+      n.fx += (W / 2 - n.x) * centerGravity;
+      n.fy += (H / 2 - n.y) * centerGravity;
+    });
+
+    // Integrate
+    nodes.forEach(n => {
+      if (n === dragging) return;
+      n.vx = (n.vx + n.fx) * damping;
+      n.vy = (n.vy + n.fy) * damping;
+      n.x += n.vx;
+      n.y += n.vy;
+      // Bounds
+      n.x = Math.max(30, Math.min(W - 30, n.x));
+      n.y = Math.max(30, Math.min(H - 30, n.y));
+    });
+  }
+
+  function getNodeColor(n) {
+    if (n.clusters.length === 0) return '#4a5568';
+    return CLUSTER_COLORS[n.clusters[0] % CLUSTER_COLORS.length];
+  }
+
+  function draw() {
+    time++;
+    ctx.clearRect(0, 0, W, H);
+
+    // Background grid (subtle)
+    ctx.strokeStyle = 'rgba(61,216,197,0.03)';
+    ctx.lineWidth = 0.5;
+    const gridSize = 50;
+    for (let x = 0; x < W; x += gridSize) {
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke();
+    }
+    for (let y = 0; y < H; y += gridSize) {
+      ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke();
+    }
+
+    // Edges
+    edges.forEach(e => {
+      const a = nodeMap[e.source];
+      const b = nodeMap[e.target];
+      if (!a || !b) return;
+      const isHighlighted = hovered && (hovered.word === e.source || hovered.word === e.target);
+      const color = CLUSTER_COLORS[e.cluster % CLUSTER_COLORS.length];
+
+      if (hovered && !isHighlighted) {
+        ctx.globalAlpha = 0.06;
+      } else if (isHighlighted) {
+        ctx.globalAlpha = 0.9;
+      } else {
+        ctx.globalAlpha = 0.2;
+      }
+
+      ctx.strokeStyle = color;
+      ctx.lineWidth = isHighlighted ? 2 : 1;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      ctx.lineTo(b.x, b.y);
+      ctx.stroke();
+
+      // Flowing particle on highlighted edges
+      if (isHighlighted) {
+        const t = ((time * 0.02) % 1);
+        const px = a.x + (b.x - a.x) * t;
+        const py = a.y + (b.y - a.y) * t;
+        ctx.globalAlpha = 0.9;
+        ctx.fillStyle = color;
+        ctx.beginPath();
+        ctx.arc(px, py, 2.5, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    });
+
+    ctx.globalAlpha = 1;
+
+    // Nodes
+    nodes.forEach(n => {
+      const color = getNodeColor(n);
+      const isHovered = hovered === n;
+      const isConnectedToHover = hovered && edges.some(e =>
+        (e.source === hovered.word && e.target === n.word) ||
+        (e.target === hovered.word && e.source === n.word)
+      );
+      const isDimmed = hovered && !isHovered && !isConnectedToHover;
+
+      const baseR = n.clusters.length > 1 ? 7 : (n.clusters.length === 1 ? 5.5 : 4);
+      const r = isHovered ? baseR + 3 : baseR;
+
+      // Outer glow
+      if (!isDimmed) {
+        const pulse = 1 + Math.sin(time * 0.03 + nodes.indexOf(n)) * 0.15;
+        const glowR = r * 3 * pulse;
+        const grad = ctx.createRadialGradient(n.x, n.y, r * 0.5, n.x, n.y, glowR);
+        grad.addColorStop(0, color + (isHovered ? '60' : '25'));
+        grad.addColorStop(1, color + '00');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(n.x, n.y, glowR, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      // Core
+      ctx.globalAlpha = isDimmed ? 0.15 : 1;
+      ctx.fillStyle = color;
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, r, 0, Math.PI * 2);
+      ctx.fill();
+
+      // White center dot
+      ctx.fillStyle = isDimmed ? '#ffffff20' : '#ffffffcc';
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, r * 0.35, 0, Math.PI * 2);
+      ctx.fill();
+
+      // Label
+      ctx.globalAlpha = isDimmed ? 0.1 : (isHovered || isConnectedToHover ? 1 : 0.7);
+      ctx.font = (isHovered ? '700 ' : '600 ') + (isHovered ? '14' : '11') + 'px "Cormorant Garamond", Georgia, serif';
+      ctx.fillStyle = isHovered ? '#ffffff' : (isDimmed ? '#ffffff20' : '#e4e8ec');
+      ctx.textAlign = 'center';
+      ctx.textBaseline = 'top';
+      ctx.fillText(n.word, n.x, n.y + r + 4);
+
+      ctx.globalAlpha = 1;
+    });
+  }
+
+  function loop() {
+    simulate();
+    draw();
+    requestAnimationFrame(loop);
+  }
+  loop();
+
+  // Mouse interaction
+  function getNodeAt(mx, my) {
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      const dx = nodes[i].x - mx, dy = nodes[i].y - my;
+      if (dx * dx + dy * dy < 400) return nodes[i];
+    }
+    return null;
+  }
+
+  canvas.addEventListener('mousemove', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+
+    if (dragging) {
+      dragging.x = mx;
+      dragging.y = my;
+      dragging.vx = 0;
+      dragging.vy = 0;
+      return;
+    }
+
+    const n = getNodeAt(mx, my);
+    hovered = n;
+    canvas.style.cursor = n ? 'pointer' : 'default';
+
+    if (n) {
+      const tw = tooltip.querySelector('.nt-word');
+      const tp = tooltip.querySelector('.nt-pos');
+      const td = tooltip.querySelector('.nt-def');
+      const tc = tooltip.querySelector('.nt-clusters');
+      tw.textContent = n.data.word;
+      tp.textContent = n.data.partOfSpeech;
+      td.textContent = n.data.definitions[0];
+      const clusters = wordClusters[n.word] || [];
+      tc.textContent = clusters.length ? clusters.join(' · ') : 'No connections yet';
+      tooltip.classList.add('visible');
+      let tx = mx + 18, ty = my - 10;
+      if (tx + 280 > W) tx = mx - 290;
+      if (ty + 120 > H) ty = my - 120;
+      tooltip.style.left = tx + 'px';
+      tooltip.style.top = ty + 'px';
+    } else {
+      tooltip.classList.remove('visible');
+    }
+  });
+
+  canvas.addEventListener('mousedown', function(e) {
+    const rect = canvas.getBoundingClientRect();
+    const mx = e.clientX - rect.left;
+    const my = e.clientY - rect.top;
+    const n = getNodeAt(mx, my);
+    if (n) { dragging = n; dragging.vx = 0; dragging.vy = 0; }
+  });
+
+  canvas.addEventListener('mouseup', function() { dragging = null; });
+  canvas.addEventListener('mouseleave', function() { dragging = null; hovered = null; tooltip.classList.remove('visible'); });
+
+  // Touch support
+  canvas.addEventListener('touchstart', function(e) {
+    e.preventDefault();
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    const mx = t.clientX - rect.left;
+    const my = t.clientY - rect.top;
+    const n = getNodeAt(mx, my);
+    if (n) {
+      dragging = n;
+      hovered = n;
+    }
+  }, { passive: false });
+
+  canvas.addEventListener('touchmove', function(e) {
+    e.preventDefault();
+    if (!dragging) return;
+    const rect = canvas.getBoundingClientRect();
+    const t = e.touches[0];
+    dragging.x = t.clientX - rect.left;
+    dragging.y = t.clientY - rect.top;
+    dragging.vx = 0;
+    dragging.vy = 0;
+  }, { passive: false });
+
+  canvas.addEventListener('touchend', function() { dragging = null; });
+}
+
 function renderWeb(container) {
   var tiles = '';
   var panels = '';
@@ -1294,7 +1773,8 @@ function renderWeb(container) {
       '<div class="group-tile-count">' + c.words.length + ' words</div></div>';
     var wordTiles = '';
     var wordDetails = '';
-    c.words.forEach(function(wName) {
+    var sortedWords = c.words.slice().sort();
+    sortedWords.forEach(function(wName) {
       var w = ALL_WORDS.find(function(x) { return x.word === wName; });
       if (!w) return;
       wordTiles += '<div class="group-word-tile" onclick="toggleGroupWord(this, \'wwd-' + ci + '-' + w.word + '\')">' +
