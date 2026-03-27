@@ -1,4 +1,24 @@
 [  {
+    "date": "2026-03-27",
+    "word": "copacetic",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "in excellent order; very satisfactory"
+    ],
+    "etymology": "of unknown origin",
+    "pronunciation": "koh-puh-SET-ik",
+    "ipa": "/ˌkōpəˈsedik/",
+    "sentence": "The pilot announced that all systems were copacetic, his voice perfectly steady over the intercom while black smoke poured from the engines and the horizon tilted violently.",
+    "quiz": {
+      "correct": 2,
+      "options": [
+        "His mother begged him to remain copacetic during family dinner, but he still tried to set the turkey on fire with his mind.",
+        "The detective remained completely copacetic during the interrogation, revealing nothing about his suspicions even as the suspect broke down in tears.",
+        "After the divorce hearing, the ex-spouses smiled sweetly and declared the custody arrangement completely copacetic while their lawyers quietly called the police.",
+        "She kept her voice copacetic during the exorcism, never once raising it above a pleasant whisper as the demon hurled furniture and spoke in fourteen languages."
+      ]
+    }
+  },  {
     "date": "2026-03-26",
     "word": "tacit",
     "partOfSpeech": "adjective",
