@@ -1460,7 +1460,7 @@ function renderBySyllables(container) {
 
 function renderNeuralWeb(container) {
   const CLUSTER_COLORS = ['#3dd8c5','#e05c5c','#d4a843','#8b7fd4','#5cb8e0','#d47fb8'];
-  const height = Math.max(600, window.innerHeight - 200);
+  const height = Math.max(800, window.innerHeight - 100);
 
   // Build nodes and edges from CLUSTERS
   const nodeMap = {};
@@ -1537,15 +1537,15 @@ function renderNeuralWeb(container) {
   // Initialize positions in a rough circle
   nodes.forEach((n, i) => {
     const angle = (i / nodes.length) * Math.PI * 2;
-    const radius = Math.min(W, H) * 0.3;
+    const radius = Math.min(W, H) * 0.38;
     n.x = W / 2 + Math.cos(angle) * radius + (Math.random() - 0.5) * 60;
     n.y = H / 2 + Math.sin(angle) * radius + (Math.random() - 0.5) * 60;
   });
 
   // Force simulation parameters
-  const springLength = 150;
+  const springLength = 160;
   const springStrength = 0.004;
-  const repulsion = 4500;
+  const repulsion = 6000;
   const centerGravity = 0.01;
   const damping = 0.88;
   let hovered = null;
