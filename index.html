@@ -135,6 +135,28 @@ body {
   background: var(--accent-glow);
 }
 
+.review-banner .subscribe-link {
+  display: block;
+  text-align: center;
+  padding: 1.1rem 1.5rem;
+  margin-top: 0.6rem;
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-decoration: none;
+  background: none;
+  border: 1px solid var(--accent-dim);
+  transition: background 0.2s, color 0.2s;
+}
+
+.review-banner .subscribe-link:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
 /* --- ENTRIES --- */
 .entries {
   max-width: 740px;
@@ -863,9 +885,12 @@ body {
 }
 
 /* --- NEURAL WEB --- */
+.neural-wrapper {
+  position: relative;
+}
+
 .neural-container {
   max-width: 100%;
-  margin: 0 auto;
   position: relative;
   overflow: hidden;
   background: #0a0e11;
@@ -946,6 +971,21 @@ body {
   flex-shrink: 0;
 }
 
+@media (max-width: 600px) {
+  .neural-legend {
+    position: static;
+    padding: 1rem 1.2rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 1rem;
+    background: #0a0e11;
+  }
+
+  .neural-legend-item {
+    margin-bottom: 0;
+  }
+}
+
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(14px); }
   to { opacity: 1; transform: translateY(0); }
@@ -964,6 +1004,7 @@ body {
   }
   .review-banner { padding: 2rem 1.2rem; }
   .review-banner a { font-size: 1.15rem; padding: 1.3rem; }
+  .review-banner .subscribe-link { font-size: 1.05rem; padding: 1.1rem; }
   .entries { padding: 0 1.2rem 4rem; }
   .date-group { padding: 3rem 0 0; }
   .date-group.today { margin: 0 -1.2rem; padding: 3rem 1.2rem 0.5rem; }
@@ -1040,7 +1081,8 @@ body {
 </div>
 
 <div class="review-banner">
-  <a href="review.html">Review for Quiz &rarr;</a>
+  <a href="review.html">Quiz Prep</a>
+  <a class="subscribe-link" href="sms:6317660898?&body=Add%20me%20to%20the%20vocab%20list">Subscribe &mdash; Daily Word</a>
 </div>
 
 <div class="view-bar">
@@ -1457,10 +1499,10 @@ function renderNeuralWeb(container) {
   const nodes = Object.values(nodeMap);
 
   // HTML
-  container.innerHTML = '<div class="neural-container" style="height:' + height + 'px">' +
+  container.innerHTML = '<div class="neural-wrapper"><div class="neural-container" style="height:' + height + 'px">' +
     '<canvas id="neuralCanvas"></canvas>' +
     '<div class="neural-tooltip" id="neuralTooltip"><div class="nt-word"></div><div class="nt-pos"></div><div class="nt-def"></div><div class="nt-clusters"></div></div>' +
-    '<div class="neural-legend" id="neuralLegend"></div></div>';
+    '</div><div class="neural-legend" id="neuralLegend"></div></div>';
 
   const cntr = container.querySelector('.neural-container');
   const canvas = document.getElementById('neuralCanvas');
@@ -1501,9 +1543,9 @@ function renderNeuralWeb(container) {
   });
 
   // Force simulation parameters
-  const springLength = 120;
+  const springLength = 150;
   const springStrength = 0.004;
-  const repulsion = 3000;
+  const repulsion = 4500;
   const centerGravity = 0.01;
   const damping = 0.88;
   let hovered = null;
@@ -1634,8 +1676,8 @@ function renderNeuralWeb(container) {
       );
       const isDimmed = hovered && !isHovered && !isConnectedToHover;
 
-      const baseR = n.clusters.length > 1 ? 7 : (n.clusters.length === 1 ? 5.5 : 4);
-      const r = isHovered ? baseR + 3 : baseR;
+      const baseR = n.clusters.length > 1 ? 10 : (n.clusters.length === 1 ? 8 : 6);
+      const r = isHovered ? baseR + 4 : baseR;
 
       // Outer glow
       if (!isDimmed) {
@@ -1665,11 +1707,11 @@ function renderNeuralWeb(container) {
 
       // Label
       ctx.globalAlpha = isDimmed ? 0.1 : (isHovered || isConnectedToHover ? 1 : 0.7);
-      ctx.font = (isHovered ? '700 ' : '600 ') + (isHovered ? '14' : '11') + 'px "Cormorant Garamond", Georgia, serif';
+      ctx.font = (isHovered ? '700 ' : '600 ') + (isHovered ? '19' : '15') + 'px "Cormorant Garamond", Georgia, serif';
       ctx.fillStyle = isHovered ? '#ffffff' : (isDimmed ? '#ffffff20' : '#e4e8ec');
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
-      ctx.fillText(n.word, n.x, n.y + r + 4);
+      ctx.fillText(n.word, n.x, n.y + r + 6);
 
       ctx.globalAlpha = 1;
     });
@@ -1686,7 +1728,7 @@ function renderNeuralWeb(container) {
   function getNodeAt(mx, my) {
     for (let i = nodes.length - 1; i >= 0; i--) {
       const dx = nodes[i].x - mx, dy = nodes[i].y - my;
-      if (dx * dx + dy * dy < 400) return nodes[i];
+      if (dx * dx + dy * dy < 625) return nodes[i];
     }
     return null;
   }
