@@ -1,4 +1,24 @@
 [  {
+    "date": "2026-03-28",
+    "word": "rusticate",
+    "partOfSpeech": "verb",
+    "definitions": [
+      "to go into or reside in the country; follow a rustic life"
+    ],
+    "etymology": "Latin *rusticatus*, past participle of *rusticārī* “to live in the country,” from *rusticus* “rustic,” from *rūs* “open land, country”",
+    "pronunciation": "chiefly British: to suspend from school or college",
+    "ipa": "to build or face with usually rough-surfaced masonry blocks having beveled or rebated edges producing pronounced joints",
+    "sentence": "Aidan rusticated so hard he renounced electricity and married a scarecrow in a ceremony where he delivered a valediction to a congregation of confused sheep.",
+    "quiz": {
+      "correct": 1,
+      "options": [
+        "Centuries of rain and salt air rusticated the iron foundation into a brittle, flaking skeleton that crumbled at the slightest touch like broken dreams of all who waked there.",
+        "After thirty years in DC, she sold everything and rusticated to a Vermont cottage where her only neighbor was a dairy farmer who talked exclusively to his cows.",
+        "The dean chose to rusticate the modern curriculum, adding a series of classes with names like \"Principles of Gardening.\"",
+        "She paid a deranged Swiss craftsman eighty-seven million dollars to rusticate the penthouse's interior, leaving her with fifteen-foot antler chandeliers dripping in diamonds and the blood of endangered species."
+      ]
+    }
+  }, {
     "date": "2026-03-27",
     "word": "copacetic",
     "partOfSpeech": "adjective",
