@@ -951,7 +951,7 @@ body {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
-  font-size: 0.75rem;
+  font-size: 1.5rem;
   color: var(--ink-muted);
   font-family: 'Lora', Georgia, serif;
   z-index: 5;
@@ -965,8 +965,8 @@ body {
 }
 
 .neural-legend-dot {
-  width: 8px;
-  height: 8px;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   flex-shrink: 0;
 }
@@ -979,6 +979,7 @@ body {
     flex-wrap: wrap;
     gap: 0.3rem 1rem;
     background: #0a0e11;
+    font-size: 0.85rem;
   }
 
   .neural-legend-item {
@@ -1707,7 +1708,7 @@ function renderNeuralWeb(container) {
 
       // Label
       ctx.globalAlpha = isDimmed ? 0.1 : (isHovered || isConnectedToHover ? 1 : 0.7);
-      ctx.font = (isHovered ? '700 ' : '600 ') + (isHovered ? '19' : '15') + 'px "Cormorant Garamond", Georgia, serif';
+      ctx.font = (isHovered ? '700 ' : '600 ') + (isHovered ? '28' : '22') + 'px "Cormorant Garamond", Georgia, serif';
       ctx.fillStyle = isHovered ? '#ffffff' : (isDimmed ? '#ffffff20' : '#e4e8ec');
       ctx.textAlign = 'center';
       ctx.textBaseline = 'top';
