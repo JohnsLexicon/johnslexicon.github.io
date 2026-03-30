@@ -1,5 +1,31 @@
 [  {
     "date": "2026-03-30",
+    "word": "extirpate",
+    "partOfSpeech": "verb",
+    "definitions": [
+      "to destroy completely; wipe out",
+      "to pull up by the root",
+      "to cut out by surgery"
+    ],
+    "etymology": "Latin *exstirpatus*, past participle of *exstirpare*, from *ex-* + *stirp-*, *stirps* trunk, root",
+    "pronunciation": "EK-stur-payt",
+    "ipa": "/ˈekstərˌpāt/",
+    "sentence": "Dropping to his knees in the moonlight, the old man swore he would extirpate every last dandelion from his lawn, hissing “I will erase your bloodline from this soil” through clenched teeth as he repeatedly drove the knife into the earth.",
+    "quiz": {
+      "correct": 1,
+      "options": [
+        "The marriage counselor attempted to extirpate the couple by seating them on the same sofa, unaware the sofa was the subject of their longest-running argument.",
+        "Grandma extirpated the fire ant colony from her garden using a combination of boiling holy water and language that would have resulted in her excommunication from three separate denominations",
+        "The analyst extirpated next quarter's revenue from a single data point, then presented it to the board as though it were divine prophecy.",
+        "The judge agreed to extirpate the speeding violation from David's record after the defendant delivered a 90-minute valediction that somehow involved the Treaty of Rome and Carthage."
+      ]
+    }
+  },
+
+  // CONNECTIONS — add "extirpate" to these CLUSTERS in index.html:
+  //   • Acts of Removal
+  {
+    "date": "2026-03-30",
     "word": "lexicography",
     "partOfSpeech": "noun",
     "definitions": [
