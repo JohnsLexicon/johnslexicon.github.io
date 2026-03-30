@@ -1,4 +1,29 @@
 [  {
+    "date": "2026-03-30",
+    "word": "lexicography",
+    "partOfSpeech": "noun",
+    "definitions": [
+      "the editing or making of a dictionary",
+      "the principles and practices of dictionary making"
+    ],
+    "etymology": "From Greek *lexikographos*, from *lexikon* 'dictionary' + -*graphos* 'writer', from *lexis* 'word, speech'",
+    "pronunciation": "lek-sih-KOG-ruh-fee",
+    "ipa": "/ˌleksəˈkäɡrəfē/",
+    "sentence": "After months of obsessive lexicography, he submitted a 10-page proposal to the Oxford English Dictionary demanding that “bless your heart” be entered as both a compliment and a declaration of war.",
+    "quiz": {
+      "correct": 2,
+      "options": [
+        "She lexicographically dismantled his argument, peeling back each claim until nothing remained but assumptions.",
+        "The museum arranged its entire fossil collection in lexicographic order, grouping specimens by the geological period in which they were discovered.",
+        "Webster saw lexicography as an act of patriotism, believing that a distinctly American dictionary would help unify the young republic's language.",
+        "She lexicographically dismantled his argument, peeling back each claim until nothing remained but assumptions."
+      ]
+    }
+  },
+
+  // CONNECTIONS — add "lexicography" to these CLUSTERS in index.html:
+  //   • Greek Roots
+  {
     "date": "2026-03-28",
     "word": "rusticate",
     "partOfSpeech": "verb",
