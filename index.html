@@ -124,7 +124,6 @@ body {
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--bg);
   text-decoration: none;
   background: var(--accent);
@@ -144,7 +143,6 @@ body {
   font-size: 1.1rem;
   font-weight: 700;
   letter-spacing: 0.06em;
-  text-transform: uppercase;
   color: var(--accent);
   text-decoration: none;
   background: none;
@@ -457,6 +455,7 @@ body {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
   border-bottom: 1px solid var(--rule);
 }
@@ -470,6 +469,7 @@ body {
   margin-right: 0.3rem;
   width: 100%;
   margin-bottom: 0.2rem;
+  text-align: center;
 }
 
 .view-btn {
@@ -951,7 +951,7 @@ body {
   position: absolute;
   bottom: 1rem;
   left: 1rem;
-  font-size: 1.5rem;
+  font-size: 0.85rem;
   color: var(--ink-muted);
   font-family: 'Lora', Georgia, serif;
   z-index: 5;
@@ -1083,7 +1083,7 @@ body {
 
 <div class="review-banner">
   <a href="review.html">Quiz Prep</a>
-  <a class="subscribe-link" href="sms:6317660898?body=Add%20me%20to%20the%20vocab%20list">Subscribe &mdash; Daily Word</a>
+  <a class="subscribe-link" href="sms:6317660898?body=Add%20me%20to%20the%20vocab%20list">Subscribe for new words</a>
 </div>
 
 <div class="view-bar">
@@ -1323,6 +1323,7 @@ function setView(mode) {
   document.querySelectorAll('.view-btn').forEach(b => b.classList.remove('active'));
   document.querySelector(`[onclick="setView('${mode}')"]`).classList.add('active');
   const content = document.getElementById('mainContent');
+  setTimeout(() => content.scrollIntoView({ behavior:'smooth', block:'start' }), 50);
 
   if (mode === 'date') {
     content.innerHTML = '<main class="entries" id="entries"></main>';
@@ -1843,6 +1844,7 @@ function toggleQuiz(id) {
   var parent = el.closest('.quiz-section');
   if (parent) { var sf = parent.querySelector('.sentence-form'); if (sf) sf.classList.remove('open'); }
   el.classList.toggle('open');
+  if (!isOpen) { setTimeout(function(){ el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 100); }
 }
 
 function toggleWebDetail(id) {
@@ -1918,9 +1920,11 @@ let featuredData = null;
 
 function toggleSentenceForm(id) {
   var el = document.getElementById(id);
+  var wasOpen = el.classList.contains('open');
   var parent = el.closest('.quiz-section');
   if (parent) { var qo = parent.querySelector('.quiz-options'); if (qo) qo.classList.remove('open'); }
   el.classList.toggle('open');
+  if (!wasOpen) { setTimeout(function(){ el.scrollIntoView({ behavior:'smooth', block:'start' }); }, 100); }
 }
 
 function submitSentence(word) {
