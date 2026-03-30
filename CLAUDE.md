@@ -27,6 +27,17 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
   - rusticate: "Aidan rusticated so hard he renounced electricity and married a scarecrow in a ceremony where he delivered a valediction to a congregation of confused sheep."
 - No AI-sounding language. No hedging. No "get." Active voice. Chicago Manual of Style.
 
+### Tone Calibration
+- The humor should be DRY, understated, and escalating naturally — not forced or wacky
+- Think sardonic adult, not hyperactive teenager. The comedy comes from specificity and deadpan delivery, not from stacking absurd images
+- BAD (trying too hard): "riding a dolphin in full medieval armor"
+- BAD (Reddit humor): anything involving random animals doing random things for shock value
+- GOOD (dry escalation): "hissing 'I will erase your bloodline from this soil' through clenched teeth"
+- GOOD (deadpan specificity): "his voice perfectly steady over the intercom while black smoke poured from the engines"
+- GOOD (bureaucratic absurdity): "an emergency ethics seminar titled 'Why Stealing Breakfast Is Basically Treason'"
+- The sentence should read like something a witty, overeducated person would say at a dinner party — not like a comedy sketch pitch
+- When in doubt, underwrite. One precise, dark detail beats three zany ones.
+
 ### 3. Generate quiz (Test Your Understanding)
 - Produce exactly 4 sentences labeled A, B, C, D
 - ONE sentence uses the word correctly per the definition
@@ -40,6 +51,12 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
   - copacetic wrong: "She kept her voice copacetic during the exorcism, never once raising it above a pleasant whisper as the demon hurled furniture and spoke in fourteen languages."
   - rusticate wrong: "She paid a deranged Swiss craftsman eighty-seven million dollars to rusticate the penthouse's interior, leaving her with fifteen-foot antler chandeliers dripping in diamonds and the blood of endangered species."
 - In the JSON, "correct" is the zero-indexed position (A=0, B=1, C=2, D=3)
+
+### Quiz Wrong Answer Rules
+- Each wrong sentence must use the word in a way that is UNAMBIGUOUSLY incorrect — there should be zero interpretation under which it could be correct
+- Before finalizing, stress-test each wrong answer: "Could someone argue this usage is technically valid?" If yes, rewrite it.
+- The wrong usage should clearly map to a specific different word (e.g., "inveigle" used as if it means "inveigh," "invigorate," or "unveil") with no overlap with the actual definition
+- Wrong sentences should still be entertaining and well-written, but the usage must be plainly wrong to anyone who knows the real definition
 
 ### 4. Update words.json
 - Add the new entry at the TOP of the array (after the opening `[`)
