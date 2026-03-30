@@ -21,9 +21,6 @@
       ]
     }
   },
-
-  // CONNECTIONS — add "extirpate" to these CLUSTERS in index.html:
-  //   • Acts of Removal
   {
     "date": "2026-03-30",
     "word": "lexicography",
@@ -42,13 +39,10 @@
         "She lexicographically dismantled his argument, peeling back each claim until nothing remained but assumptions.",
         "The museum arranged its entire fossil collection in lexicographic order, grouping specimens by the geological period in which they were discovered.",
         "Webster saw lexicography as an act of patriotism, believing that a distinctly American dictionary would help unify the young republic's language.",
-        "She lexicographically dismantled his argument, peeling back each claim until nothing remained but assumptions."
+        "The lexicographer examined the patient's bloodwork and confirmed that the white cell count had returned to normal."
       ]
     }
   },
-
-  // CONNECTIONS — add "lexicography" to these CLUSTERS in index.html:
-  //   • Greek Roots
   {
     "date": "2026-03-28",
     "word": "rusticate",
@@ -57,8 +51,8 @@
       "to go into or reside in the country; follow a rustic life"
     ],
     "etymology": "Latin *rusticatus*, past participle of *rusticārī* “to live in the country,” from *rusticus* “rustic,” from *rūs* “open land, country”",
-    "pronunciation": "chiefly British: to suspend from school or college",
-    "ipa": "to build or face with usually rough-surfaced masonry blocks having beveled or rebated edges producing pronounced joints",
+    "pronunciation": "RUS-tih-kayt",
+    "ipa": "/ˈrʌs.tɪ.keɪt/",
     "sentence": "Aidan rusticated so hard he renounced electricity and married a scarecrow in a ceremony where he delivered a valediction to a congregation of confused sheep.",
     "quiz": {
       "correct": 1,

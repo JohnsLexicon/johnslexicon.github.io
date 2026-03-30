@@ -410,6 +410,7 @@
   <div class="output-label">Paste this at the top of words.json (after the opening <code>[</code>)</div>
   <div class="output-box" id="outputBox"></div>
   <button class="copy-btn" id="copyBtn" onclick="copyOutput()">Copy to Clipboard</button>
+  <div id="connReminder" style="margin-top:1rem;padding:0.8rem 1rem;background:var(--highlight);border:1px solid var(--rule);font-size:0.82rem;color:var(--muted);line-height:1.6;display:none;"></div>
   <p class="instructions">
     Open words.json in GitHub → tap the pencil icon → paste this block at the very top (after the opening bracket) → commit.
   </p>
@@ -555,12 +556,16 @@ function generateJSON() {
 
   let json = '  ' + JSON.stringify(entry, null, 2).split('\n').join('\n  ') + ',';
 
-  if (conns.length > 0) {
-    json += '\n\n  // CONNECTIONS — add "' + word.toLowerCase() + '" to these CLUSTERS in index.html:\n';
-    conns.forEach(c => { json += '  //   • ' + c + '\n'; });
-  }
-
   document.getElementById('outputBox').textContent = json;
+
+  const reminderDiv = document.getElementById('connReminder');
+  if (conns.length > 0) {
+    reminderDiv.innerHTML = '<strong style="color:var(--accent);">CONNECTIONS</strong> — add "<strong>' + word.toLowerCase() + '</strong>" to these CLUSTERS in index.html:<br>' +
+      conns.map(c => '&nbsp;&nbsp;• ' + c).join('<br>');
+    reminderDiv.style.display = 'block';
+  } else {
+    reminderDiv.style.display = 'none';
+  }
   document.getElementById('outputSection').classList.add('visible');
   document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
 }
