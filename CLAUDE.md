@@ -101,6 +101,8 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
 - After committing and pushing, draft 3 message options for the daily SMS distribution
 - Each option has a different hook line — one sentence, playful or intriguing, references the word(s) without defining them outright
 - The hook should make the recipient curious, not informed; tease the word's meaning or context
+- If two or more words share a clear thematic connection, the hook can lean on that connection
+- If no clear connection exists, do not force one — instead write a hook about the act of learning new words, using the words themselves naturally within it
 - The rest of the message is fixed format:
 
 ```
