@@ -28,15 +28,19 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
 - No AI-sounding language. No hedging. No "get." Active voice. Chicago Manual of Style.
 
 ### Tone Calibration
-- The humor should be DRY, understated, and escalating naturally — not forced or wacky
-- Think sardonic adult, not hyperactive teenager. The comedy comes from specificity and deadpan delivery, not from stacking absurd images
-- BAD (trying too hard): "riding a dolphin in full medieval armor"
+- The formula is: UNHINGED CONTENT + DEADPAN DELIVERY. The scenario should go too far; the sentence should describe it as though it did not.
+- "Dry and understated" describes the VOICE, not the tameness of the scenario. The content can be wild, violent, or absurd — but the sentence never winks at the reader or signals that anything unusual has occurred.
+- Think sardonic adult, not hyperactive teenager. The comedy comes from specificity and matter-of-fact framing, not from stacking absurd images.
+- BAD (random wackiness with no escalation): "riding a dolphin in full medieval armor"
 - BAD (Reddit humor): anything involving random animals doing random things for shock value
-- GOOD (dry escalation): "hissing 'I will erase your bloodline from this soil' through clenched teeth"
-- GOOD (deadpan specificity): "his voice perfectly steady over the intercom while black smoke poured from the engines"
-- GOOD (bureaucratic absurdity): "an emergency ethics seminar titled 'Why Stealing Breakfast Is Basically Treason'"
+- BAD (too intellectual/abstract): a regime banning jazz, an ambassador negotiating with warlords — real-world gravity without the unhinged personal specificity
+- BAD (too mundane): a corporate setting where someone sends gift baskets or loses a job
+- GOOD (unhinged act, deadpan framing): "then saluted as it exploded on the driveway below"
+- GOOD (dark escalation treated as routine): "was found in their yard at two in the morning with scissors and what she described, in a sworn statement, as a defensive posture"
+- GOOD (wild premise, bureaucratic understatement): "they burned him in effigy out of an abundance of caution"
+- GOOD (specific threat delivered with total composure): "hissing 'I will erase your bloodline from this soil' through clenched teeth"
 - The sentence should read like something a witty, overeducated person would say at a dinner party — not like a comedy sketch pitch
-- When in doubt, underwrite. One precise, dark detail beats three zany ones.
+- When in doubt, the scenario should be more extreme, not less. Underwrite the DELIVERY. Do not underwrite the content.
 
 ### 3. Generate quiz (Test Your Understanding)
 - Produce exactly 4 sentences labeled A, B, C, D
