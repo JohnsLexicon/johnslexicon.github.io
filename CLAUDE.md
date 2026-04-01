@@ -65,6 +65,8 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
 - Before finalizing, stress-test each wrong answer: "Could someone argue this usage is technically valid?" If yes, rewrite it.
 - The wrong usage should clearly map to a specific different word (e.g., "inveigle" used as if it means "inveigh," "invigorate," or "unveil") with no overlap with the actual definition
 - Wrong sentences should still be entertaining and well-written, but the usage must be plainly wrong to anyone who knows the real definition
+- No em dashes, no self-aware or meta humor, no lists — the same style rules that apply to example sentences apply here
+- Match the length and register of the existing good examples; when in doubt, cut
 
 ### 4. Update words.json
 - Add the new entry at the TOP of the array (after the opening `[`)
