@@ -97,6 +97,28 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
 - I may request changes to the sentence, quiz options, or any other field
 - Once I say "looks good" or "push it" or similar approval, commit with message "Add [word]" and push to main
 
+### 8. Draft distribution messages
+- After committing and pushing, draft 3 message options for the daily SMS distribution
+- Each option has a different hook line — one sentence, playful or intriguing, references the word(s) without defining them outright
+- The hook should make the recipient curious, not informed; tease the word's meaning or context
+- The rest of the message is fixed format:
+
+```
+[Hook line]
+
+📚🧠💡
+Today's word: [word]
+
+https://johnslexicon.github.io
+
+Reminder: [current reminder line — check with me if unsure]
+
+Reply "stop" to unsubscribe.
+```
+
+- For multiple words, use "Today's words: [word1], [word2]"
+- Present all 3 options for copy-paste; I will choose one
+
 ## Word JSON Schema
 ```json
 {
