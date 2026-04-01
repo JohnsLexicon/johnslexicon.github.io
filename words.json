@@ -1,4 +1,48 @@
 [  {
+    "date": "2026-04-01",
+    "word": "propitiate",
+    "partOfSpeech": "verb",
+    "definitions": [
+      "to gain or regain the favor or goodwill of; appease",
+      "to make favorably inclined; conciliate"
+    ],
+    "etymology": "Latin *propitiatus*, past participle of *propitiare* 'to make favorable,' from *propitius* 'favorable, gracious'",
+    "pronunciation": "pruh-PISH-ee-ayt",
+    "ipa": "/prəˈpɪʃ.i.eɪt/",
+    "sentence": "The village had been propitiating the volcano for three hundred years when a geology student informed them it was dormant, and they burned him in effigy out of an abundance of caution.",
+    "quiz": {
+      "correct": 0,
+      "options": [
+        "She spent three hours propitiating the grants committee with homemade jam, handwritten notes referencing their published work by title, and a printed timeline that suggested, without explicitly stating, that her project would name a building after someone in the room.",
+        "He propitiated his findings across three continents over a year, presenting at conferences, publishing in journals, and giving a TED talk that made him briefly famous in the kind of circles where TED talks make people briefly famous.",
+        "The general declared conditions propitiated for the winter offensive, supplies secured and the eastern flank unguarded, and the attack began before dawn.",
+        "The state propitiated the land belonging to seventeen farming families to build the reservoir, with compensation packages that one senator described as 'technically legal' in a tone that implied considerable regret."
+      ]
+    }
+  },
+  {
+    "date": "2026-04-01",
+    "word": "inimical",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "harmful in effect; adverse",
+      "unfriendly; hostile"
+    ],
+    "etymology": "Late Latin *inimīcālis* 'hostile,' from *inimīcus* 'enemy,' from *in-* 'not' + *amīcus* 'friend'",
+    "pronunciation": "ih-NIM-ih-kul",
+    "ipa": "/ɪˈnɪm.ɪ.kəl/",
+    "sentence": "The wine was described on the label as \"inimical to hasty consumption,\" which the rescue workers later noted did not appear to have been a deterrent.",
+    "quiz": {
+      "correct": 2,
+      "options": [
+        "The director's staging of the third act was wholly inimical: a vision so specific to his sensibility that rival productions had been attempting and failing to reproduce it for forty years.",
+        "The divorce proceedings were described as surprisingly inimical by both parties' attorneys, who noted the couple had agreed on everything from the asset split to which parent the cat actually preferred.",
+        "The researcher concluded that four hours of daily news consumption was inimical to long-term cognitive function, then published her findings in a paper no one who needed to read it would ever see.",
+        "The test results were inimical — so far outside the expected range that the lab technician ran them three times before calling the professor at home at eleven o'clock on a Sunday."
+      ]
+    }
+  },
+  {
     "date": "2026-03-30",
     "word": "extirpate",
     "partOfSpeech": "verb",
