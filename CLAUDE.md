@@ -39,6 +39,10 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
 - GOOD (dark escalation treated as routine): "was found in their yard at two in the morning with scissors and what she described, in a sworn statement, as a defensive posture"
 - GOOD (wild premise, bureaucratic understatement): "they burned him in effigy out of an abundance of caution"
 - GOOD (specific threat delivered with total composure): "hissing 'I will erase your bloodline from this soil' through clenched teeth"
+- GOOD (offscreen catastrophe implied through formal language): "The wine was described on the label as 'inimical to hasty consumption,' which the rescue workers later noted did not appear to have been a deterrent."
+- GOOD (horror conveyed via bureaucratic omission): "proceeded in a direction she would later decline to specify in the operative report"
+- The unhinged element can be IMPLIED rather than shown. A sentence that points toward catastrophe through withheld detail is often stronger than one that describes it. Let the reader's imagination do the worst work.
+- Avoid the formula: [character] + [grand declaration] + [epic physical gesture]. It reads as constructed. The best sentences feel discovered.
 - The sentence should read like something a witty, overeducated person would say at a dinner party — not like a comedy sketch pitch
 - When in doubt, the scenario should be more extreme, not less. Underwrite the DELIVERY. Do not underwrite the content.
 
