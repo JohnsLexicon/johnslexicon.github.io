@@ -125,7 +125,8 @@ Reply "stop" to unsubscribe.
 ```
 
 - For multiple words, use "Today's words: [word1], [word2]"
-- Present all 3 options for copy-paste; I will choose one
+- Present all 3 options and stop — selection and distribution are manual from this point
+- If told which option was chosen, use it to calibrate future hooks; do not treat it as a workflow step
 
 ## Word JSON Schema
 ```json
