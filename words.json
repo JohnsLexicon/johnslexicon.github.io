@@ -1,4 +1,25 @@
 [  {
+    "date": "2026-04-02",
+    "word": "inimitable",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "not capable of being imitated; matchless"
+    ],
+    "etymology": "Latin *inimitabilis*, from *in-* 'not' + *imitabilis* 'capable of being imitated,' from *imitari* 'to imitate'",
+    "pronunciation": "ih-NIM-ih-tuh-bul",
+    "ipa": "/ɪˈnɪm.ɪ.tə.bəl/",
+    "sentence": "The structural engineer declared the building inimitable and recommended it be preserved as a teaching example, a position she maintained until it collapsed and crushed three of her graduate students.",
+    "quiz": {
+      "correct": 1,
+      "options": [
+        "The new scheduling system proved inimitable to the staff's remaining goodwill, which the exit surveys confirmed with a thoroughness the HR department found instructive.",
+        "The forger's eye was considered inimitable by the very experts who had authenticated the paintings he later admitted to producing, a fact the museum's press release addressed with notable brevity.",
+        "The collapse was, by the third quarter, inimitable: every analyst had seen it coming, three had published papers saying so, and two had quietly relocated their families.",
+        "The senator's remarks, described in advance as brief, proved inimitable, running four hours and covering, among other topics, the entire legislative history of the interstate highway system."
+      ]
+    }
+  },
+  {
     "date": "2026-04-01",
     "word": "propitiate",
     "partOfSpeech": "verb",
