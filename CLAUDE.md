@@ -73,6 +73,7 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
 - Date: today's date in YYYY-MM-DD format unless I specify otherwise
 - Word: lowercase
 - All fields required: date, word, partOfSpeech, definitions (array), etymology, pronunciation, ipa, sentence, quiz (correct + options[4])
+- Forms (optional): include a "forms" array listing notable inflections and derived forms when the word has them (e.g., verb conjugations, noun/adjective derivations). Omit for words with no notable alternate forms. Sentences and quiz options may use any listed form.
 - NO trailing commas after the last element
 - NO JavaScript comments — JSON does not support //
 
@@ -135,6 +136,7 @@ Reply "stop" to unsubscribe.
   "word": "lowercase",
   "partOfSpeech": "noun|verb|adjective|adverb",
   "definitions": ["def1", "def2"],
+  "forms": ["inflected1", "inflected2"],
   "etymology": "Language *term* 'gloss', from *root* 'meaning'",
   "pronunciation": "STRESSED-syl-la-ble",
   "ipa": "/IPA here/",

@@ -1,14 +1,21 @@
-[  {
+[
+  {
     "date": "2026-04-04",
-    "word": "perambulation",
-    "partOfSpeech": "noun",
+    "word": "perambulate",
+    "partOfSpeech": "verb",
     "definitions": [
-      "the act of walking through or over an area; a stroll",
-      "an official inspection of a district on foot, especially to determine or assert boundaries"
+      "to walk through or over; traverse on foot",
+      "to make an official inspection of on foot"
+    ],
+    "forms": [
+      "perambulates",
+      "perambulated",
+      "perambulating",
+      "perambulation"
     ],
     "etymology": "Latin *perambulare* 'to walk through,' from *per-* 'through' + *ambulare* 'to walk'",
-    "pronunciation": "pur-AM-byuh-LAY-shun",
-    "ipa": "/pəˌræm.bjəˈleɪ.ʃən/",
+    "pronunciation": "pur-AM-byuh-layt",
+    "ipa": "/pəˈræm.bjə.leɪt/",
     "sentence": "Stonewall Jackson's idea of a routine perambulation was a 36-mile forced march through the Shenandoah Valley in a single day, after which he knelt in prayer while his men collapsed in the road behind him, several of them barefoot and one reportedly weeping into a hardtack biscuit.",
     "quiz": {
       "correct": 2,
@@ -60,7 +67,10 @@
         "The collapse was, by the third quarter, inimitable: every analyst had seen it coming, three had published papers saying so, and two had quietly relocated their families.",
         "The opposition proved inimitable through four consecutive election cycles, surviving scandal, indictment, and what one analyst described as a sustained experiment in self-destruction."
       ]
-    }
+    },
+    "forms": [
+      "inimitably"
+    ]
   },
   {
     "date": "2026-04-01",
@@ -82,7 +92,14 @@
         "The meteorologist declared the weekend propitiated for the summit attempt, having consulted three models and one superstition, and the team began ascending at four in the morning.",
         "The city propitiated fourteen homes to build a highway that the department of transportation later rerouted, leaving the neighborhood bisected by an elevated nothing."
       ]
-    }
+    },
+    "forms": [
+      "propitiates",
+      "propitiated",
+      "propitiating",
+      "propitiation",
+      "propitiatory"
+    ]
   },
   {
     "date": "2026-04-01",
@@ -104,7 +121,10 @@
         "The researcher concluded that four hours of daily news consumption was inimical to long-term cognitive function, then published her findings in a paper no one who needed to read it would ever see.",
         "The ink was inimical: the conservator had been working on it for three months and had begun, she admitted, to take it personally."
       ]
-    }
+    },
+    "forms": [
+      "inimically"
+    ]
   },
   {
     "date": "2026-03-30",
@@ -127,7 +147,13 @@
         "The analyst extirpated next quarter's revenue from a single data point, then presented it to the board as though it were divine prophecy.",
         "The judge agreed to extirpate the speeding violation from David's record after the defendant delivered a 90-minute valediction that somehow involved the Treaty of Rome and Carthage."
       ]
-    }
+    },
+    "forms": [
+      "extirpates",
+      "extirpated",
+      "extirpating",
+      "extirpation"
+    ]
   },
   {
     "date": "2026-03-30",
@@ -149,7 +175,12 @@
         "Webster saw lexicography as an act of patriotism, believing that a distinctly American dictionary would help unify the young republic's language.",
         "The lexicographer examined the patient's bloodwork and confirmed that the white cell count had returned to normal."
       ]
-    }
+    },
+    "forms": [
+      "lexicographer",
+      "lexicographic",
+      "lexicographical"
+    ]
   },
   {
     "date": "2026-03-28",
@@ -170,8 +201,15 @@
         "The dean chose to rusticate the modern curriculum, adding a series of classes with names like \"Principles of Gardening.\"",
         "She paid a deranged Swiss craftsman eighty-seven million dollars to rusticate the penthouse's interior, leaving her with fifteen-foot antler chandeliers dripping in diamonds and the blood of endangered species."
       ]
-    }
-  }, {
+    },
+    "forms": [
+      "rusticates",
+      "rusticated",
+      "rusticating",
+      "rustication"
+    ]
+  },
+  {
     "date": "2026-03-27",
     "word": "copacetic",
     "partOfSpeech": "adjective",
@@ -190,8 +228,12 @@
         "After the divorce hearing, the ex-spouses smiled sweetly and declared the custody arrangement completely copacetic while their lawyers quietly called the police.",
         "She kept her voice copacetic during the exorcism, never once raising it above a pleasant whisper as the demon hurled furniture and spoke in fourteen languages."
       ]
-    }
-  },  {
+    },
+    "forms": [
+      "copacetically"
+    ]
+  },
+  {
     "date": "2026-03-26",
     "word": "tacit",
     "partOfSpeech": "adjective",
@@ -211,8 +253,12 @@
         "Stonewall Jackson flanked the opponent from both sides, a brilliant tacit that won them the battle.",
         "The neighbors had a tacit agreement not to mow their lawns before 9 AM."
       ]
-    }
-  },  {
+    },
+    "forms": [
+      "tacitly"
+    ]
+  },
+  {
     "date": "2026-03-25",
     "word": "taciturn",
     "partOfSpeech": "adjective",
@@ -231,7 +277,11 @@
         "The taciturn rhythm of the drums built steadily until the entire audience was standing.",
         "The new hire was so taciturn that three weeks passed before anyone in the office heard him speak a complete sentence."
       ]
-    }
+    },
+    "forms": [
+      "taciturnly",
+      "taciturnity"
+    ]
   },
   {
     "date": "2026-03-24",
@@ -253,7 +303,12 @@
       ]
     },
     "pronunciation": "el-ih-JY-ak",
-    "ipa": "/ˌel.ɪˈdʒaɪ.æk/"
+    "ipa": "/ˌel.ɪˈdʒaɪ.æk/",
+    "forms": [
+      "elegy",
+      "elegies",
+      "elegiacal"
+    ]
   },
   {
     "date": "2026-03-23",
@@ -276,7 +331,13 @@
       ]
     },
     "pronunciation": "ih-VIS-uh-rayt",
-    "ipa": "/ɪˈvɪs.ə.reɪt/"
+    "ipa": "/ɪˈvɪs.ə.reɪt/",
+    "forms": [
+      "eviscerates",
+      "eviscerated",
+      "eviscerating",
+      "evisceration"
+    ]
   },
   {
     "date": "2026-03-23",
@@ -298,7 +359,13 @@
       ]
     },
     "pronunciation": "dee-FEN-ih-strayt",
-    "ipa": "/diːˈfen.ɪ.streɪt/"
+    "ipa": "/diːˈfen.ɪ.streɪt/",
+    "forms": [
+      "defenestrates",
+      "defenestrated",
+      "defenestrating",
+      "defenestration"
+    ]
   },
   {
     "date": "2026-03-21",
@@ -319,7 +386,10 @@
       ]
     },
     "pronunciation": "sar-TOR-ee-ul",
-    "ipa": "/sɑːrˈtɔːr.i.əl/"
+    "ipa": "/sɑːrˈtɔːr.i.əl/",
+    "forms": [
+      "sartorially"
+    ]
   },
   {
     "date": "2026-03-20",
@@ -362,7 +432,11 @@
       ]
     },
     "pronunciation": "PAIR-uk-siz-um",
-    "ipa": "/ˈpær.ək.sɪz.əm/"
+    "ipa": "/ˈpær.ək.sɪz.əm/",
+    "forms": [
+      "paroxysmal",
+      "paroxysmally"
+    ]
   },
   {
     "date": "2026-03-18",
@@ -384,7 +458,12 @@
       ]
     },
     "pronunciation": "DAL-ee-unce",
-    "ipa": "/ˈdæl.i.əns/"
+    "ipa": "/ˈdæl.i.əns/",
+    "forms": [
+      "dally",
+      "dallies",
+      "dallied"
+    ]
   },
   {
     "date": "2026-03-17",
@@ -406,7 +485,12 @@
       ]
     },
     "pronunciation": "pair-uh-RAY-shun",
-    "ipa": "/ˌper.əˈreɪ.ʃən/"
+    "ipa": "/ˌper.əˈreɪ.ʃən/",
+    "forms": [
+      "perorate",
+      "perorates",
+      "perorated"
+    ]
   },
   {
     "date": "2026-03-16",
@@ -428,7 +512,11 @@
       ]
     },
     "pronunciation": "TUR-jid",
-    "ipa": "/ˈtɜːr.dʒɪd/"
+    "ipa": "/ˈtɜːr.dʒɪd/",
+    "forms": [
+      "turgidly",
+      "turgidity"
+    ]
   },
   {
     "date": "2026-03-16",
@@ -450,7 +538,11 @@
       ]
     },
     "pronunciation": "TUR-bid",
-    "ipa": "/ˈtɜːr.bɪd/"
+    "ipa": "/ˈtɜːr.bɪd/",
+    "forms": [
+      "turbidly",
+      "turbidity"
+    ]
   },
   {
     "date": "2026-03-16",
@@ -471,7 +563,10 @@
       ]
     },
     "pronunciation": "TUR-pih-tood",
-    "ipa": "/ˈtɜːr.pɪ.tjuːd/"
+    "ipa": "/ˈtɜːr.pɪ.tjuːd/",
+    "forms": [
+      "turpitudes"
+    ]
   },
   {
     "date": "2026-03-16",
@@ -494,7 +589,10 @@
       ]
     },
     "pronunciation": "TOR-id",
-    "ipa": "/ˈtɔːr.ɪd/"
+    "ipa": "/ˈtɔːr.ɪd/",
+    "forms": [
+      "torridly"
+    ]
   },
   {
     "date": "2026-03-16",
@@ -517,7 +615,11 @@
       ]
     },
     "pronunciation": "TEP-id",
-    "ipa": "/ˈtep.ɪd/"
+    "ipa": "/ˈtep.ɪd/",
+    "forms": [
+      "tepidly",
+      "tepidity"
+    ]
   },
   {
     "date": "2026-03-11",
@@ -538,7 +640,12 @@
       ]
     },
     "pronunciation": "THAW-muh-turj",
-    "ipa": "/ˈθɔː.mə.tɜːrdʒ/"
+    "ipa": "/ˈθɔː.mə.tɜːrdʒ/",
+    "forms": [
+      "thaumaturgy",
+      "thaumaturgic",
+      "thaumaturgical"
+    ]
   },
   {
     "date": "2026-03-11",
@@ -559,7 +666,12 @@
       ]
     },
     "pronunciation": "TOR-pid",
-    "ipa": "/ˈtɔːr.pɪd/"
+    "ipa": "/ˈtɔːr.pɪd/",
+    "forms": [
+      "torpidly",
+      "torpidity",
+      "torpor"
+    ]
   },
   {
     "date": "2026-03-09",
@@ -580,7 +692,11 @@
       ]
     },
     "pronunciation": "nee-oh-FOH-bik",
-    "ipa": "/ˌniː.əˈfoʊ.bɪk/"
+    "ipa": "/ˌniː.əˈfoʊ.bɪk/",
+    "forms": [
+      "neophobe",
+      "neophobia"
+    ]
   },
   {
     "date": "2026-03-08",
@@ -601,7 +717,12 @@
       ]
     },
     "pronunciation": "ih-FYOO-siv",
-    "ipa": "/ɪˈfjuː.sɪv/"
+    "ipa": "/ɪˈfjuː.sɪv/",
+    "forms": [
+      "effusively",
+      "effusion",
+      "effusiveness"
+    ]
   },
   {
     "date": "2026-03-08",
@@ -624,7 +745,11 @@
       ]
     },
     "pronunciation": "pruh-PRY-uh-tee",
-    "ipa": "/prəˈpraɪ.ə.ti/"
+    "ipa": "/prəˈpraɪ.ə.ti/",
+    "forms": [
+      "proprieties",
+      "impropriety"
+    ]
   },
   {
     "date": "2026-03-06",
@@ -645,7 +770,11 @@
       ]
     },
     "pronunciation": "MEN-dih-kunt",
-    "ipa": "/ˈmen.dɪ.kənt/"
+    "ipa": "/ˈmen.dɪ.kənt/",
+    "forms": [
+      "mendicancy",
+      "mendicants"
+    ]
   },
   {
     "date": "2026-03-05",
@@ -666,7 +795,11 @@
       ]
     },
     "pronunciation": "jok-yoo-LAIR-ih-tee",
-    "ipa": "/ˌdʒɒk.jʊˈlær.ɪ.ti/"
+    "ipa": "/ˌdʒɒk.jʊˈlær.ɪ.ti/",
+    "forms": [
+      "jocular",
+      "jocularly"
+    ]
   },
   {
     "date": "2026-03-05",
@@ -687,7 +820,11 @@
       ]
     },
     "pronunciation": "in-EK-sur-uh-bul",
-    "ipa": "/ɪˈnek.sər.ə.bəl/"
+    "ipa": "/ɪˈnek.sər.ə.bəl/",
+    "forms": [
+      "inexorably",
+      "inexorability"
+    ]
   },
   {
     "date": "2026-03-02",
@@ -708,7 +845,13 @@
       ]
     },
     "pronunciation": "dih-FAL-kayt",
-    "ipa": "/dɪˈfæl.keɪt/"
+    "ipa": "/dɪˈfæl.keɪt/",
+    "forms": [
+      "defalcates",
+      "defalcated",
+      "defalcating",
+      "defalcation"
+    ]
   },
   {
     "date": "2026-03-02",
@@ -729,7 +872,11 @@
       ]
     },
     "pronunciation": "ad-ih-NOY-dul",
-    "ipa": "/ˌæd.ɪˈnɔɪ.dəl/"
+    "ipa": "/ˌæd.ɪˈnɔɪ.dəl/",
+    "forms": [
+      "adenoid",
+      "adenoids"
+    ]
   },
   {
     "date": "2026-03-01",
@@ -750,7 +897,11 @@
       ]
     },
     "pronunciation": "vur-TIJ-ih-nus",
-    "ipa": "/vɜːrˈtɪdʒ.ɪ.nəs/"
+    "ipa": "/vɜːrˈtɪdʒ.ɪ.nəs/",
+    "forms": [
+      "vertiginously",
+      "vertigo"
+    ]
   },
   {
     "date": "2026-03-01",
@@ -772,7 +923,10 @@
       ]
     },
     "pronunciation": "FRIP-ur-ee",
-    "ipa": "/ˈfrɪp.ər.i/"
+    "ipa": "/ˈfrɪp.ər.i/",
+    "forms": [
+      "fripperies"
+    ]
   },
   {
     "date": "2026-02-27",
@@ -794,6 +948,10 @@
       ]
     },
     "pronunciation": "val-ih-DIK-shun",
-    "ipa": "/ˌvæl.ɪˈdɪk.ʃən/"
+    "ipa": "/ˌvæl.ɪˈdɪk.ʃən/",
+    "forms": [
+      "valedictory",
+      "valedictorian"
+    ]
   }
 ]
