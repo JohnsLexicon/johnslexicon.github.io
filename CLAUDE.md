@@ -25,7 +25,7 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
   - copacetic: "The pilot announced that all systems were copacetic, his voice perfectly steady over the intercom while black smoke poured from the engines and the horizon tilted violently."
   - defenestrate: "Grandpa defenestrated the smart fridge after it suggested low-fat yogurt for the third time, then saluted as it exploded on the driveway below."
   - rusticate: "Aidan rusticated so hard he renounced electricity and married a scarecrow in a ceremony where he delivered a valediction to a congregation of confused sheep."
-- No AI-sounding language. No hedging. No "get." Active voice. Chicago Manual of Style.
+- No AI-sounding language. No hedging. No "get." No passive voice ("was found," "was discovered," "was seen"). Chicago Manual of Style.
 
 ### Tone Calibration
 - The formula is: UNHINGED CONTENT + DEADPAN DELIVERY. The scenario should go too far; the sentence should describe it as though it did not.
@@ -65,7 +65,7 @@ When I say "add [word]" or "new word: [word]", do ALL of the following:
 - Before finalizing, stress-test each wrong answer: "Could someone argue this usage is technically valid?" If yes, rewrite it.
 - The wrong usage should clearly map to a specific different word (e.g., "inveigle" used as if it means "inveigh," "invigorate," or "unveil") with no overlap with the actual definition
 - Wrong sentences should still be entertaining and well-written, but the usage must be plainly wrong to anyone who knows the real definition
-- No em dashes, no self-aware or meta humor, no lists — the same style rules that apply to example sentences apply here
+- No passive voice, no em dashes, no self-aware or meta humor, no lists — the same style rules that apply to example sentences apply here
 - Match the length and register of the existing good examples; when in doubt, cut
 
 ### 4. Update words.json
@@ -156,7 +156,7 @@ Reply "stop" to unsubscribe.
 - No contractions in formal writing
 - No "get" — use precise alternatives
 - No em dashes
-- Active voice always
+- Active voice always — no passive constructions ("was found," "was described," "was seen") in sentences, quiz options, or any generated content
 - Oxford comma always
 - No hedging or conditional framing
 - Sentences should be declarative assertions

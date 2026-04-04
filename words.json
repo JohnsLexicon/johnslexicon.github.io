@@ -1,4 +1,47 @@
 [  {
+    "date": "2026-04-04",
+    "word": "perambulation",
+    "partOfSpeech": "noun",
+    "definitions": [
+      "the act of walking through or over an area; a stroll",
+      "an official inspection of a district on foot, especially to determine or assert boundaries"
+    ],
+    "etymology": "Latin *perambulare* 'to walk through,' from *per-* 'through' + *ambulare* 'to walk'",
+    "pronunciation": "pur-AM-byuh-LAY-shun",
+    "ipa": "/pəˌræm.bjəˈleɪ.ʃən/",
+    "sentence": "Stonewall Jackson's idea of a routine perambulation was a 36-mile forced march through the Shenandoah Valley in a single day, after which he knelt in prayer while his men collapsed in the road behind him, several of them barefoot and one reportedly weeping into a hardtack biscuit.",
+    "quiz": {
+      "correct": 2,
+      "options": [
+        "The senator opened the hearing with a twelve-minute perambulation about the sanctity of the democratic process, then voted to defund the election commission before anyone had finished their coffee.",
+        "The smell of the durian achieved full perambulation of the office in under six minutes, prompting an evacuation that the fire marshal later characterized as warranted.",
+        "Grandpa's nightly perambulation took him past every house on the block, during which he assessed each lawn's condition and left written evaluations in their mailboxes that three homeowners had framed and one had forwarded to an attorney.",
+        "His perambulation was visible to everyone in the courtroom when the verdict was read: a jaw muscle twitching, both fists white, and a vein in his forehead the sketch artist captured with what observers called unnecessary enthusiasm."
+      ]
+    }
+  },
+  {
+    "date": "2026-04-04",
+    "word": "fossiliferous",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "containing fossils"
+    ],
+    "etymology": "Latin *fossilis* 'dug up,' from *fodere* 'to dig' + *-ferous* from Latin *ferre* 'to bear, carry'",
+    "pronunciation": "fah-suh-LIF-ur-us",
+    "ipa": "/ˌfɑː.sɪˈlɪf.ər.əs/",
+    "sentence": "The White House director of the Office of Public Liaison rounded a corridor in the Eisenhower Executive Office Building at 11:00 p.m. before finding himself speechless at the sight of an intern kneeling with a rock hammer and a headlamp, prying ancient mollusks from the fossiliferous limestone floors and cataloging each one in a field journal that the Secret Service later entered into evidence.",
+    "quiz": {
+      "correct": 1,
+      "options": [
+        "The crowd outside the courthouse grew increasingly fossiliferous as the hours passed, their chanting audible from three blocks away and their signage increasingly personal in its accusations.",
+        "The geology students spent the afternoon splitting open fossiliferous shale behind the science building, pulling out trilobites with the reverence of surgeons and the frequency of an assembly line.",
+        "The IT department declared the server infrastructure fossiliferous and recommended a full migration, which the CFO approved six months later, by which point two of the servers had physically caught fire.",
+        "The garden became so fossiliferous under her care that the zucchini alone required its own wheelbarrow, and the neighbors began finding tomatoes in their mailboxes with notes reading 'please, take them.'"
+      ]
+    }
+  },
+  {
     "date": "2026-04-02",
     "word": "inimitable",
     "partOfSpeech": "adjective",
