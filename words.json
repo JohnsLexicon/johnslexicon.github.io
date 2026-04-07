@@ -1,5 +1,74 @@
 [
   {
+    "date": "2026-04-07",
+    "word": "inveterate",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "firmly established by long persistence",
+      "confirmed in a habit; habitual"
+    ],
+    "forms": ["inveterately", "inveteracy"],
+    "etymology": "Latin *inveteratus*, past participle of *inveterare* 'to age,' from *in-* 'in' + *vetus* 'old'",
+    "pronunciation": "in-VET-er-it",
+    "ipa": "/ɪnˈvɛt.ər.ət/",
+    "sentence": "The mayor was an inveterate arsonist, a detail the fire marshal confirmed on the night she traced the fourth library fire back to his garage.",
+    "quiz": {
+      "correct": 0,
+      "options": [
+        "The judge was an inveterate hoarder of legal pads, his chambers eventually requiring structural reinforcement to support the seventeen tons of yellow paper that the courthouse maintenance staff had asked him to address since 1998.",
+        "The new associate proved so inveterate during the partner meetings that he agreed to three different conflicting deadlines, then sent an apology email so groveling four separate recipients forwarded it to HR.",
+        "The morning swim in the icy lake inveterated her so thoroughly that she returned to the office and dictated nineteen memos before her colleagues had finished their first cup of coffee.",
+        "His inveterate response to losing the contract involved a forty-minute phone call to the client, two thrown chairs, and a voicemail to the board that the legal department insisted he record over with weather information."
+      ]
+    }
+  },
+  {
+    "date": "2026-04-07",
+    "word": "invective",
+    "partOfSpeech": "noun",
+    "definitions": [
+      "insulting or abusive language; vituperation",
+      "an abusive expression or speech"
+    ],
+    "forms": ["invectives", "invectively"],
+    "etymology": "Late Latin *invectivus* 'reproachful, abusive,' from Latin *invehi* 'to attack with words,' from *in-* 'against' + *vehere* 'to carry'",
+    "pronunciation": "in-VEK-tiv",
+    "ipa": "/ɪnˈvɛk.tɪv/",
+    "sentence": "The bishop's Christmas Eve invective against the choir director ran so long and so pointed that the organist began playing quietly beneath it around minute twelve, a detail the diocesan review board later described as 'the one act of mercy performed in the cathedral that evening.'",
+    "quiz": {
+      "correct": 1,
+      "options": [
+        "The ceremony opened with an invective to the patron saint of accountants, after which the firm's senior partner blessed the new tax software and led the staff in a chant the diocesan office later asked him to clarify in writing.",
+        "The columnist's farewell invective ran twelve thousand words, named seventeen people, and prompted the paper's libel attorney to take an unscheduled sabbatical from which he has yet to return.",
+        "The judge issued an invective preventing the company from selling the product within state lines, an order the defendant violated within four hours and celebrated with a press release the bench called 'aggressively unhelpful.'",
+        "Management offered each employee an invective of three hundred dollars to complete the cybersecurity training, then revoked it after discovering most of the staff had hired a teenager to take the quiz on their behalf."
+      ]
+    }
+  },
+  {
+    "date": "2026-04-07",
+    "word": "inviolate",
+    "partOfSpeech": "adjective",
+    "definitions": [
+      "not violated or profaned; intact",
+      "pure, unbroken"
+    ],
+    "forms": ["inviolately", "inviolacy", "inviolable"],
+    "etymology": "Latin *inviolatus*, from *in-* 'not' + *violatus*, past participle of *violare* 'to violate'",
+    "pronunciation": "in-VY-uh-lit",
+    "ipa": "/ɪnˈvaɪ.ə.lət/",
+    "sentence": "Everyone understood the treaty's boundary line to be inviolate until a Belgian surveyor, working alone in the forest for reasons he never adequately explained, moved it fourteen meters and reduced two adjacent villages to smoke in what historians now refer to simply as 'the incident.'",
+    "quiz": {
+      "correct": 2,
+      "options": [
+        "The contract's terms proved so inviolate that the senior partner spent three days untangling the cross-references, after which she filed a memo recommending the firm decline all future engagements with the same opposing counsel.",
+        "The new conference room remained inviolate to the junior associates, with its leather chairs, free espresso, and a window view the firm had spent seven years and most of a lawsuit acquiring.",
+        "The seal on the time capsule remained inviolate for ninety-six years, broken finally at the bicentennial ceremony by a fourth-grader with a hammer who proceeded to extract a cassette tape, a Polaroid of someone's uncle, and a folded note the principal asked the audience to disregard.",
+        "The town meeting grew increasingly inviolate as the zoning debate stretched past midnight, ending with two residents in handcuffs and the mayor announcing future sessions would convene over Zoom."
+      ]
+    }
+  },
+  {
     "date": "2026-04-04",
     "word": "perambulate",
     "partOfSpeech": "verb",
